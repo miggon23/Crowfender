@@ -1,4 +1,5 @@
 # Grupo08
+# DESCRIPCIÓN
 Pájaros invaden habitaciones  y hay que espantarlos usando objetos como espantapájaros/campanas y evitar que invadan todas las habitaciones tipo five night 's at freddy' s.
 
 
