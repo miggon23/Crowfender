@@ -1,7 +1,7 @@
 # Grupo08
 # DESCRIPCIÓN
 El objetivo del juego es evitar que más de n pájaros (número regulable según exija el diseño y la dificultad del juego) se agrupen en una misma habitación. Para ello, el protagonista
-tendrá que utilizar distintos tipos de herramientas y trampas para espantar a los pájaros, evitando que se amontonen. 
+tendrá que utilizar distintos tipos de herramientas y trampas, en general compradas, para espantar a los pájaros, evitando que se amontonen. 
 
 Las habitaciones son independientes entre sí, es decir, el
 número de pajaros que puede haber es el mismo para todas las habitaciones/estancias, pero el número de pajaros no se suma entre todas las habitaciones (si el número de pájaros
