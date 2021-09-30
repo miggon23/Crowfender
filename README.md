@@ -1,9 +1,22 @@
 # Grupo08
-# DESCRIPCIÓN
-El objetivo del juego es evitar que más de n pájaros (número regulable según exija el diseño y la dificultad del juego) se agrupen en una misma habitación. Para ello, el protagonista
-tendrá que utilizar distintos tipos de herramientas y trampas, en general compradas, para espantar a los pájaros, evitando que se amontonen. 
+# Crowfender
+Nombre de los autores o la empresa: Daniel Martín Gómez, Miguel González Pérez, Javier Callejo Herrero, Ignacio Ligero Martín
+Sitio web o correo electrónico de contacto: damart24@ucm.es, miggon23@ucm.es, iligero@ucm.es, jacall02@ucm.es 
 
-Las habitaciones son independientes entre sí, es decir, el número de pajaros que puede haber es el mismo para todas las habitaciones/estancias, pero el número de pajaros no se suma entre todas las habitaciones (si el número de pájaros que puede haber es, por ejemplo 5, en cada habitación puede haber 4 pájaros que el jugador no perderá hasta que se pose el 5 en alguna de las estancias). 
+Resumen: Pájaros intentan entrar en una casa que tienes que defender.
+Géneros: Survival suspense.
+Modos: Por oleadas.
+Público objetivo:
+Edad: adolescentes y/o fans de hitchcock de Europa y Estados Unidos
+Plataformas: Navegador Web
+
+# DESCRIPCIÓN
+Crowfender es un juego de supervivencia y suspense con vista 2.5D (vista estilo battletoads). El jugador tendrá que bloquear la entrada de los pájaros usando madera, además de echar a los pájaros que hayan conseguido entrar golpeándolos con la escoba, antes de que consigan invadir el centro. Nuestro protagonista tendrá que aguantar 5 horas en combate con los pájaros antes de que se marchen al amanecer. Una hora en Crowfender equivale a un minuto de juego.
+
+# ASPECTOS GENERALES
+Crowfender trata de transmitir al jugador la angustia de una invasión voladora, al igual que en la película Los pájaros de Alfred Hitchcock. El juego se ambienta en una casa abandonada, a la que llega un explorador a pasar la noche tras una fuerte tormenta. Tras amaina la tormenta, bandadas de pájaros intentarán invadir la casa para acabar con el jugador. Después de pedir ayuda, el jugador deberá atrincherarse en la casa hasta que vengan a rescatarle, usando los recursos que encuentre en su estancia para defenderse.
+
+
 
 # A QUÉ SE JUEGA
 Al estilo FNAF, el jugador tendrá que ir de habitación en habitación, tapiando puertas y ventanas, encendiendo la chimenea... para evitar que los pájaros entren a la casa, además de ir espantando a los pájaros que hayan logrado entrar, para que no invadan la habitación central. El jugador se encontrará con varias oleadas de pájaros de creciente dificultad, así como con distintas herramientas y formas de espantar a las insistentes aves. Al contrario que en FNAF, el jugador podrá desplazarse libremente por las habitaciones en escenarios de 2.5D.
