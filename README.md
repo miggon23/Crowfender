@@ -29,7 +29,7 @@ Crowfender trata de transmitir al jugador la angustia de una invasión voladora,
 
 
 ## A QUÉ SE JUEGA
-Al estilo FNAF, el jugador tendrá que ir de habitación en habitación, tapiando puertas y ventanas, encendiendo la chimenea... para evitar que los pájaros entren a la casa, además de ir espantando a los pájaros que hayan logrado entrar, para que no invadan la habitación central. El jugador se encontrará con varias oleadas de pájaros de creciente dificultad, así como con distintas herramientas y formas de espantar a las insistentes aves. Al contrario que en FNAF, el jugador podrá desplazarse libremente por las habitaciones en escenarios de 2.5D.
+Al estilo "Five Night's At Freddy's" (FNAF), el jugador tendrá que ir de habitación en habitación, tapiando puertas y ventanas, encendiendo la chimenea... para evitar que los pájaros entren a la casa, además de ir espantando a los pájaros que hayan logrado entrar, para que no invadan la habitación central. El jugador se encontrará con varias oleadas de pájaros de creciente dificultad, así como con distintas herramientas y formas de espantar a las insistentes aves. Al contrario que en FNAF, el jugador podrá desplazarse libremente por las habitaciones en escenarios de 2.5D.
 
 ## RELATO BREVE
 El jugador se encuentra en la sala central, el jugador decide encargarse primero de los pájaros de la izquierda, por tanto va a buscar madera para tapiar la puerta de la derecha y encender la hoguera, consiguiendo evitar que entren los pájaros por arriba. Con esto consigue retener a los pájaros el tiempo suficiente para ir a espantar todos los pájaros de la izquierda. Mientras esto sucede, una alerta sonora (por ejemplo, el crujir de la puerta tapiada o el apagarse la hoguera) alertan al jugador de que el bloqueo que había puesto anteriormente ha terminado. Una segunda alerta, esta vez una campana, avisa de que los pájaros están entrando por el resto de habitaciones, sin bloqueo ya. Esto obliga al jugador a moverse constantemente entre habitaciones y a gestionar el tiempo que emplea en disuadir cada flanco atacado por los pájaros, creando así una sensación de tensión constante.
@@ -40,31 +40,30 @@ El jugador se encuentra en la sala central, el jugador decide encargarse primero
 Las mecánicas de Crowfender requieren interacción con el escenario mediante gestión de recursos, desplazamiento por el escenario por parte del jugador y ataque a los pájaros con el fin de ahuyentarlos, todo eso detallado en su correspondiente apartado de mecánicas. 
 
 #### Mecánicas de jugador
-Movimiento: Movimiento uniforme no acelerado, en el eje x, eje y, y en diagonal, siendo el escenario más reducido en el eje y, pues no puede moverse por toda la pantalla si no por la sección inferior únicamente, con el fin de dar sensación de profundidad. 
-
-Ataque: Cuenta con una escoba que resta 1 de vida a los pájaros, espantándolos (haciéndolos retroceder una sala) o matándolos si a estos no les queda vida. Al existir cierta profundidad en el escenario, un pájaro puede estar colocado en una capa diferente a la del jugador, por lo que no lo golpearía a menos que antes de atacar se coloque frente al pájaro tanto en el eje x como en el eje y. 
+Movimiento: Movimiento uniforme no acelerado, en 8 direcciones.
+Ataque: Cuenta con una escoba que espanta a los pájaros (haciéndolos retroceder una sala) y les quita 1 punto de vida (matándolos si estos se quedan  sin vida). Golpea en el eje x a una distancia dos veces el ancho del jugador en la dirección en la que esté mirando. En el momento en el que el pájaro emprenda el vuelo (para cambiar de sala) no podrá ser golpeado ya que el jugador no puede golpear hacia arriba.
   
 Vida: No tiene vida, pues los enemigos no le atacan directamente. En cambio, el jugador pierde cuando la sala central supera el límite de pájaros. Se detalla en dinámica: perder. 
 
 Bloqueo: El jugador puede coger madera en el sótano con la que podrá bloquear ventanas, puertas o prender la chimenea. Sólo puede llevar una unidad de madera cada vez, y tendrá que gastarla para recoger más. 
 
 #### Recursos
--Madera: La madera se consigue al visitar la habitación del sótano. Ésta se puede invertir en encender la hoguera o tapiar una ventana o puerta. La madera no es acumulable, solo se puede llevar una unidad de madera al mismo tiempo, y es ésta la cantidad que se invierte cuando se gasta, por lo que el jugador tendrá que visitar el sótano, tantas veces el sótano como acciones con madera quiera realzar
+-Madera: La madera se consigue al visitar la habitación del sótano. Ésta se puede invertir en encender la hoguera o tapiar una ventana o puerta. La madera no es acumulable, solo se puede llevar una unidad de madera al mismo tiempo, y es ésta la cantidad que se invierte cuando se gasta, por lo que el jugador tendrá que visitar el sótano, tantas veces el sótano como acciones con madera quiera realizar.
 
 #### Mecánicas de escenario
 Esquema de la zona de juego
 ![Esquema Zona de Juego](https://user-images.githubusercontent.com/82326243/134644498-b26d2520-5295-4dc0-b4a1-fd46a808252d.png)
 Los post-it en azul representan las zonas de spawn de los pájaros. Son zonas visibles para el jugador pero no accesibles para él.
 
-Los post-it en naranja son las entradas para los pájaros. En estas zonas el jugador puede realizar una determinada acción a cambio de madera para bloquear temporalmente el paso a los pájaros, a cambio del recurso madera. Estas zonas separan el spawn del interior de la casa, por donde sí se puede mover el jugador. 
-
-El post-it rosa, la zona del sótano, es una zona pacífica, donde no entran los cuervos. Aquí se consigue la madera.
-
-El post-it amarillo donde pone Jugador, representa al jugador. El resto de post-it amarillos corresponden a los pájaros.
-
 - SPAWN: Punto de congregación de los pájaros que sirve para alertar al jugador del número potencial de pájaros que pueden entrar en la casa en un determinado momento. Los spawns son zonas no accesibles para el jugador, pero sí visibles e interactuables (mediante el uso de la electricidad en este último caso). 
 
 Cada spawn tiene un límite fijo de pájaros que puede generar, y son 6. Para poder generar un pájaro después de haber superado el límite del spawn, debe haber muerto alguno de los pájaros que haya generado, aún siendo dentro de la casa. Esto se hace para poder devolver los pájaros que entren en la casa y no hayan muerto al spawn y no haya conflictos con los pájaros nuevos que se puedan generar (y se acumulen muchos pájaros en el spawn que no puedan ser representados gráficamente).
+
+Los post-it en naranja son las entradas para los pájaros. En estas zonas el jugador puede realizar una determinada acción a cambio de madera para bloquear temporalmente el paso a los pájaros, a cambio del recurso madera. Estas zonas separan el spawn del interior de la casa, por donde sí se puede mover el jugador. 
+
+El post-it verde, la zona del sótano, es una zona pacífica, donde no entran los cuervos. Aquí se consigue la madera.
+
+El post-it amarillo donde pone Jugador, representa al jugador. El resto de post-it amarillos corresponden a los pájaros.
 
 - Electrocutar: Hay un paneles de electricidad en cada sala lateral con los que el jugador podrá eliminar a los pájaros que haya en las salas donde aparecen los pájaros, haciendo que desaparezcan permanentemente. Esta tendrá un enfriamiento común para todas las salas, pero el efecto de echar a los pájaros del spawn afecta solo a esa sala. Ignora la vida de los pájaros.
 
@@ -75,11 +74,12 @@ Cada spawn tiene un límite fijo de pájaros que puede generar, y son 6. Para po
 #### Enemigos
 **Los valores de los atributos asociados a cada pájaro son susceptibles de ser modificados durante la fase de desarrollo. Los números son provisionales y orientativos, siendo la relación entre ellos más importante que los valores aislados.**
 
-Los enemigos en Crowfender son distintas aves, cada una con sus atributos y características. Todas las aves tienen un cierto número de golpes que pueden soportar antes de ser eliminadas (vida). Para las aves que pueden soportar más de un golpe, al recibir uno, además de restarse un punto de vida, huyen a la sala en la que hayan estado antes de entrar en la  que recibieron el golpe. De este modo, si un pájaro recibe un golpe por parte del jugador en la sala de la chimenea y éste no muere, regresaría al spawn, ya que es la habitación 
-inmediatamente anterior en la que estuvieron. La electricidad ignora cuanta vida le quedan a los pájaros y los expulsa a todos los que estén en ese spawn. 
+Los enemigos en Crowfender son distintas aves, cada una con sus atributos y características. Todas las aves tienen un cierto número de golpes que pueden soportar antes de ser eliminadas (vida). Para las aves que pueden soportar más de un golpe, al recibir uno, además de restarse un punto de vida, huyen a la sala en la que hayan estado antes de entrar en la  que recibieron el golpe. De este modo, si un pájaro recibe un golpe por parte del jugador en la sala de la chimenea y éste no muere, regresaría al spawn, ya que es la habitación inmediatamente anterior en la que estuvieron.La electricidad ignora cuanta vida le quedan a los pájaros y los expulsa a todos los que estén en ese spawn.
+
+Los pájaros tendrán un movimiento aleatorio (cada segundo tiene una probabilidad del 10% de moverse) mientras estén en dicha sala, es decir se pueden mover en 1 de las 4 direcciones seleccionadajj al azar. Al pasar el tiempo límite en la sala empezará a volar y no podrá ser golpeado al alcanzar cierta altura debido a que el jugador no puede golpear hacia arriba. Éste volará hasta la puerta de la siguiente sala donde desaparecerá y aparecerá en dicha sala situado en el suelo.
 
 - Paloma:
-Movimiento:  La paloma avanzará pasando de sala en sala cada 5-8 segundos elegidos de manera aleatoria entre ese intervalo de tiempo.
+Movimiento:  La paloma avanzará pasando de sala en sala cada 5-8 segundos elegidos de manera aleatoria entre ese intervalo de tiempo. 
 Vida: 1 golpe de escoba. 
 - Cuervo:
 Movimiento:  El cuervo avanzará pasando de sala en sala cada 7-10 segundos elegidos de manera aleatoria entre ese intervalo de tiempo.
@@ -89,7 +89,7 @@ Movimiento:  La gaviota avanzará pasando de sala en sala cada 3-5 segundos eleg
 Vida: 2 golpes de escoba.
 
 ### CONTROLES
-El jugador se controla con las teclas WASD del teclado. Se recogerán objetos (madera) con la barra espaciadora del teclado al encontrarse cerca del cofre y se usarán también con esta misma tecla al encontrarse el jugador cerca de las entradas bloqueables de enemigos, es decir la chimenea, la puerta y la ventana. Se golpeará con la escoba con el click izquierdo del ratón en la dirección en la que esté mirando el jugador en el eje x. Tecla escape para activar el menú de pausa.
+El jugador se controla con las teclas WASD del teclado. Se recogerán objetos (madera) con la tecla K al encontrarse cerca del cofre y se usarán también con esta misma tecla al encontrarse el jugador cerca de las entradas bloqueables de enemigos, es decir la chimenea, la puerta y la ventana. Se golpeará con la escoba con la tecla J en la última dirección en la que se ha movido siendo posible pegar en la dirección izquierda o derecha. Tecla P para activar el menú de pausa.
 ![Controles (2)](https://user-images.githubusercontent.com/82326243/135593458-ec29d549-2833-4cb2-8f54-0c84353848ba.png)
 
 
@@ -111,7 +111,7 @@ De cara al apartado estético y gráfico, se pretende emplear colores oscuros y 
 ### MENÚ Y MODOS DE JUEGO
 El juego se dividirá en oleadas/niveles, las cuales serán independientes las unas de las otras e irán incrementando en dificultad al hacer aparecer más cantidad de pájaros cada vez, además de distintos tipos de pájaros.
 Menú principal:
-- Jugar: Selección de nivel: El jugador podrá elegir nivel en función de los niveles (oleadas) que haya logrado superar. Al principio solo está disponible la primera oleada. 
+- Jugar: Selección de dificultad: El jugador podrá elegir la dificultad del nivel, variando tiempo de aparición de pájaros, tipo de enemigos... 
 - Menú de sonido: Permite regular el volumen de salida de audio.
 - Menú de redes sociales: Permite acceder a las redes sociales de la empresa.
 Menú de pausa:
@@ -144,9 +144,9 @@ Sprite para los objetos interactuables del juago, así como personaje y ennemigo
 Un explorador se encontraba de excursión. Al encontrarse ante una tormenta nefasta, solo le quedaba una solución, refugiarse en la primera casa que vió para poder descansar. Para el explorador solo era una casa másn y una zona de paso temporal. Al día siguiente, al despertarse, encontró una nota sujeta de la mano de un cadáver sobre unos pájaros salvajes y asesinos que se acercaban y le acechaban. Ignoró el mensaje, tratando de abandonar la casa para seguir con su excursión, pero fue brutalmente atacado por una bandada de pájaros. Volviendo exhausto a la casa, trató de esperar a que los pájaros se marcharan. Tras unos segundos de silencio, al explorador le sobresaltaron unos violentos graznidos y el crujir de la madera de la ventanas. El resto, es historia.
 
 ### NIVELES
-El juego consta de 6 oleadas.
+El juego tiene un único nivel al que se aplican 5 grados de dificultad.
 
-Como se ha mencionado anteriormente, los niveles se desarrollarán en un mismo espacio, pues el juego se desarrolla en oleadas. Cada oleada aumentará la dificultad de la partida, agregando pájaros adicionales respecto de la ronda anterior o añadiendo nuevos tipos de pájaros. La primera oleada, que sirve de introducción al juego, consta únicamente de palomas, las aves más fáciles de combatir. En las oleadas posteriores, se añadirán gradualment cuervos, y en oleadas má avanzadas, ataques con todos los tipos de ave.
+Cada nivel de dificultad aumentará la complejidad de la partida, agregando pájaros adicionales respecto de la ronda anterior o añadiendo nuevos tipos de pájaros. El primer nivel de dificultad, que sirve de introducción al juego, consta únicamente de palomas, las aves más fáciles de combatir. En los niveles posteriores, se añadirán gradualmente cuervos, y en oleadas má avanzadas, ataques con todos los tipos de ave.
 
 ### PERSONAJES
 Los sitintos personajes, ya comentados en el apartado de mecánica son:
