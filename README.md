@@ -90,7 +90,7 @@ Vida: 2 golpes de escoba.
 
 ### CONTROLES
 El jugador se controla con las teclas WASD del teclado. Se recogerán objetos (madera) con la tecla K al encontrarse cerca del cofre y se usarán también con esta misma tecla al encontrarse el jugador cerca de las entradas bloqueables de enemigos, es decir la chimenea, la puerta y la ventana. Se golpeará con la escoba con la tecla J en la última dirección en la que se ha movido siendo posible pegar en la dirección izquierda o derecha. Tecla P para activar el menú de pausa.
-![Controles (2)](https://user-images.githubusercontent.com/82326243/135593458-ec29d549-2833-4cb2-8f54-0c84353848ba.png)
+![Controles (2)](![e83b75a839c6a2e6d7d49e689f09feb0](https://user-images.githubusercontent.com/82498461/136593061-2fb864c7-c487-4bdd-8bb7-986eb26cfadc.jpg))
 
 
 ### CÁMARA
