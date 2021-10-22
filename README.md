@@ -89,7 +89,7 @@ Movimiento:  La gaviota avanzará pasando de sala en sala cada 3-5 segundos eleg
 Vida: 2 golpes de escoba.
 
 ### CONTROLES
-El jugador se controla con las teclas WASD del teclado. Se recogerán objetos (madera) con la tecla K al encontrarse cerca del cofre y se usarán también con esta misma tecla al encontrarse el jugador cerca de las entradas bloqueables de enemigos, es decir la chimenea, la puerta y la ventana. La tecla K se utilizará también para acceder al sótano al pulsarlo cerca de la trampilla presente en la sala central. Se golpeará con la escoba con la tecla J en la última dirección en la que se ha movido siendo posible pegar en la dirección izquierda o derecha. Tecla P para activar el menú de pausa.
+El jugador se controla con las teclas WASD del teclado. Se recogerán objetos (madera) con la tecla K al encontrarse cerca del cofre y se usarán también con esta misma tecla al encontrarse el jugador cerca de las entradas bloqueables de enemigos, es decir la chimenea, la puerta y la ventana. La tecla K se utilizará también para cambiar de habitación, al igual que acceder al sótano (al pulsarlo cerca de la trampilla presente en la sala central). Se le avisará al jugador visualmente de lo que podrá hacer al pulsar la letra k, cuando esté cerca de un elemento interactuable. Se golpeará con la escoba con la tecla J en la última dirección en la que se ha movido siendo posible pegar en la dirección izquierda o derecha. Tecla P para activar el menú de pausa.
 ![Controles (2)](![e83b75a839c6a2e6d7d49e689f09feb0](https://user-images.githubusercontent.com/82498461/136593061-2fb864c7-c487-4bdd-8bb7-986eb26cfadc.jpg))
 
 
