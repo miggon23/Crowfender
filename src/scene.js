@@ -24,11 +24,15 @@ export default class Level extends Phaser.Scene {
    */
   create() {
     this.maxBirds = 10;
+    this.nBirds = 0;
+    //temporizador para spawnear pájaros
+    this.timer = 0;
+    this.spawnTime = Phaser.Math.Between(2000, 5000);
+    this.newRand;
     this.bases = this.add.group();
     this.player = new Player(this, 200, 300);
     this.birds = this.add.group(); 
     this.y = 30;
-    this.spawnBird();
 
   }
 
@@ -37,9 +41,9 @@ export default class Level extends Phaser.Scene {
    * Genera un pájaro en el escenario, la coordenada x e y han sido de momento cableadas por código, lo ideal
    * sería consultar el ancho y alto del juego de una forma segura
    */
-  spawnBird() {
+  spawnBird(delayedSpawn) {
     this.y += 20;
-    this.add.text(0, this.y, 'Pájaro creado')
+    this.add.text(0, this.y, 'Pájaro creado, SpawnTime: ' + delayedSpawn)
         .setOrigin(0, 0.5)  // Colocamos el pivote en el centro de cuadro de texto 
         .setAlign('center');  // Centramos el texto dentro del cuadro de texto
     new Bird(this, Phaser.Math.Between(0, 1000), Phaser.Math.Between(0, 600), this.birds);
@@ -63,5 +67,16 @@ export default class Level extends Phaser.Scene {
       }
   }
 
+  update(t, dt){
+    this.timer += dt;
+    
+    if(this.timer > this.spawnTime && this.nBirds < this.maxBirds){
+      this.nBirds++;
+      this.spawnBird(this.spawnTime);
+      this.timer -= this.spawnTime;
+      this.spawnTime = Phaser.Math.Between(2000, 5000);
+    }
+
+  }
 
 }
