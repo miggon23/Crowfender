@@ -23,6 +23,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     // Esta label es la UI en la que pondremos la puntuación del jugador
     this.label = this.scene.add.text(10, 10, "");
     this.cursors = this.scene.input.keyboard.createCursorKeys();
+    this.w = this.scene.input.keyboard.addKey('W');
+    this.a = this.scene.input.keyboard.addKey('A');
+    this.s = this.scene.input.keyboard.addKey('S');
+    this.d = this.scene.input.keyboard.addKey('D');
     this.updateScore();
   }
 
@@ -50,19 +54,19 @@ export default class Player extends Phaser.GameObjects.Sprite {
    */
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
-    if (this.cursors.up.isDown) {
+    if (this.cursors.up.isDown || this.w.isDown) {
       this.body.setVelocityY(this.jumpSpeed);
     }
-    else if(this.cursors.down.isDown){
+    else if(this.cursors.down.isDown || this.s.isDown){
       this.body.setVelocityY(-this.jumpSpeed);
     }
     else {
       this.body.setVelocityY(0);
     }
-    if (this.cursors.right.isDown) {
+    if (this.cursors.right.isDown || this.d.isDown) {
       this.body.setVelocityX(this.speed);
     }
-    else if (this.cursors.left.isDown) {
+    else if (this.cursors.left.isDown || this.a.isDown) {
       this.body.setVelocityX(-this.speed);
     }
     else{
