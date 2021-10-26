@@ -1,4 +1,6 @@
+
 import Player from './player.js';
+import Bird from './bird.js';
 import Platform from './platform.js';
 
 /**
@@ -21,20 +23,27 @@ export default class Level extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    this.stars = 10;
+    this.maxBirds = 10;
     this.bases = this.add.group();
     this.player = new Player(this, 200, 300);
-
+    this.birds = this.add.group(); 
+    this.y = 30;
+    this.spawnBird();
 
   }
 
+
   /**
-   * Genera una estrella en una de las bases del escenario
-   * @param {Array<Base>} from Lista de bases sobre las que se puede crear una estrella
-   * Si es null, entonces se crea aleatoriamente sobre cualquiera de las bases existentes
+   * Genera un pájaro en el escenario, la coordenada x e y han sido de momento cableadas por código, lo ideal
+   * sería consultar el ancho y alto del juego de una forma segura
    */
-  spawn(from = null) {
-    Phaser.Math.RND.pick(from || this.bases.children.entries).spawn();
+  spawnBird() {
+    this.y += 20;
+    this.add.text(0, this.y, 'Pájaro creado')
+        .setOrigin(0, 0.5)  // Colocamos el pivote en el centro de cuadro de texto 
+        .setAlign('center');  // Centramos el texto dentro del cuadro de texto
+    new Bird(this, Phaser.Math.Between(0, 1000), Phaser.Math.Between(0, 600), this.birds);
+    
   }
 
   /**
@@ -53,4 +62,6 @@ export default class Level extends Phaser.Scene {
 
       }
   }
+
+
 }

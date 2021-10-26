@@ -11,14 +11,16 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    * @param {number} x Coordenada X
    * @param {number} y Coordenada Y
    */
-  constructor(scene, x, y) {
+  constructor(scene, x, y, birdsGroup) {
     super(scene, x, y, 'bird');
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
-  
+    birdsGroup.add(this);
+    this.body.setCollideWorldBounds();
   
 
   }
+
 
 
   /**
@@ -27,24 +29,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    */
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
-    if (this.cursors.up.isDown) {
-      this.body.setVelocityY(this.jumpSpeed);
-    }
-    else if(this.cursors.down.isDown){
-      this.body.setVelocityY(-this.jumpSpeed);
-    }
-    else {
-      this.body.setVelocityY(0);
-    }
-    if (this.cursors.right.isDown) {
-      this.body.setVelocityX(this.speed);
-    }
-    else if (this.cursors.left.isDown) {
-      this.body.setVelocityX(-this.speed);
-    }
-    else{
-      this.body.setVelocityX(0);
-    }
+    
   }
   
 }
