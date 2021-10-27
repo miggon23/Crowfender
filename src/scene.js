@@ -23,7 +23,8 @@ export default class Level extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    this.maxBirds = 10;
+    this.clock = new Phaser.Time.Clock(this);
+    this.maxBirds = 20;
     this.nBirds = 0;
     //temporizador para spawnear pájaros
     this.timer = 0;
@@ -34,6 +35,7 @@ export default class Level extends Phaser.Scene {
     this.birds = this.add.group(); 
     this.y = 30;
 
+
   }
 
 
@@ -43,9 +45,9 @@ export default class Level extends Phaser.Scene {
    */
   spawnBird(delayedSpawn) {
     this.y += 20;
-    this.add.text(0, this.y, 'Pájaro creado, SpawnTime: ' + delayedSpawn)
-        .setOrigin(0, 0.5)  // Colocamos el pivote en el centro de cuadro de texto 
-        .setAlign('center');  // Centramos el texto dentro del cuadro de texto
+    // this.add.text(0, this.y, 'Pájaro creado, SpawnTime: ' + delayedSpawn)
+    //     .setOrigin(0, 0)  // Colocamos el pivote en la esquina superior izquierda
+    //     .setAlign('center');  // Centramos el texto dentro del cuadro de texto
     new Bird(this, Phaser.Math.Between(0, 1000), Phaser.Math.Between(0, 600), this.birds);
     
   }
@@ -67,14 +69,29 @@ export default class Level extends Phaser.Scene {
       }
   }
 
+  /**
+   * La escena se encarga de crear los pájaros cada cierto tiempo, si ha llegado
+   * al límite de pájaros de la escena, se resetea el timer a 0 para que no spawnea
+   * inmediatamente otro pájaro nada más echar a otro.
+   * @param {*} t 
+   * @param {*} dt 
+   */
   update(t, dt){
     this.timer += dt;
     
-    if(this.timer > this.spawnTime && this.nBirds < this.maxBirds){
-      this.nBirds++;
-      this.spawnBird(this.spawnTime);
-      this.timer -= this.spawnTime;
-      this.spawnTime = Phaser.Math.Between(2000, 5000);
+    if(this.timer > this.spawnTime)
+    {
+      if(this.nBirds < this.maxBirds){
+
+        this.nBirds++;
+        this.spawnBird(this.spawnTime);
+        this.timer -= this.spawnTime;
+        this.spawnTime = Phaser.Math.Between(2000, 5000);
+      }
+      else{
+        this.timer = 0;
+      }
+      
     }
 
   }

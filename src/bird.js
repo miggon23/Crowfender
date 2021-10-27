@@ -17,19 +17,73 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this);
     birdsGroup.add(this);
     this.body.setCollideWorldBounds();
-  
+
+    //Velocidad de movimiento
+    this.sJump = 300;
+    this.delayToMove = Phaser.Math.Between(2000, 5000);
 
   }
 
-
+  create(){
+    console.log("Create de pájaro");
+      
+    // let timer = this.time.addEvent( {
+    //   delay: 2000, 
+    //   callback: moveBird,
+    //   callbackScope: this,
+    //   loop: true
+    // });
+  }
 
   /**
-   * Métodos preUpdate de Phaser. En este caso solo se encarga del pájaro.
+   * Selecciona una de las 4 direcciones posibles de movimiento (no se mueve diagonalmente) 
+   * y le añade un valor fijo de desplazamiento definido en la clase
+   */
+  moveBird(){
+    console.log("Mueve al pájaro");
+    //Hay una pequeña probabilidad de que no salte en este turno
+    let dir = Phaser.Math.Between(0, 4);
+    if (dir === 0){
+      this.body.setVelocityY(this.sJump);
+    }
+    else if (dir === 1){
+      this.body.setVelocityY(-this.sJump);
+    }
+    else if (dir === 2){
+      this.body.setVelocityX(this.sJump);
+    }
+    else if (dir === 3){
+      this.body.setVelocityX(-this.sJump);
+    }
+    //  this.time.addEvent( {
+    //    delay: 500, 
+    //    callback: cancelMovement,
+    //    callbackScope: this,
+    //    loop: false
+    //  });
+    //this.cancelMovement();
+
+  }
+
+  cancelMovement(){
+    this.body.setVelocity(0, 0);
+
+  }
+
+  /**
+   * Métodos preUpdate de Phaser. En este caso solo se encarga del movimiento del pajaro.
    * @override
    */
-  preUpdate(t,dt) {
+   preUpdate(t,dt) {
     super.preUpdate(t,dt);
-    
+    this.timer += dt;
+    this.moveBird();
+    if (this.timer > this.delayToMove)
+    {
+      this.moveBird();
+      this.timer -= this.delayToMove;
+      this.delayToMove = Phaser.Math.Between(2000, 5000);
+    }
   }
   
 }
