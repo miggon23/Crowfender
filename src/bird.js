@@ -21,18 +21,10 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     //Velocidad de movimiento
     this.sJump = 300;
     this.delayToMove = Phaser.Math.Between(2000, 5000);
+    this.timer = 0;
+    this.stopMovementTimer = 0;
+    this.delayToStopMovement = 500;
 
-  }
-
-  create(){
-    console.log("Create de pájaro");
-      
-    // let timer = this.time.addEvent( {
-    //   delay: 2000, 
-    //   callback: moveBird,
-    //   callbackScope: this,
-    //   loop: true
-    // });
   }
 
   /**
@@ -61,13 +53,12 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     //    callbackScope: this,
     //    loop: false
     //  });
-    //this.cancelMovement();
+    
 
   }
 
   cancelMovement(){
     this.body.setVelocity(0, 0);
-
   }
 
   /**
@@ -77,13 +68,19 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    preUpdate(t,dt) {
     super.preUpdate(t,dt);
     this.timer += dt;
-    this.moveBird();
-    if (this.timer > this.delayToMove)
+    this.stopMovementTimer += dt;
+    if (this.timer >= this.delayToMove)
     {
       this.moveBird();
       this.timer -= this.delayToMove;
-      this.delayToMove = Phaser.Math.Between(2000, 5000);
+      this.stopMovementTimer = Phaser.Math.Between(2000, 5000);
+      this.stopMovementTimer = 0;
     }
+    else if (this.stopMovementTimer >= this.delayToStopMovement){
+      this.cancelMovement();
+      this.stopMovementTimer = 0;
+    }
+    
   }
   
 }

@@ -24,7 +24,7 @@ export default class Level extends Phaser.Scene {
    */
   create() {
     this.clock = new Phaser.Time.Clock(this);
-    this.maxBirds = 20;
+    this.maxBirds = 10;
     this.nBirds = 0;
     //temporizador para spawnear pájaros
     this.timer = 0;
