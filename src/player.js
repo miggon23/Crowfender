@@ -18,8 +18,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this);
     // Queremos que el jugador no se salga de los límites del mundo
     this.body.setCollideWorldBounds();
-    this.horizontalSpeed = 300;
-    this.verticalSpeed = 300;
+    this.speed = 300;
+    this.jumpSpeed = -300;
     // Esta label es la UI en la que pondremos la puntuación del jugador
     this.label = this.scene.add.text(10, 10, "");
     this.cursors = this.scene.input.keyboard.createCursorKeys();
@@ -28,8 +28,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.s = this.scene.input.keyboard.addKey('S');
     this.d = this.scene.input.keyboard.addKey('D');
     this.updateScore();
-    //Valor para normalizar el vector velocidad calculado a mano dependiendo de verticalSpeed y horizontalSpeed
-    this.velocidad2 = 212.13203435596425732025330863145;
   }
 
   /**
@@ -57,37 +55,22 @@ export default class Player extends Phaser.GameObjects.Sprite {
   preUpdate(t,dt) {
     super.preUpdate(t,dt);
     if (this.cursors.up.isDown || this.w.isDown) {
-      this.body.setVelocityY(-this.verticalSpeed);
+      this.body.setVelocityY(this.jumpSpeed);
     }
     else if(this.cursors.down.isDown || this.s.isDown){
-      this.body.setVelocityY(this.verticalSpeed);
+      this.body.setVelocityY(-this.jumpSpeed);
     }
     else {
       this.body.setVelocityY(0);
     }
     if (this.cursors.right.isDown || this.d.isDown) {
-      this.body.setVelocityX(this.horizontalSpeed);
+      this.body.setVelocityX(this.speed);
     }
     else if (this.cursors.left.isDown || this.a.isDown) {
-      this.body.setVelocityX(-this.horizontalSpeed);
+      this.body.setVelocityX(-this.speed);
     }
     else{
       this.body.setVelocityX(0);
-    }
-    
-    if(this.body.velocity.x != 0 && this.body.velocity.y != 0){
-      if(this.body.velocity.x < 0){
-        this.body.setVelocityX(-this.velocidad2);
-      }
-      else{
-        this.body.setVelocityX(this.velocidad2);
-      }
-      if(this.body.velocity.y < 0){
-        this.body.setVelocityY(-this.velocidad2);
-      }
-      else{
-        this.body.setVelocityY(this.velocidad2);
-      }     
     }
   }
   
