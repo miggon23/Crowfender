@@ -16,7 +16,7 @@ export default class End extends Phaser.Scene {
    * @override
    */
   create() {
-    this.add.text(500, 250, 'Se acabó!\nPulsa cualquier tecla para volver a jugar')
+    this.add.text(500, 250, '¡Se acabó, demasiados pájaros invadieron la escena!\nPulsa cualquier tecla para volver a jugar')
         .setOrigin(0.5, 0.5)  // Colocamos el pivote en el centro de cuadro de texto 
         .setAlign('center');  // Centramos el texto dentro del cuadro de texto
 

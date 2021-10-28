@@ -1,5 +1,8 @@
+
 import Player from './player.js';
+import Bird from './bird.js';
 import Platform from './platform.js';
+import Broom from './broom.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -21,25 +24,44 @@ export default class Level extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    this.stars = 10;
+    this.clock = new Phaser.Time.Clock(this);
+    this.maxBirds = 15;
+    this.nBirds = 0;
+    //temporizador para spawnear pájaros
+    this.timer = 0;
+    this.spawnTime = Phaser.Math.Between(2000, 5000);
+    this.newRand;
     this.bases = this.add.group();
+    this.birds = this.add.group(); 
+    this.y = 30;
     this.player = new Player(this, 200, 300);
+    let broom = new Broom(this);
+    this.player.add(broom);
 
-    new Platform(this, this.player, this.bases, 150, 350);
-    new Platform(this, this.player, this.bases, 850, 350);
-    new Platform(this, this.player, this.bases, 500, 200);
-    new Platform(this, this.player, this.bases, 150, 100);
-    new Platform(this, this.player, this.bases, 850, 100);
-    this.spawn();
+    //Colision de la escoba con los pájaros
+    this.physics.add.overlap(broom, this.birds, (o1, o2) => {
+      //Cambiar este método para espantar al pájaro en vez de matarlo (gestionado por el pájaro)
+      o2.destroy();
+      //restamos el número de pájaros para que se puedan generar más
+      this.nBirds--;
+      this.player.point();
+
+    });
   }
 
+
+
   /**
-   * Genera una estrella en una de las bases del escenario
-   * @param {Array<Base>} from Lista de bases sobre las que se puede crear una estrella
-   * Si es null, entonces se crea aleatoriamente sobre cualquiera de las bases existentes
+   * Genera un pájaro en el escenario, la coordenada x e y han sido de momento cableadas por código, lo ideal
+   * sería consultar el ancho y alto del juego de una forma segura
    */
-  spawn(from = null) {
-    Phaser.Math.RND.pick(from || this.bases.children.entries).spawn();
+  spawnBird(delayedSpawn) {
+    this.y += 20;
+    // this.add.text(0, this.y, 'Pájaro creado, SpawnTime: ' + delayedSpawn)
+    //     .setOrigin(0, 0)  // Colocamos el pivote en la esquina superior izquierda
+    //     .setAlign('center');  // Centramos el texto dentro del cuadro de texto
+    new Bird(this, Phaser.Math.Between(0, 1000), Phaser.Math.Between(0, 600), this.birds);
+    
   }
 
   /**
@@ -58,4 +80,36 @@ export default class Level extends Phaser.Scene {
 
       }
   }
+
+  /**
+   * La escena se encarga de crear los pájaros cada cierto tiempo, si ha llegado
+   * al límite de pájaros de la escena, se resetea el timer a 0 para que no spawnea
+   * inmediatamente otro pájaro nada más echar a otro.
+   * @param {*} t 
+   * @param {*} dt 
+   */
+  update(t, dt){
+    this.timer += dt;
+    
+    if(this.timer > this.spawnTime)
+    {
+      if(this.nBirds < this.maxBirds){
+
+        this.nBirds++;
+        this.spawnBird(this.spawnTime);
+        this.timer -= this.spawnTime;
+        this.spawnTime = Phaser.Math.Between(2000, 5000);
+      }
+      else{
+        this.timer = 0;
+      }
+      
+    }
+    //Si el número de pájaros alcanza el máximo, pierdes y se muestra tu puntuación
+    if (this.nBirds === this.maxBirds){
+      this.scene.start('end');
+    }
+
+  }
+
 }
