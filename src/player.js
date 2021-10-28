@@ -36,7 +36,7 @@ export default class Player extends Phaser.GameObjects.Container {
   }
 
   /**
-   * El jugador ha recogido una estrella por lo que este método añade un punto y
+   * El jugador ha acabado con un pájaro por lo que este método añade un punto y
    * actualiza la UI con la puntuación actual.
    */
   point() {

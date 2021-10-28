@@ -25,7 +25,7 @@ export default class Level extends Phaser.Scene {
    */
   create() {
     this.clock = new Phaser.Time.Clock(this);
-    this.maxBirds = 10;
+    this.maxBirds = 15;
     this.nBirds = 0;
     //temporizador para spawnear pájaros
     this.timer = 0;
@@ -42,6 +42,10 @@ export default class Level extends Phaser.Scene {
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
       //Cambiar este método para espantar al pájaro en vez de matarlo (gestionado por el pájaro)
       o2.destroy();
+      //restamos el número de pájaros para que se puedan generar más
+      this.nBirds--;
+      this.player.point();
+
     });
   }
 
@@ -101,7 +105,10 @@ export default class Level extends Phaser.Scene {
       }
       
     }
-
+    //Si el número de pájaros alcanza el máximo, pierdes y se muestra tu puntuación
+    if (this.nBirds === this.maxBirds){
+      this.scene.start('end');
+    }
 
   }
 
