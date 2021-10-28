@@ -1,3 +1,4 @@
+import Broom from './broom.js';
 import Star from './star.js';
 /**
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
@@ -10,6 +11,7 @@ export default class Player extends Phaser.GameObjects.Container {
    * @param {Phaser.Scene} scene Escena a la que pertenece el jugador
    * @param {number} x Coordenada X
    * @param {number} y Coordenada Y
+   * @param {bool} sentido false = izquierda, true = derecha
    */
   constructor(scene, x, y) {
     let aspecto = scene.add.sprite(30, 32, 'player');
@@ -29,6 +31,7 @@ export default class Player extends Phaser.GameObjects.Container {
     this.s = this.scene.input.keyboard.addKey('S');
     this.d = this.scene.input.keyboard.addKey('D');
     this.updateScore();
+
   }
 
   /**
@@ -49,8 +52,6 @@ export default class Player extends Phaser.GameObjects.Container {
 
   /**
    * Métodos preUpdate de Phaser. En este caso solo se encarga del movimiento del jugador.
-   * Como se puede ver, no se tratan las colisiones con las estrellas, ya que estas colisiones 
-   * ya son gestionadas por la estrella (no gestionar las colisiones dos veces)
    * @override
    */
   preUpdate(t,dt) {
@@ -65,13 +66,16 @@ export default class Player extends Phaser.GameObjects.Container {
     }
     if (this.cursors.right.isDown || this.d.isDown) {
       this.body.setVelocityX(this.speed);
+      this.sentido = true;
     }
     else if (this.cursors.left.isDown || this.a.isDown) {
       this.body.setVelocityX(-this.speed);
+      this.sentido = false;
     }
     else{
       this.body.setVelocityX(0);
     }
+
+    this.iterate( (child) => child.preUpdate(t,dt) );
   }
-  
 }

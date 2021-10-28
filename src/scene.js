@@ -35,10 +35,14 @@ export default class Level extends Phaser.Scene {
     this.birds = this.add.group(); 
     this.y = 30;
     this.player = new Player(this, 200, 300);
-    let broom = new Broom(this, 0, 0);
+    let broom = new Broom(this);
     this.player.add(broom);
-    //this.physics.add.collider(broom, this.birds, onCollision);
 
+    //Colision de la escoba con los pájaros
+    this.physics.add.overlap(broom, this.birds, (o1, o2) => {
+      //Cambiar este método para espantar al pájaro en vez de matarlo (gestionado por el pájaro)
+      o2.destroy();
+    });
   }
 
 
@@ -97,6 +101,7 @@ export default class Level extends Phaser.Scene {
       }
       
     }
+
 
   }
 
