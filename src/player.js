@@ -21,8 +21,9 @@ export default class Player extends Phaser.GameObjects.Container {
     this.scene.physics.add.existing(this);
     // Queremos que el jugador no se salga de los límites del mundo
     this.body.setCollideWorldBounds();
-    this.speed = 300;
-    this.jumpSpeed = -300;
+    this.horizontalSpeed = 300;
+    this.verticalSpeed = 300;
+    this.velocidad2 = 212.13203435596425732025330863145;
     // Esta label es la UI en la que pondremos la puntuación del jugador
     this.label = this.scene.add.text(10, 10, "");
     this.cursors = this.scene.input.keyboard.createCursorKeys();
@@ -56,25 +57,41 @@ export default class Player extends Phaser.GameObjects.Container {
    */
   preUpdate(t,dt) {
     if (this.cursors.up.isDown || this.w.isDown) {
-      this.body.setVelocityY(this.jumpSpeed);
+      this.body.setVelocityY(-this.verticalSpeed);
     }
     else if(this.cursors.down.isDown || this.s.isDown){
-      this.body.setVelocityY(-this.jumpSpeed);
+      this.body.setVelocityY(this.verticalSpeed);
     }
     else {
       this.body.setVelocityY(0);
     }
     if (this.cursors.right.isDown || this.d.isDown) {
-      this.body.setVelocityX(this.speed);
+      this.body.setVelocityX(this.horizontalSpeed);
       this.sentido = true;
     }
     else if (this.cursors.left.isDown || this.a.isDown) {
-      this.body.setVelocityX(-this.speed);
+      this.body.setVelocityX(-this.horizontalSpeed);
       this.sentido = false;
     }
     else{
       this.body.setVelocityX(0);
     }
+
+    if(this.body.velocity.x != 0 && this.body.velocity.y != 0){
+      if(this.body.velocity.x < 0){
+        this.body.setVelocityX(-this.velocidad2);
+      }
+      else{
+        this.body.setVelocityX(this.velocidad2);
+      }
+      if(this.body.velocity.y < 0){
+        this.body.setVelocityY(-this.velocidad2);
+      }
+      else{
+        this.body.setVelocityY(this.velocidad2);
+      }     
+    }
+
 
     this.iterate( (child) => child.preUpdate(t,dt) );
   }
