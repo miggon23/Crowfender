@@ -3,7 +3,7 @@ import Star from './star.js';
  * Clase que representa el jugador del juego. El jugador se mueve por el mundo usando los cursores.
  * También almacena la puntuación o número de estrellas que ha recogido hasta el momento.
  */
-export default class Player extends Phaser.GameObjects.Sprite {
+export default class Player extends Phaser.GameObjects.Container {
   
   /**
    * Constructor del jugador
@@ -12,7 +12,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
    * @param {number} y Coordenada Y
    */
   constructor(scene, x, y) {
-    super(scene, x, y, 'player');
+    let aspecto = scene.add.sprite(30, 32, 'player');
+    super(scene, x, y, aspecto);
     this.score = 0;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
@@ -53,7 +54,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
    * @override
    */
   preUpdate(t,dt) {
-    super.preUpdate(t,dt);
     if (this.cursors.up.isDown || this.w.isDown) {
       this.body.setVelocityY(this.jumpSpeed);
     }

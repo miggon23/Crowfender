@@ -2,6 +2,7 @@
 import Player from './player.js';
 import Bird from './bird.js';
 import Platform from './platform.js';
+import Broom from './broom.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -31,12 +32,15 @@ export default class Level extends Phaser.Scene {
     this.spawnTime = Phaser.Math.Between(2000, 5000);
     this.newRand;
     this.bases = this.add.group();
-    this.player = new Player(this, 200, 300);
     this.birds = this.add.group(); 
     this.y = 30;
-
+    this.player = new Player(this, 200, 300);
+    let broom = new Broom(this, 0, 0);
+    this.player.add(broom);
+    //this.physics.add.collider(broom, this.birds, onCollision);
 
   }
+
 
 
   /**
