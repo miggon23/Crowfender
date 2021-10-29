@@ -29,22 +29,21 @@ export default class Level extends Phaser.Scene {
     this.nBirds = 0;
     //temporizador para spawnear pájaros
     this.timer = 0;
-    this.spawnTime = Phaser.Math.Between(2000, 5000);
+    this.spawnTime = Phaser.Math.Between(2000, 4000);
     this.newRand;
     this.bases = this.add.group();
     this.birds = this.add.group(); 
     this.y = 30;
-    //Jugador y escoba
+    this.add.text(400, 10, 'Pulsa J para atacar');
     this.player = new Player(this, 200, 300);
     let broom = new Broom(this);
     this.player.add(broom);
-    //xD
-    this.add.text(400, 10, 'Pulsa J para golpear');
 
     //Colision de la escoba con los pájaros
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
       //Cambiar este método para espantar al pájaro en vez de matarlo (gestionado por el pájaro)
       o2.destroy();
+  
       //restamos el número de pájaros para que se puedan generar más
       this.nBirds--;
       this.player.point();
@@ -101,7 +100,7 @@ export default class Level extends Phaser.Scene {
         this.nBirds++;
         this.spawnBird(this.spawnTime);
         this.timer -= this.spawnTime;
-        this.spawnTime = Phaser.Math.Between(2000, 5000);
+        this.spawnTime = Phaser.Math.Between(1400, 4000);
       }
       else{
         this.timer = 0;
