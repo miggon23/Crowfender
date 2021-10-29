@@ -34,9 +34,12 @@ export default class Level extends Phaser.Scene {
     this.bases = this.add.group();
     this.birds = this.add.group(); 
     this.y = 30;
+    //Jugador y escoba
     this.player = new Player(this, 200, 300);
     let broom = new Broom(this);
     this.player.add(broom);
+    //xD
+    this.add.text(400, 10, 'Pulsa J para golpear');
 
     //Colision de la escoba con los pájaros
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
