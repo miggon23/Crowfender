@@ -23,7 +23,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.delayToMove = Phaser.Math.Between(2000, 5000);
     this.timer = 0;
     this.stopMovementTimer = 0;
-    this.delayToStopMovement = 500;
+   
 
   }
 
@@ -47,12 +47,12 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     else if (dir === 3){
       this.body.setVelocityX(-this.sJump);
     }
-    //  this.time.addEvent( {
-    //    delay: 500, 
-    //    callback: cancelMovement,
-    //    callbackScope: this,
-    //    loop: false
-    //  });
+      this.scene.time.addEvent( {
+        delay: 500, 
+        callback: this.cancelMovement,
+        callbackScope: this,
+        loop: false
+      });
     
 
   }
@@ -68,7 +68,6 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    preUpdate(t,dt) {
     super.preUpdate(t,dt);
     this.timer += dt;
-    this.stopMovementTimer += dt;
     if (this.timer >= this.delayToMove)
     {
       this.moveBird();
@@ -76,11 +75,8 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       this.stopMovementTimer = Phaser.Math.Between(2000, 5000);
       this.stopMovementTimer = 0;
     }
-    else if (this.stopMovementTimer >= this.delayToStopMovement){
-      this.cancelMovement();
-      this.stopMovementTimer = 0;
-    }
+    
     
   }
-  
+   
 }

@@ -17,9 +17,12 @@
       this.visible= false; 
       this.body.enable = false;
       this.j = this.scene.input.keyboard.addKey('J');
+      this.timer = 0;
+      this.cooldown = 1500;
     }
 
     //El jugador se movió a la izquierda, por lo tanto la escoba está a su izquierda
+    //Es aconsejable cambiar la escala del player para que cambie la escoba
     facingLeft(){
         this.x=-30;      
         this.setFlip(false, false);
@@ -32,11 +35,17 @@
     }
 
     golpear(){
-        this.visible= !this.visible;
-        this.body.enable= !this.body.enable;
+        this.visible= true;
+        this.body.enable= true;
+        this.scene.time.addEvent( {
+            delay: 300, 
+            callback: this.hideBroom,
+            callbackScope: this,
+            loop: false
+          });
     }
 
-    esconderEscoba(){
+    hideBroom(){
         this.visible= false;
         this.body.enable= false;
     }
@@ -55,8 +64,11 @@
           this.facingLeft();
       }
 
-      if (Phaser.Input.Keyboard.JustDown(this.j)){
+      //Vammos acumualndo en timer el tiempo en cada frame
+      this.timer += dt;
+      if (this.timer >= this.cooldown && Phaser.Input.Keyboard.JustDown(this.j)){
           this.golpear();
+          this.timer = 0;
       }
     }
   }
