@@ -31,8 +31,8 @@ export default class Player extends Phaser.GameObjects.Container {
     this.a = this.scene.input.keyboard.addKey('A');
     this.s = this.scene.input.keyboard.addKey('S');
     this.d = this.scene.input.keyboard.addKey('D');
+    this.madera = false;
     this.updateScore();
-
   }
 
   /**
@@ -45,10 +45,20 @@ export default class Player extends Phaser.GameObjects.Container {
   }
   
   /**
-   * Actualiza la UI con la puntuación actual
+   * Al interactuar con el cofre, el jugador recoge madera, mientras que al interactuar
+   * con la chimenea, la ventana o la puerta, el jugador gasta la madera. En ambos casos
+   * se actualiza en pantalla si lleva madera encima o no
+   */
+  maderaEnMano(tieneMadera){
+    this.madera = tieneMadera;
+    this.updateScore();
+  }
+
+  /**
+   * Actualiza la UI con la puntuación actual y la madera
    */
   updateScore() {
-    this.label.text = 'Puntuación: ' + this.score;
+    this.label.text = 'Puntuación: ' + this.score + '\nMadera: ' + this.madera;
   }
 
   /**

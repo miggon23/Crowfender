@@ -23,6 +23,7 @@
 
     //El jugador se movió a la izquierda, por lo tanto la escoba está a su izquierda
     //Es aconsejable cambiar la escala del player para que cambie la escoba
+    //Cuando haya animaciones se gestionará dentro del propio player con un collider extra para la escoba
     facingLeft(){
         this.x=-30;      
         this.setFlip(false, false);
