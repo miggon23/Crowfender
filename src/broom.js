@@ -49,6 +49,7 @@
     hideBroom(){
         this.visible= false;
         this.body.enable= false;
+        this.parentContainer.cambiarHaPegado();
     }
 
 
@@ -69,6 +70,7 @@
       this.timer += dt;
       if (this.timer >= this.cooldown && Phaser.Input.Keyboard.JustDown(this.j)){
           this.golpear();
+          this.parentContainer.cambiarHaPegado();
           this.timer = 0;
       }
     }

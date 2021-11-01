@@ -32,6 +32,7 @@ export default class Player extends Phaser.GameObjects.Container {
     this.s = this.scene.input.keyboard.addKey('S');
     this.d = this.scene.input.keyboard.addKey('D');
     this.madera = false;
+    this.haPegado = false;
     this.updateScore();
   }
 
@@ -59,6 +60,10 @@ export default class Player extends Phaser.GameObjects.Container {
    */
   updateScore() {
     this.label.text = 'Puntuación: ' + this.score + '\nMadera: ' + this.madera;
+  }
+
+  cambiarHaPegado(){
+    this.haPegado = !this.haPegado;
   }
 
   /**
@@ -100,8 +105,12 @@ export default class Player extends Phaser.GameObjects.Container {
       else{
         this.body.setVelocityY(this.velocidad2);
       }     
-    }
+    }   
 
+    if(this.haPegado){
+      this.body.setVelocityY(0);
+      this.body.setVelocityX(0);
+    }
 
     this.iterate( (child) => child.preUpdate(t,dt) );
   }
