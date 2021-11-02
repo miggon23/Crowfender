@@ -25,6 +25,7 @@ export default class Level extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
+    this.add.tileSprite(0, 0, 3000, 2000, 'fondo');  
     this.clock = new Phaser.Time.Clock(this);
     this.maxBirds = 15;
     this.nBirds = 0;
@@ -39,6 +40,9 @@ export default class Level extends Phaser.Scene {
     this.player.add(broom);
     this.chest = new Chest(this, this.player, 300, 64);
     this.window = new Blockable(this, this.player, 935, 300, 'window');
+    
+    var camera = this.cameras.main;
+    camera.startFollow(this.player);
 
     //Colision de la escoba con los pájaros
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
