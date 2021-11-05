@@ -4,6 +4,8 @@ import Bird from './bird.js';
 import Chest from './chest.js';
 import Broom from './broom.js';
 import Blockable from './blockable.js';
+import Sala from './sala.js';
+import SalaCentral from './salacentral.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
