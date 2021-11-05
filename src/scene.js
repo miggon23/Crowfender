@@ -74,23 +74,6 @@ export default class Level extends Phaser.Scene {
   }
 
   /**
-   * Método que se ejecuta al coger una estrella. Se pasa la base
-   * sobre la que estaba la estrella cogida para evitar repeticiones
-   * @param {Base} base La base sobre la que estaba la estrella que se ha cogido
-   */
-  starPickt (base) {
-    this.player.point();
-      if (this.player.score == this.stars) {
-        this.scene.start('end');
-      }
-      else {
-        let s = this.bases.children.entries;
-        this.spawn(s.filter(o => o !== base));
-
-      }
-  }
-
-  /**
    * La escena se encarga de crear los pájaros cada cierto tiempo, si ha llegado
    * al límite de pájaros de la escena, se resetea el timer a 0 para que no spawnea
    * inmediatamente otro pájaro nada más echar a otro.

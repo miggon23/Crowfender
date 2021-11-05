@@ -75,7 +75,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     {
       this.moveBird();
       this.timer -= this.delayToMove;
-      this.stopMovementTimer = Phaser.Math.Between(2000, 5000);
+      this.delayToStopMovement = Phaser.Math.Between(2000, 5000);
       this.stopMovementTimer = 0;
     }
     else if (this.stopMovementTimer >= this.delayToStopMovement){
