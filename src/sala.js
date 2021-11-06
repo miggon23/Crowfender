@@ -16,7 +16,7 @@ export default class Sala extends Phaser.GameObjects.Sprite {
    * @param {number} orientation Identifica cual de las salas es, 1, para Oeste, 2 para Norte y 3 para este, la sala 0 sería la sala
    */
   constructor(scene, player, baseGroup, x, y, w, h, orientation) {
-    super(scene, x, y, 'platform');
+
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this, true);
     

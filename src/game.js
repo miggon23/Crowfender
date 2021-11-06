@@ -1,6 +1,5 @@
 import Boot from './boot.js';
 import End from './end.js';
-import Platform from './platform.js';
 import Level from './scene.js';
 
 /**

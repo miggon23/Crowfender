@@ -15,7 +15,7 @@ export default class SalaCentral extends Phaser.GameObjects.Sprite {
    * @param {number} y Coordenada y
    */
   constructor(scene, player, baseGroup, x, y, w, h) {
-    super(scene, x, y, 'platform');
+   
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this, true);
 
