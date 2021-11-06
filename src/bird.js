@@ -19,7 +19,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.body.setCollideWorldBounds();
 
     //Velocidad de movimiento
-    this.sJump = 300;
+    this.speed = 300;
     this.delayToMove = Phaser.Math.Between(2000, 5000);
     this.timer = 0;
     this.stopMovementTimer = 0;
@@ -36,16 +36,16 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     //Hay una pequeña probabilidad de que no salte en este turno
     let dir = Phaser.Math.Between(0, 4);
     if (dir === 0){
-      this.body.setVelocityY(this.sJump);
+      this.body.setVelocityY(this.speed);
     }
     else if (dir === 1){
-      this.body.setVelocityY(-this.sJump);
+      this.body.setVelocityY(-this.speed);
     }
     else if (dir === 2){
-      this.body.setVelocityX(this.sJump);
+      this.body.setVelocityX(this.speed);
     }
     else if (dir === 3){
-      this.body.setVelocityX(-this.sJump);
+      this.body.setVelocityX(-this.speed);
     }
 
     // this.scene.time.addEvent( {

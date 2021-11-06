@@ -18,9 +18,11 @@
       this.blocked = false;
       this.k = this.scene.input.keyboard.addKey('K');
       this.scene.physics.add.overlap(this, player, (o1, o2) => {
-          if(Phaser.Input.Keyboard.JustDown(this.k) && player.madera && !this.blocked){
-              player.pickWood(false);
-              this.block();
+          if(Phaser.Input.Keyboard.JustDown(this.k) && !this.blocked){
+              if(player.getWood()){
+                this.block();
+              }
+              
           }
       });
     }

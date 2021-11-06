@@ -18,7 +18,7 @@ export default class Chest extends Phaser.GameObjects.Sprite {
     this.k = this.scene.input.keyboard.addKey('K');
     this.scene.physics.add.overlap(this, player, (o1, o2) => {
         if(Phaser.Input.Keyboard.JustDown(this.k)){
-            player.pickWood(true);
+            player.pickWood();
         }
     });
   }

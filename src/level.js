@@ -4,6 +4,7 @@ import Bird from './bird.js';
 import Chest from './chest.js';
 import Broom from './broom.js';
 import Blockable from './blockable.js';
+import Wall from './wall.js';
 import Sala from './sala.js';
 import SalaCentral from './salacentral.js';
 
@@ -27,7 +28,14 @@ export default class Level extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    this.add.tileSprite(0, 0, 3000, 2000, 'fondo');  
+    this.add.tileSprite(500, 300, 1000, 600, 'fondo');  
+    this.add.tileSprite(1500, 300, 1000, 600, 'fondo');  
+    this.add.tileSprite(-500, 300, 1000, 600, 'fondo');  
+    this.add.tileSprite(500, 900, 1000, 600, 'fondo');  
+    this.add.tileSprite(500, -300, 1000, 600, 'fondo');  
+
+    
+
     this.clock = new Phaser.Time.Clock(this);
     this.maxBirds = 15;
     this.nBirds = 0;
@@ -37,13 +45,20 @@ export default class Level extends Phaser.Scene {
     this.newRand;
     this.birds = this.add.group(); 
     this.y = 30;
-    this.player = new Player(this, 200, 300);
+    this.player = new Player(this, 200, 500);
     let broom = new Broom(this);
     this.player.add(broom);
-    this.chest = new Chest(this, this.player, 300, 64);
+    this.chest = new Chest(this, this.player, 250, 1032);
     this.window = new Blockable(this, this.player, 935, 300, 'window');
-    
+    this.spawnWalls();
+
     var camera = this.cameras.main;
+    
+    camera.x = 0;
+    camera.y = 0;
+
+    //camera.setZoom(0.2);
+
     camera.startFollow(this.player);
 
     //Colision de la escoba con los pájaros
@@ -56,8 +71,35 @@ export default class Level extends Phaser.Scene {
       this.player.point();
 
     });
+
+    
+
+    this.physics.add.collider(this.player, this.walls)
+    this.physics.add.collider(this.birds, this.walls)
+    
   }
 
+
+  spawnWalls(){
+    this.walls = this.add.group();
+    // Paredes fondo
+    new Wall(this, 500, 170, 3000, 340, this.walls);
+    new Wall(this, 500, 770, 3000, 340, this.walls);
+    new Wall(this, 500, 1370, 1000, 340, this.walls);
+    new Wall(this, 500, -430, 1000, 340, this.walls);
+    // // Paredes laterales
+    new Wall(this, -1000, 450, 120, 1200, this.walls);
+    new Wall(this, 0, 1200, 120, 1000, this.walls);
+    new Wall(this, 0, 10, 120, 1000, this.walls);
+    new Wall(this, 1000, 1200, 120, 1000, this.walls);
+    new Wall(this, 1000, 10, 120, 1000, this.walls);
+    new Wall(this, 2000, 450, 120, 1200, this.walls);
+    // Cofres 
+    new Wall(this, 250, 1000, 64, 64, this.walls);
+    // Chimenea 
+    new Wall(this, -650, 350, 128, 128, this.walls);
+    
+  }
 
 
   /**
