@@ -15,11 +15,10 @@
       super(scene, x, y, sprite);
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this, true);
-      this.blocked = false;
+      this.bloqued = false;
       this.k = this.scene.input.keyboard.addKey('K');
       this.scene.physics.add.overlap(this, player, (o1, o2) => {
-          if(Phaser.Input.Keyboard.JustDown(this.k) && player.madera && !this.blocked){
-            //Delegar en player la accion de comprobar madera
+          if(Phaser.Input.Keyboard.JustDown(this.k) && player.madera && !this.bloqued){
               player.maderaEnMano(false);
               this.Bloquear();
           }
@@ -30,7 +29,7 @@
     *Bloquea la entrada a los pájaros por un tiempo, en este caso 10 segundos
     */
     Bloquear(){
-      this.blocked = true;
+      this.bloqued = true;
       this.setTexture('window_bloq');
       this.scene.time.addEvent( {
         delay: 10000, 
@@ -43,7 +42,7 @@
     *Desbloquea la entrada
     */
     Desbloquear(){
-      this.blocked = false;
+      this.bloqued = false;
       this.setTexture('window');
     }
   }
