@@ -31,7 +31,7 @@ export default class Player extends Phaser.GameObjects.Container {
     this.s = this.scene.input.keyboard.addKey('S');
     this.d = this.scene.input.keyboard.addKey('D');
     this.madera = false;
-    this.haPegado = false;
+    this.hittingState = false;
     this.updateScore();
   }
 
@@ -49,8 +49,8 @@ export default class Player extends Phaser.GameObjects.Container {
    * con la chimenea, la ventana o la puerta, el jugador gasta la madera. En ambos casos
    * se actualiza en pantalla si lleva madera encima o no
    */
-  maderaEnMano(tieneMadera){
-    this.madera = tieneMadera;
+  pickWood(hasWood){
+    this.madera = hasWood;
     this.updateScore();
   }
 
@@ -61,8 +61,8 @@ export default class Player extends Phaser.GameObjects.Container {
     this.label.text = 'Puntuación: ' + this.score + '\nMadera: ' + this.madera;
   }
 
-  cambiarHaPegado(){
-    this.haPegado = !this.haPegado;
+  switchPlayerHit(){
+    this.hittingState = !this.hittingState;
   }
 
   /**
@@ -106,7 +106,7 @@ export default class Player extends Phaser.GameObjects.Container {
       }     
     }   
 
-    if(this.haPegado){
+    if(this.hittingState){
       this.body.setVelocityY(0);
       this.body.setVelocityX(0);
     }

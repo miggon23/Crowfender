@@ -35,7 +35,7 @@
         this.setFlip(true, false);
     }
 
-    golpear(){
+    hit(){
         this.visible= true;
         this.body.enable= true;
         this.scene.time.addEvent( {
@@ -49,7 +49,7 @@
     hideBroom(){
         this.visible= false;
         this.body.enable= false;
-        this.parentContainer.cambiarHaPegado();
+        this.parentContainer.switchPlayerHit();
     }
 
 
@@ -69,8 +69,8 @@
       //Vammos acumualndo en timer el tiempo en cada frame
       this.timer += dt;
       if (this.timer >= this.cooldown && Phaser.Input.Keyboard.JustDown(this.j)){
-          this.golpear();
-          this.parentContainer.cambiarHaPegado();
+          this.hit();
+          this.parentContainer.switchPlayerHit();
           this.timer = 0;
       }
     }
