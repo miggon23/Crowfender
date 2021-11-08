@@ -49,7 +49,7 @@ export default class Level extends Phaser.Scene {
     let broom = new Broom(this);
     this.player.add(broom);
     this.chest = new Chest(this, this.player, 250, 1032);
-    this.window = new Blockable(this, this.player, 935, 300, 'window');
+    this.window = new Blockable(this, this.player, 1935, 400, 'window');
     this.spawnWalls();
 
     var camera = this.cameras.main;
