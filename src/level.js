@@ -2,6 +2,7 @@
 import Player from './player.js';
 import Bird from './bird.js';
 import Chest from './chest.js';
+import Electricity from './electricity.js';
 import Broom from './broom.js';
 import Blockable from './blockable.js';
 import Wall from './wall.js';
@@ -49,6 +50,7 @@ export default class Level extends Phaser.Scene {
     let broom = new Broom(this);
     this.player.add(broom);
     this.chest = new Chest(this, this.player, 250, 1032);
+    this.Electricity = new Electricity(this, this.player, -200, 400);
     this.window = new Blockable(this, this.player, 1935, 400, 'window');
     this.spawnWalls();
 

@@ -23,6 +23,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('bird', 'bird.png');
     this.load.image('player', 'player.png');
     this.load.image('broom', 'escoba.png');
+    this.load.image('electricity', 'electricity.png');
     this.load.image('chest', 'cofre.png');
     this.load.image('window', 'ventana.png');
     this.load.image('window_bloq', 'ventana_bloq.png');
