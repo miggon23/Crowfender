@@ -1,3 +1,4 @@
+import Bird from './bird.js';
 
 /**
  * Clase para la electricidad para espantar a los pájaros de los spawns
@@ -34,7 +35,7 @@
    
     static activateElectricity(){
         if(this.timer > this.cooldown){
-            console.log("Funciona");
+            Bird.changeStateElectricity();
             this.timer = 0;
         }
     }

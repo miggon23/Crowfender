@@ -67,7 +67,6 @@ export default class Level extends Phaser.Scene {
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
       //Cambiar este método para espantar al pájaro en vez de matarlo (gestionado por el pájaro)
       o2.destroy();
-  
       //restamos el número de pájaros para que se puedan generar más
       this.nBirds--;
       this.player.point();
@@ -75,12 +74,10 @@ export default class Level extends Phaser.Scene {
     });
 
     
-
     this.physics.add.collider(this.player, this.walls)
     this.physics.add.collider(this.birds, this.walls)
     
   }
-
 
   spawnWalls(){
     this.walls = this.add.group();
