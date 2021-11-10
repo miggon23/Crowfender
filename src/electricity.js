@@ -42,6 +42,7 @@ import Bird from './bird.js';
 
     preUpdate(t,dt) {
         super.preUpdate(t,dt);
+        Bird.electricityCooldown +=dt;
         Electricity.clock(dt); 
     }
 }

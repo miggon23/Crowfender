@@ -23,7 +23,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.timer = 0;
     this.stopMovementTimer = 0;
     this.delayToStopMovement = 500;
-
+    this.delayElectricity = 50;
   }
   /**
    * Selecciona una de las 4 direcciones posibles de movimiento (no se mueve diagonalmente) 
@@ -55,34 +55,27 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     
 
   }
-  static electricidadActivada = false;
+  static electricityActivated = false;
+  static electricityCooldown = 0;
 
   static changeStateElectricity(){
-    this.electricidadActivada = true;
-    console.log("Activado");
+    this.electricityActivated = !this.electricityActivated;
+    this.electricityCooldown = 0;
   }
-
-  static die(){
-    console.log(this.electricidadActivada);
-      if(this.electricidadActivada){
-        Bird.changeStateElectricity();
-        console.log("muerto");
-        //this.destroy();
-      }
-    }
 
   cancelMovement(){
     this.body.setVelocity(0, 0);
   }
 
   /**
-   * Métodos preUpdate de Phaser. En este caso solo se encarga del movimiento del pajaro.
+   * Métodos preUpdate de Phaser. En este caso se encarga del movimiento del pajaro y de su eliminación por electricidad.
    * @override
    */
    preUpdate(t,dt) {
     super.preUpdate(t,dt);
     this.timer += dt;
     this.stopMovementTimer += dt;
+    this.electricityTimer += dt;
     if (this.timer >= this.delayToMove)
     {
       this.moveBird();
@@ -94,7 +87,13 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       this.cancelMovement();
       this.stopMovementTimer = 0;
     }
-    console.log(this.electricidadActivada);
-    Bird.die();
+
+    if(Bird.electricityActivated){
+      this.destroy();
+      if(Bird.electricityCooldown > this.delayElectricity){
+        Bird.changeStateElectricity();
+      }
+      
+    }
   }  
 }

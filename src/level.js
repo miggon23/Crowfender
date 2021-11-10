@@ -59,7 +59,7 @@ export default class Level extends Phaser.Scene {
     camera.x = 0;
     camera.y = 0;
 
-    //camera.setZoom(0.2);
+    camera.setZoom(0.7);
 
     camera.startFollow(this.player);
 
