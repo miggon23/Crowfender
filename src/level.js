@@ -9,6 +9,7 @@ import Wall from './wall.js';
 import Sala from './sala.js';
 import SalaCentral from './salacentral.js';
 import SpawnZone from './spawnzone.js';
+import Basement from './basement.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -50,6 +51,8 @@ export default class Level extends Phaser.Scene {
     let broom = new Broom(this);
     this.player.add(broom);
     this.chest = new Chest(this, this.player, 250, 1032);
+    this.basement = new Basement(this, this.player, 500, 485, true);
+    this.basement = new Basement(this, this.player, 500, 1100, false);
     this.Electricity = new Electricity(this, this.player, -200, 400);
     this.window = new Blockable(this, this.player, 1935, 400, 'window');
 
@@ -91,24 +94,23 @@ export default class Level extends Phaser.Scene {
   }
 
   spawnWalls(){
-    this.walls = this.add.group();
-    // Paredes fondo
-    new Wall(this, 500, 170, 3000, 340, this.walls);
-    new Wall(this, 500, 770, 3000, 340, this.walls);
-    new Wall(this, 500, 1370, 1000, 340, this.walls);
-    new Wall(this, 500, -430, 1000, 340, this.walls);
-    // Paredes laterales
-    new Wall(this, -1000, 450, 120, 1200, this.walls);
-    new Wall(this, 0, 1200, 120, 1000, this.walls);
-    new Wall(this, 0, 10, 120, 1000, this.walls);
-    new Wall(this, 1000, 1200, 120, 1000, this.walls);
-    new Wall(this, 1000, 10, 120, 1000, this.walls);
-    new Wall(this, 2000, 450, 120, 1200, this.walls);
-    // Cofres 
-    new Wall(this, 250, 1000, 64, 64, this.walls);
-    // Chimenea 
-    new Wall(this, -650, 350, 128, 128, this.walls);
-    
+      this.walls = this.add.group();
+      // Paredes fondo
+      new Wall(this, 500, 170, 3000, 340, this.walls);
+      new Wall(this, 500, 770, 3000, 340, this.walls);
+      new Wall(this, 500, 1370, 1000, 340, this.walls);
+      new Wall(this, 500, -430, 1000, 340, this.walls);
+      // // Paredes laterales
+      new Wall(this, -1000, 450, 120, 1200, this.walls);
+      new Wall(this, 0, 1200, 120, 1000, this.walls);
+      new Wall(this, 0, 10, 120, 1000, this.walls);
+      new Wall(this, 1000, 1200, 120, 1000, this.walls);
+      new Wall(this, 1000, 10, 120, 1000, this.walls);
+      new Wall(this, 2000, 450, 120, 1200, this.walls);
+      // Cofres 
+      new Wall(this, 250, 1000, 64, 64, this.walls);
+      // Chimenea 
+      new Wall(this, -650, 350, 128, 128, this.walls);
   }
 
   spawnZones(){

@@ -34,6 +34,12 @@ export default class Player extends Phaser.GameObjects.Container {
     this.updateScore();
   }
 
+    /**
+     * El jugador ha pulsado k en la zona de teletransporte hacia el sótano,
+     * por lo que se le desplazará en y abajo.
+     * */
+
+
   /**
    * El jugador ha acabado con un pájaro por lo que este método añade un punto y
    * actualiza la UI con la puntuación actual.

@@ -13,23 +13,20 @@ h1 {
   max-width: 15%;
 }
 
-li{
+button{
   display: inline;
-  text-transform: uppercase;
-  font-size: 30px;
-  line-height: 1px;
-  border: solid red;
-  text-align: center;
   padding: 15px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
 }
-a{
-  cursor: pointer;
-  text-decoration: none;
-  outline: 0;
-  background-color: transparent;
-  color: #101010;
+.logo{
+  width: 55px;
+  height: 55px;
 }
-#juego{
-  line-height: 55px;
+div{
+  background-color: #55897c;
+  display: block;
+  margin-left: auto;
+}
+.juego{
+  margin-top: 30px;
 }
