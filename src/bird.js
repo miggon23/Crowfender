@@ -1,3 +1,5 @@
+import Level from "./level.js";
+
 /**
  * Clase que representa a los pájaros del juego, es decir, los enemigos. Los pájaros cambian de habitación
  * cada cierto tiempo. Y tienen un movimietno aleatorio que les hace desplazarse una posición cada cierto tiempo.
@@ -11,12 +13,13 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    * @param {number} x Coordenada X
    * @param {number} y Coordenada Y
    */
-  constructor(scene, x, y, birdsGroup) {
+  constructor(scene, x, y, birdsGroup, level) {
     super(scene, x, y, 'bird');
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     birdsGroup.add(this);
     this.body.setCollideWorldBounds();
+    this.level = level;
     //Velocidad de movimiento
     this.speed = 300;
     this.delayToMove = Phaser.Math.Between(2000, 5000);
@@ -63,6 +66,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.electricityCooldown = 0;
   }
 
+  //Detiene al pájaro de su movimiento actual
   cancelMovement(){
     this.body.setVelocity(0, 0);
   }
@@ -89,6 +93,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     }
 
     if(Bird.electricityActivated){
+      this.level.subBird(); //Restamos un pájaro del contador y añadimos un punto
       this.destroy();
       if(Bird.electricityCooldown > this.delayElectricity){
         Bird.changeStateElectricity();

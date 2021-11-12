@@ -8,6 +8,7 @@ import Blockable from './blockable.js';
 import Wall from './wall.js';
 import Sala from './sala.js';
 import SalaCentral from './salacentral.js';
+import SpawnZone from './spawnzone.js';
 
 /**
  * Escena principal del juego. La escena se compone de una serie de plataformas 
@@ -45,21 +46,26 @@ export default class Level extends Phaser.Scene {
     this.spawnTime = Phaser.Math.Between(2000, 4000);
     this.newRand;
     this.birds = this.add.group(); 
-    this.y = 30;
     this.player = new Player(this, 200, 500);
     let broom = new Broom(this);
     this.player.add(broom);
     this.chest = new Chest(this, this.player, 250, 1032);
     this.Electricity = new Electricity(this, this.player, -200, 400);
     this.window = new Blockable(this, this.player, 1935, 400, 'window');
+
+    //Array de zonas de spawn
+    this.spawnzones = [];
+
+    //Creación de muros y zonas de spawn
     this.spawnWalls();
+    this.spawnZones();
 
     var camera = this.cameras.main;
     
     camera.x = 0;
     camera.y = 0;
 
-    camera.setZoom(0.7);
+    camera.setZoom(0.3);
 
     camera.startFollow(this.player);
 
@@ -68,8 +74,7 @@ export default class Level extends Phaser.Scene {
       //Cambiar este método para espantar al pájaro en vez de matarlo (gestionado por el pájaro)
       o2.destroy();
       //restamos el número de pájaros para que se puedan generar más
-      this.nBirds--;
-      this.player.point();
+      this.subBird();
 
     });
 
@@ -79,6 +84,12 @@ export default class Level extends Phaser.Scene {
     
   }
 
+  //Resta un pájaro del contador y suma un punto
+  subBird(){
+    this.nBirds--;
+    this.player.point();
+  }
+
   spawnWalls(){
     this.walls = this.add.group();
     // Paredes fondo
@@ -86,7 +97,7 @@ export default class Level extends Phaser.Scene {
     new Wall(this, 500, 770, 3000, 340, this.walls);
     new Wall(this, 500, 1370, 1000, 340, this.walls);
     new Wall(this, 500, -430, 1000, 340, this.walls);
-    // // Paredes laterales
+    // Paredes laterales
     new Wall(this, -1000, 450, 120, 1200, this.walls);
     new Wall(this, 0, 1200, 120, 1000, this.walls);
     new Wall(this, 0, 10, 120, 1000, this.walls);
@@ -100,18 +111,20 @@ export default class Level extends Phaser.Scene {
     
   }
 
+  spawnZones(){
+    new SpawnZone(this, -500, -120, 720, 200, this.spawnzones);
+    new SpawnZone(this, 2250, 450, 300, 300, this.spawnzones);
+    new SpawnZone(this, 1300, -170, 400, 250, this.spawnzones);
+  }
+
 
   /**
-   * Genera un pájaro en el escenario, la coordenada x e y han sido de momento cableadas por código, lo ideal
-   * sería consultar el ancho y alto del juego de una forma segura
+   * Método que escoge de entre los spawns posibles, uno de ellos para crear un pájaro nuevo
+   * pájaro cuyas coordenadas estarán dentro del spawn elegido
+   * 
    */
-  spawnBird(delayedSpawn) {
-    this.y += 20;
-    // this.add.text(0, this.y, 'Pájaro creado, SpawnTime: ' + delayedSpawn)
-    //     .setOrigin(0, 0)  // Colocamos el pivote en la esquina superior izquierda
-    //     .setAlign('center');  // Centramos el texto dentro del cuadro de texto
-    new Bird(this, Phaser.Math.Between(0, 1000), Phaser.Math.Between(0, 600), this.birds);
-    
+  spawnBird(delayedSpawn) {      
+    new Bird(this, Phaser.Math.Between(0, 1000), Phaser.Math.Between(0, 600), this.birds, this);    
   }
 
   /**
