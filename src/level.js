@@ -31,11 +31,11 @@ export default class Level extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    this.add.tileSprite(500, 300, 1000, 600, 'fondo');  
-    this.add.tileSprite(1500, 300, 1000, 600, 'fondo');  
-    this.add.tileSprite(-500, 300, 1000, 600, 'fondo');  
-    this.add.tileSprite(500, 900, 1000, 600, 'fondo');  
-    this.add.tileSprite(500, -300, 1000, 600, 'fondo');  
+    this.add.tileSprite(500, 300, 1140, 600, 'fondo_central');  
+    this.add.tileSprite(1570, 300, 1000, 600, 'fondo_ventana');  
+    this.add.tileSprite(-570, 300, 1000, 600, 'fondo_chimenea');  
+    this.add.tileSprite(500, 900, 1140, 600, 'fondo_central');  
+    this.add.tileSprite(250, -300, 1500, 600, 'fondo_puerta');  
 
     
 
@@ -68,7 +68,7 @@ export default class Level extends Phaser.Scene {
     camera.x = 0;
     camera.y = 0;
 
-    camera.setZoom(0.3);
+    //camera.setZoom(0.3);
 
     camera.startFollow(this.player);
 
