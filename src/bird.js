@@ -18,7 +18,6 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     birdsGroup.add(this);
-    this.body.setCollideWorldBounds();
     this.level = level;
     //Velocidad de movimiento
     this.speed = 300;
@@ -27,13 +26,15 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.stopMovementTimer = 0;
     this.delayToStopMovement = 500;
     this.delayElectricity = 50;
+    this.body.setVelocity(0, 0);
+    console.log("Bird : x: " + x + " y: " + y);
+    
   }
   /**
    * Selecciona una de las 4 direcciones posibles de movimiento (no se mueve diagonalmente) 
    * y le añade un valor fijo de desplazamiento definido en la clase
    */
   moveBird(){
-    console.log("Mueve al pájaro");
     //Hay una pequeña probabilidad de que no salte en este turno
     let dir = Phaser.Math.Between(0, 4);
     if (dir === 0){

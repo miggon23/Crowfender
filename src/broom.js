@@ -35,6 +35,7 @@
         this.setFlip(true, false);
     }
 
+    //Activa la escoba para que golpee y la vuelve visible. LLama a hide broom depués de 0.3 seundos
     hit(){
         this.visible= true;
         this.body.enable= true;
@@ -46,6 +47,7 @@
           });
     }
 
+    //Desactiva el collider de la escoba y la vuleve invisible
     hideBroom(){
         this.visible= false;
         this.body.enable= false;

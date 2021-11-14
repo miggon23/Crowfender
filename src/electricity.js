@@ -29,6 +29,7 @@ import Bird from './bird.js';
     static cooldown = 3000;
 
 
+    //Cambiar la acción para eliminar los static
     static clock(d) {
         this.timer +=d;
       }

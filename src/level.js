@@ -36,9 +36,7 @@ export default class Level extends Phaser.Scene {
     this.add.tileSprite(-570, 300, 1000, 600, 'fondo_chimenea');  
     this.add.tileSprite(500, 900, 1140, 600, 'fondo_central');  
     this.add.tileSprite(250, -300, 1500, 600, 'fondo_puerta');  
-
     
-
     this.clock = new Phaser.Time.Clock(this);
     this.maxBirds = 15;
     this.nBirds = 0;
@@ -68,7 +66,7 @@ export default class Level extends Phaser.Scene {
     camera.x = 0;
     camera.y = 0;
 
-    //camera.setZoom(0.3);
+    camera.setZoom(0.35);
 
     camera.startFollow(this.player);
 
@@ -80,8 +78,7 @@ export default class Level extends Phaser.Scene {
       this.subBird();
 
     });
-
-    
+   
     this.physics.add.collider(this.player, this.walls)
     this.physics.add.collider(this.birds, this.walls)
     
@@ -94,46 +91,51 @@ export default class Level extends Phaser.Scene {
   }
 
   spawnWalls(){
-      this.walls = this.add.group();
-      // Paredes fondo
-      new Wall(this, 500, 170, 3000, 340, this.walls);
-      new Wall(this, 500, 770, 3000, 340, this.walls);
-      new Wall(this, 500, 1370, 1000, 340, this.walls);
-      new Wall(this, 500, -430, 1000, 340, this.walls);
-      // // Paredes laterales
-      new Wall(this, -1000, 450, 120, 1200, this.walls);
-      new Wall(this, 0, 1200, 120, 1000, this.walls);
-      new Wall(this, 0, 10, 120, 1000, this.walls);
-      new Wall(this, 1000, 1200, 120, 1000, this.walls);
-      new Wall(this, 1000, 10, 120, 1000, this.walls);
-      new Wall(this, 2000, 450, 120, 1200, this.walls);
-      // Cofres 
-      new Wall(this, 250, 1000, 64, 64, this.walls);
-      // Chimenea 
-      new Wall(this, -650, 350, 128, 128, this.walls);
+    this.walls = this.add.group();
+    // Paredes fondo
+    new Wall(this, 1000, 170, 2000, 340, this.walls);
+      //Sala chimenea
+    new Wall(this, -500, 320, 1000, 140, this.walls);
+    new Wall(this, 500, 770, 3000, 340, this.walls);
+    new Wall(this, 500, 1370, 1000, 340, this.walls);
+    new Wall(this, 500, -430, 1000, 340, this.walls);
+    // // Paredes laterales
+    new Wall(this, -1000, 450, 120, 1200, this.walls);
+    new Wall(this, 0, 1200, 120, 1000, this.walls);
+    new Wall(this, 0, 10, 120, 1000, this.walls);
+    new Wall(this, 1000, 1200, 120, 1000, this.walls);
+    new Wall(this, 1000, 10, 120, 1000, this.walls);
+    new Wall(this, 2000, 450, 120, 1200, this.walls);
+    // Cofres 
+    new Wall(this, 250, 1000, 64, 64, this.walls);
+    // Chimenea 
+    new Wall(this, -650, 350, 128, 128, this.walls);
+
   }
 
   spawnZones(){
-    new SpawnZone(this, -500, -120, 720, 200, this.spawnzones);
-    new SpawnZone(this, 2250, 450, 300, 300, this.spawnzones);
-    new SpawnZone(this, 1300, -170, 400, 250, this.spawnzones);
+    new SpawnZone(this, -500, 100, 720, 200, this.spawnzones);
+    new SpawnZone(this, 2250, 350, 400, 500, this.spawnzones);
+    new SpawnZone(this, -250, -250, 400, 500, this.spawnzones);
   }
 
 
   /**
-   * Método que escoge de entre los spawns posibles, uno de ellos para crear un pájaro nuevo
-   * pájaro cuyas coordenadas estarán dentro del spawn elegido
-   * 
+   * Método que escoge un spawn de entre los existentes y crea un pájaro en su interior
    */
-  spawnBird(delayedSpawn) {      
-    new Bird(this, Phaser.Math.Between(0, 1000), Phaser.Math.Between(0, 600), this.birds, this);    
-  }
+  spawnBird() { 
+    let index = Phaser.Math.Between(0, this.spawnzones.length - 1);
+    //Guardamos la spawnzone de una variable para acceder más facilmente a sus métodos
+    let birdSpawnZone = this.spawnzones[index];
+    let topLeft = birdSpawnZone.getTopLeft();
+    let botRight = birdSpawnZone.getBottomRight();
 
-  /**
-   * Método que se ejecuta al coger una estrella. Se pasa la base
-   * sobre la que estaba la estrella cogida para evitar repeticiones
-   *  La base sobre la que estaba la estrella que se ha cogido
-   */
+    let newX = Phaser.Math.Between(topLeft.x, botRight.x);
+    let newY = Phaser.Math.Between(topLeft.y, botRight.y);
+
+    new Bird(this, newX, newY, this.birds, this);    
+
+  }
   
 
   /**
