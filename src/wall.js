@@ -1,10 +1,9 @@
-import Base from './base.js';
 /**
  * Clase que representa las plataformas que aparecen en el escenario de juego.
  * Cada plataforma es responsable de crear la base que aparece sobre ella y en la 
  * que, durante el juego, puede aparecer una estrella
  */
-export default class Platform extends Phaser.GameObjects.Sprite {
+export default class Wall extends Phaser.GameObjects.Sprite {
   
   /**
    * Constructor de la Plataforma
@@ -14,12 +13,17 @@ export default class Platform extends Phaser.GameObjects.Sprite {
    * @param {number} x Coordenada x
    * @param {number} y Coordenada y
    */
-  constructor(scene, player, baseGroup, x, y) {
-    super(scene, x, y, 'platform');
+  constructor(scene, x, y, scaleX, scaleY, wallsGroup) {
+    super(scene, x, y, 'empty');
+    
+    this.displayWidth = scaleX;
+    this.displayHeight= scaleY;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this, true);
-    new Base(scene, this, x, y, baseGroup);
-    this.scene.physics.add.collider(this, player);
+    wallsGroup.add(this);
+    
+    // Comentar para mostrar los muros
+    this.visible = false;
   }
 
 }

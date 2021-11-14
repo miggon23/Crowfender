@@ -27,6 +27,9 @@ Crowfender trata de transmitir al jugador la angustia de una invasión voladora,
 
 * A través de la ventana entran los pájaros y se les expulsa dándoles un golpe con la escoba.
 
+## Diagrama UML
+![Crowfender drawio](https://user-images.githubusercontent.com/82326243/141452154-d8cb728f-e475-47c9-b6ec-b2e841c29bdf.png)
+
 
 ## A QUÉ SE JUEGA
 Al estilo "Five Night's At Freddy's" (FNAF), el jugador tendrá que ir de habitación en habitación, tapiando puertas y ventanas, encendiendo la chimenea... para evitar que los pájaros entren a la casa, además de ir espantando a los pájaros que hayan logrado entrar, para que no invadan la habitación central. El jugador se encontrará con varias oleadas de pájaros de creciente dificultad, así como con distintas herramientas y formas de espantar a las insistentes aves. Al contrario que en FNAF, el jugador podrá desplazarse libremente por las habitaciones en escenarios de 2.5D.

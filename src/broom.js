@@ -23,6 +23,7 @@
 
     //El jugador se movió a la izquierda, por lo tanto la escoba está a su izquierda
     //Es aconsejable cambiar la escala del player para que cambie la escoba
+    //Cuando haya animaciones se gestionará dentro del propio player con un collider extra para la escoba
     facingLeft(){
         this.x=-30;      
         this.setFlip(false, false);
@@ -34,7 +35,8 @@
         this.setFlip(true, false);
     }
 
-    golpear(){
+    //Activa la escoba para que golpee y la vuelve visible. LLama a hide broom depués de 0.3 seundos
+    hit(){
         this.visible= true;
         this.body.enable= true;
         this.scene.time.addEvent( {
@@ -45,9 +47,11 @@
           });
     }
 
+    //Desactiva el collider de la escoba y la vuleve invisible
     hideBroom(){
         this.visible= false;
         this.body.enable= false;
+        this.parentContainer.switchPlayerHit();
     }
 
 
@@ -67,7 +71,8 @@
       //Vammos acumualndo en timer el tiempo en cada frame
       this.timer += dt;
       if (this.timer >= this.cooldown && Phaser.Input.Keyboard.JustDown(this.j)){
-          this.golpear();
+          this.hit();
+          this.parentContainer.switchPlayerHit();
           this.timer = 0;
       }
     }
