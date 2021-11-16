@@ -32,10 +32,14 @@ export default class Level extends Phaser.Scene {
    */
   create() {
     this.add.tileSprite(500, 300, 1140, 600, 'fondo_central');  
-    this.add.tileSprite(1570, 300, 1000, 600, 'fondo_ventana');  
-    this.add.tileSprite(-570, 300, 1000, 600, 'fondo_chimenea');  
+    this.add.tileSprite(1620, 300, 1100, 600, 'fondo_ventana');  
+    this.add.tileSprite(-570, 400, 1000, 400, 'fondo_chimenea');  
     this.add.tileSprite(500, 900, 1140, 600, 'fondo_central');  
-    this.add.tileSprite(250, -300, 1500, 600, 'fondo_puerta');  
+    this.add.tileSprite(490, -300, 1160, 600, 'fondo_puerta');  
+    this.add.tileSprite(2360, 300, 400, 600, 'spawn_ventana'); 
+    this.add.tileSprite(-570, 100, 1000, 200, 'spawn_chimenea');  
+    this.add.tileSprite(-290, -300, 400, 600, 'spawn_puerta');  
+
     
     this.clock = new Phaser.Time.Clock(this);
     this.maxBirds = 15;
@@ -93,23 +97,23 @@ export default class Level extends Phaser.Scene {
   spawnWalls(){
     this.walls = this.add.group();
     // Paredes fondo
-    new Wall(this, 1000, 170, 2000, 340, this.walls);
-      //Sala chimenea
-    new Wall(this, -500, 320, 1000, 140, this.walls);
-    new Wall(this, 500, 770, 3000, 340, this.walls);
+    new Wall(this, 1000, 170, 2100, 340, this.walls);
+    new Wall(this, 500, 770, 3100, 340, this.walls);
     new Wall(this, 500, 1370, 1000, 340, this.walls);
     new Wall(this, 500, -430, 1000, 340, this.walls);
-    // // Paredes laterales
-    new Wall(this, -1000, 450, 120, 1200, this.walls);
-    new Wall(this, 0, 1200, 120, 1000, this.walls);
-    new Wall(this, 0, 10, 120, 1000, this.walls);
-    new Wall(this, 1000, 1200, 120, 1000, this.walls);
-    new Wall(this, 1000, 10, 120, 1000, this.walls);
-    new Wall(this, 2000, 450, 120, 1200, this.walls);
-    // Cofres 
-    new Wall(this, 250, 1000, 64, 64, this.walls);
+    //Sala chimenea
+    new Wall(this, -550, 320, 1000, 140, this.walls);
+    // Paredes laterales
+    new Wall(this, -1090, 450, 120, 1200, this.walls);
+    new Wall(this, -40, 1200, 90, 1000, this.walls);
+    new Wall(this, -40, -40, 90, 1000, this.walls);
+    new Wall(this, 1040, 1200, 90, 1000, this.walls);
+    new Wall(this, 1040, -40, 90, 1000, this.walls);
+    new Wall(this, 2090, 450, 90, 1200, this.walls);
+    // Cofre
+    new Wall(this, 250, 970, 64, 64, this.walls);
     // Chimenea 
-    new Wall(this, -650, 350, 128, 128, this.walls);
+    new Wall(this, -780, 360, 170, 128, this.walls);
 
   }
 
