@@ -56,7 +56,9 @@ export default class Level extends Phaser.Scene {
     this.basement = new Basement(this, this.player, 500, 485, true);
     this.basement = new Basement(this, this.player, 500, 1100, false);
     this.Electricity = new Electricity(this, this.player, -200, 400);
-    this.window = new Blockable(this, this.player, 1935, 400, 'window');
+    this.window = new Blockable(this, this.player, 2030, 295, 'tabla_ventana');
+    this.door = new Blockable(this, this.player, 98, -280, 'tabla_puerta');
+    this.fireplace = new Blockable(this, this.player, -780, 400, 'tabla_chimenea');
 
     //Array de zonas de spawn
     this.spawnzones = [];
@@ -70,7 +72,7 @@ export default class Level extends Phaser.Scene {
     camera.x = 0;
     camera.y = 0;
 
-    camera.setZoom(0.35);
+    //camera.setZoom(0.35);
 
     camera.startFollow(this.player);
 
@@ -97,7 +99,7 @@ export default class Level extends Phaser.Scene {
   spawnWalls(){
     this.walls = this.add.group();
     // Paredes fondo
-    new Wall(this, 1000, 170, 2100, 340, this.walls);
+    //new Wall(this, 1000, 170, 2100, 340, this.walls);
     new Wall(this, 500, 770, 3100, 340, this.walls);
     new Wall(this, 500, 1370, 1000, 340, this.walls);
     new Wall(this, 500, -430, 1000, 340, this.walls);
