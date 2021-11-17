@@ -6,17 +6,13 @@ import Electricity from './electricity.js';
 import Broom from './broom.js';
 import Blockable from './blockable.js';
 import Wall from './wall.js';
-import Sala from './sala.js';
+import Room from './room.js';
 import SalaCentral from './salacentral.js';
 import SpawnZone from './spawnzone.js';
 import Basement from './basement.js';
 
 /**
- * Escena principal del juego. La escena se compone de una serie de plataformas 
- * sobre las que se sitúan las bases en las podrán aparecer las estrellas. 
- * El juego comienza generando aleatoriamente una base sobre la que generar una estrella. 
- * Cada vez que el jugador recoge la estrella, aparece una nueva en otra base.
- * El juego termina cuando el jugador ha recogido 10 estrellas.
+ * Escena principal del juego.
  * @extends Phaser.Scene
  */
 export default class Level extends Phaser.Scene {
@@ -30,16 +26,32 @@ export default class Level extends Phaser.Scene {
   /**
    * Creación de los elementos de la escena principal de juego
    */
-  create() {
-    this.add.tileSprite(500, 300, 1140, 600, 'fondo_central');  
-    this.add.tileSprite(1570, 300, 1000, 600, 'fondo_ventana');  
-    this.add.tileSprite(-570, 300, 1000, 600, 'fondo_chimenea');  
-    this.add.tileSprite(500, 900, 1140, 600, 'fondo_central');  
-    this.add.tileSprite(250, -300, 1500, 600, 'fondo_puerta');  
-    
-    this.clock = new Phaser.Time.Clock(this);
+  create() { 
+
+    //Array de zonas de spawn
+    this.spawnzones = [];
+
+    //Array de habitaciones
+    this.rooms = [];
+
+    //Creación de muros, zonas de spawn y habitaciones
+    this.spawnWalls();
+    this.spawnZones();
+    this.spawnRooms();
+  
+    //Juntamos los arrays para pasarle al pájaros las posibles zonas por donde puede moverse
+    this.birdZones = this.spawnzones.concat(this.rooms);
+    console.log(this.birdZones);
+
+    //Máximo de pájaros peritido
     this.maxBirds = 15;
+    //Número de pájaros en el nivel
     this.nBirds = 0;
+    //Número de pájaros en la sala del medio
+    this.nBirdsInMiddle = 0;
+    //Máximo de pájaros del juego
+    this.maxBirdsInMiddle = 5;
+
     //temporizador para spawnear pájaros
     this.timer = 0;
     this.spawnTime = Phaser.Math.Between(2000, 4000);
@@ -52,21 +64,16 @@ export default class Level extends Phaser.Scene {
     this.basement = new Basement(this, this.player, 500, 485, true);
     this.basement = new Basement(this, this.player, 500, 1100, false);
     this.Electricity = new Electricity(this, this.player, -200, 400);
-    this.window = new Blockable(this, this.player, 1935, 400, 'window');
-
-    //Array de zonas de spawn
-    this.spawnzones = [];
-
-    //Creación de muros y zonas de spawn
-    this.spawnWalls();
-    this.spawnZones();
+    this.window = new Blockable(this, this.player, 2030, 295, 'tabla_ventana');
+    this.door = new Blockable(this, this.player, 98, -280, 'tabla_puerta');
+    this.fireplace = new Blockable(this, this.player, -780, 400, 'tabla_chimenea');
 
     var camera = this.cameras.main;
     
     camera.x = 0;
     camera.y = 0;
 
-    camera.setZoom(0.35);
+    //camera.setZoom(0.35);
 
     camera.startFollow(this.player);
 
@@ -93,37 +100,47 @@ export default class Level extends Phaser.Scene {
   spawnWalls(){
     this.walls = this.add.group();
     // Paredes fondo
-    new Wall(this, 1000, 170, 2000, 340, this.walls);
-      //Sala chimenea
-    new Wall(this, -500, 320, 1000, 140, this.walls);
-    new Wall(this, 500, 770, 3000, 340, this.walls);
+    //new Wall(this, 1000, 170, 2100, 340, this.walls);
+    new Wall(this, 500, 770, 3100, 340, this.walls);
     new Wall(this, 500, 1370, 1000, 340, this.walls);
     new Wall(this, 500, -430, 1000, 340, this.walls);
-    // // Paredes laterales
-    new Wall(this, -1000, 450, 120, 1200, this.walls);
-    new Wall(this, 0, 1200, 120, 1000, this.walls);
-    new Wall(this, 0, 10, 120, 1000, this.walls);
-    new Wall(this, 1000, 1200, 120, 1000, this.walls);
-    new Wall(this, 1000, 10, 120, 1000, this.walls);
-    new Wall(this, 2000, 450, 120, 1200, this.walls);
-    // Cofres 
-    new Wall(this, 250, 1000, 64, 64, this.walls);
+    //Sala chimenea
+    new Wall(this, -550, 320, 1000, 140, this.walls);
+    // Paredes laterales
+    new Wall(this, -1090, 450, 120, 1200, this.walls);
+    new Wall(this, -40, 1200, 90, 1000, this.walls);
+    new Wall(this, -40, -40, 90, 1000, this.walls);
+    new Wall(this, 1040, 1200, 90, 1000, this.walls);
+    new Wall(this, 1040, -40, 90, 1000, this.walls);
+    new Wall(this, 2090, 450, 90, 1200, this.walls);
+    // Cofre
+    new Wall(this, 250, 970, 64, 64, this.walls);
     // Chimenea 
-    new Wall(this, -650, 350, 128, 128, this.walls);
+    new Wall(this, -780, 360, 170, 128, this.walls);
 
   }
 
+  //Método que crea las zonas de spawn de los pájaros
   spawnZones(){
-    new SpawnZone(this, -500, 100, 720, 200, this.spawnzones);
-    new SpawnZone(this, 2250, 350, 400, 500, this.spawnzones);
-    new SpawnZone(this, -250, -250, 400, 500, this.spawnzones);
+    new SpawnZone(this, -570, 100, 1000, 200, this.spawnzones, 'spawn_chimenea');
+    new SpawnZone(this, 2360, 300, 400, 600, this.spawnzones, 'spawn_ventana');
+    new SpawnZone(this, -290, -300, 400, 600, this.spawnzones, 'spawn_puerta');
   }
 
+  //Método que crea las habitaciones del juego
+  spawnRooms(){
+    new Room(this, 500, 300, 1140, 600, this.rooms, 'fondo_central');  //room3 middle
+    new Room(this,1620, 300, 1100, 600, this.rooms, 'fondo_ventana');  //room4 east
+    new Room(this, -570, 400, 1000, 400, this.rooms, 'fondo_chimenea');//room5 west   
+    new Room(this, 490, -300, 1160, 600, this.rooms, 'fondo_puerta');  //room6 upper
+    new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_central');  //room7 sotano
+  }
 
   /**
    * Método que escoge un spawn de entre los existentes y crea un pájaro en su interior
    */
   spawnBird() { 
+    let routes = [[0, 5, 3], [1, 4, 3], [2, 6, 3]];
     let index = Phaser.Math.Between(0, this.spawnzones.length - 1);
     //Guardamos la spawnzone de una variable para acceder más facilmente a sus métodos
     let birdSpawnZone = this.spawnzones[index];
@@ -133,10 +150,19 @@ export default class Level extends Phaser.Scene {
     let newX = Phaser.Math.Between(topLeft.x, botRight.x);
     let newY = Phaser.Math.Between(topLeft.y, botRight.y);
 
-    new Bird(this, newX, newY, this.birds, this);    
+    new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones);    
 
   }
-  
+
+  addBirdInMiddle(){
+    this.nBirdsInMiddle++;
+    console.log("Pájaros en medio: " + this.nBirdsInMiddle + "Max: " + this.maxBirdsInMiddle);
+  }
+
+  substractBirdFromMiddle(){
+    this.nBirdsInMiddle--;
+    console.log("Pájaros en medio: " + this.nBirdsInMiddle + "Max: " + this.maxBirdsInMiddle)
+  }
 
   /**
    * La escena se encarga de crear los pájaros cada cierto tiempo, si ha llegado
@@ -151,7 +177,6 @@ export default class Level extends Phaser.Scene {
     if(this.timer > this.spawnTime)
     {
       if(this.nBirds < this.maxBirds){
-
         this.nBirds++;
         this.spawnBird(this.spawnTime);
         this.timer -= this.spawnTime;
@@ -162,8 +187,8 @@ export default class Level extends Phaser.Scene {
       }
       
     }
-    //Si el número de pájaros alcanza el máximo, pierdes y se muestra tu puntuación
-    if (this.nBirds === this.maxBirds){
+    //Si el número de pájaros en el centro alcanza el máximo, pierdes y se muestra tu puntuación
+    if (this.nBirdsInMiddle >= this.maxBirdsInMiddle){
       this.scene.start('end');
     }
 

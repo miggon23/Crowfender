@@ -25,6 +25,7 @@
               
           }
       });
+      this.visible = false;
     }
 
     /**
@@ -32,7 +33,7 @@
     */
     block(){
       this.blocked = true;
-      this.setTexture('window_bloq');
+      this.visible = true;
       this.scene.time.addEvent( {
         delay: 10000, 
         callback: this.unblock,
@@ -45,7 +46,7 @@
     */
     unblock(){
       this.blocked = false;
-      this.setTexture('window');
+      this.visible = false;
     }
   }
   
