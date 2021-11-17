@@ -6,17 +6,13 @@ import Electricity from './electricity.js';
 import Broom from './broom.js';
 import Blockable from './blockable.js';
 import Wall from './wall.js';
-import Sala from './sala.js';
+import Room from './room.js';
 import SalaCentral from './salacentral.js';
 import SpawnZone from './spawnzone.js';
 import Basement from './basement.js';
 
 /**
- * Escena principal del juego. La escena se compone de una serie de plataformas 
- * sobre las que se sitúan las bases en las podrán aparecer las estrellas. 
- * El juego comienza generando aleatoriamente una base sobre la que generar una estrella. 
- * Cada vez que el jugador recoge la estrella, aparece una nueva en otra base.
- * El juego termina cuando el jugador ha recogido 10 estrellas.
+ * Escena principal del juego.
  * @extends Phaser.Scene
  */
 export default class Level extends Phaser.Scene {
@@ -31,17 +27,28 @@ export default class Level extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
-    this.add.tileSprite(500, 300, 1140, 600, 'fondo_central');  
-    this.add.tileSprite(1620, 300, 1100, 600, 'fondo_ventana');  
-    this.add.tileSprite(-570, 400, 1000, 400, 'fondo_chimenea');  
-    this.add.tileSprite(500, 900, 1140, 600, 'fondo_central');  
-    this.add.tileSprite(490, -300, 1160, 600, 'fondo_puerta');  
-    this.add.tileSprite(2360, 300, 400, 600, 'spawn_ventana'); 
-    this.add.tileSprite(-570, 100, 1000, 200, 'spawn_chimenea');  
-    this.add.tileSprite(-290, -300, 400, 600, 'spawn_puerta');  
-
+    // this.add.tileSprite(500, 300, 1140, 600, 'fondo_central');  
+    // this.add.tileSprite(1620, 300, 1100, 600, 'fondo_ventana');  
+    // this.add.tileSprite(-570, 400, 1000, 400, 'fondo_chimenea');  
+    // this.add.tileSprite(500, 900, 1140, 600, 'fondo_central');  
+    // this.add.tileSprite(490, -300, 1160, 600, 'fondo_puerta');
     
-    this.clock = new Phaser.Time.Clock(this);
+    
+    // this.add.tileSprite(2360, 300, 400, 600, 'spawn_ventana'); 
+    // this.add.tileSprite(-570, 100, 1000, 200, 'spawn_chimenea');  
+    // this.add.tileSprite(-290, -300, 400, 600, 'spawn_puerta');  
+
+    //Array de zonas de spawn
+    this.spawnzones = [];
+
+    //Array de habitaciones
+    this.rooms = [];
+
+    //Creación de muros, zonas de spawn y habitaciones
+    this.spawnWalls();
+    this.spawnZones();
+    this.spawnRooms();
+  
     this.maxBirds = 15;
     this.nBirds = 0;
     //temporizador para spawnear pájaros
@@ -60,19 +67,12 @@ export default class Level extends Phaser.Scene {
     this.door = new Blockable(this, this.player, 98, -280, 'tabla_puerta');
     this.fireplace = new Blockable(this, this.player, -780, 400, 'tabla_chimenea');
 
-    //Array de zonas de spawn
-    this.spawnzones = [];
-
-    //Creación de muros y zonas de spawn
-    this.spawnWalls();
-    this.spawnZones();
-
     var camera = this.cameras.main;
     
     camera.x = 0;
     camera.y = 0;
 
-    //camera.setZoom(0.35);
+    camera.setZoom(0.35);
 
     camera.startFollow(this.player);
 
@@ -119,12 +119,21 @@ export default class Level extends Phaser.Scene {
 
   }
 
+  //Método que crea las zonas de spawn de los pájaros
   spawnZones(){
-    new SpawnZone(this, -500, 100, 720, 200, this.spawnzones);
-    new SpawnZone(this, 2250, 350, 400, 500, this.spawnzones);
-    new SpawnZone(this, -250, -250, 400, 500, this.spawnzones);
+    new SpawnZone(this, -570, 100, 1000, 200, this.spawnzones, 'spawn_chimenea');
+    new SpawnZone(this, 2360, 300, 400, 600, this.spawnzones, 'spawn_ventana');
+    new SpawnZone(this, -290, -300, 400, 600, this.spawnzones, 'spawn_puerta');
   }
 
+  //Método que crea las habitaciones dle juego
+  spawnRooms(){
+    new Room(this, 500, 300, 1140, 600, this.rooms, 'fondo_central');  
+    new Room(this,1620, 300, 1100, 600, this.rooms, 'fondo_ventana');  
+    new Room(this, -570, 400, 1000, 400, this.rooms, 'fondo_chimenea');  
+    new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_central');  
+    new Room(this, 490, -300, 1160, 600, this.rooms, 'fondo_puerta');
+  }
 
   /**
    * Método que escoge un spawn de entre los existentes y crea un pájaro en su interior
