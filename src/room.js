@@ -25,7 +25,6 @@ export default class Room extends Phaser.GameObjects.Sprite {
     this.displayHeight= scaleY;
     this.scene.add.existing(this);
     roomArray.push(this);
-    //this.visible = false;
+    
   }
-
 }

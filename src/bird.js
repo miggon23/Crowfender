@@ -12,8 +12,12 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    * @param {Phaser.Scene} scene Escena a la que pertenece el pájaro
    * @param {number} x Coordenada X
    * @param {number} y Coordenada Y
+   * @param {group} birdsGroup Grupo de pájaros de la escena
+   * @param {Level} level Level al que pertenece el pájaro
+   * @param {array of numbers} route salas que sigue el pájaro en orden, desde el spawn a la sala central
+   * @param {array of Room} rooms array que guarda las habitaciones visitables por el pájaro
    */
-  constructor(scene, x, y, birdsGroup, level) {
+  constructor(scene, x, y, birdsGroup, level, route, rooms) {
     super(scene, x, y, 'bird');
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
@@ -26,8 +30,15 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.stopMovementTimer = 0;
     this.delayToStopMovement = 500;
     this.delayElectricity = 50;
-    this.body.setVelocity(0, 0);
-    console.log("Bird : x: " + x + " y: " + y);
+    this.route = route;
+    this.rooms = rooms;
+
+    // En lugar de guardar la habitación actual, guardo el orden de la habitación actual
+    // Habitación de spawn = 0, la siguiente = 1... 
+    this.actualOrderRoom = 0;
+
+    // console.log("Bird : x: " + x + " y: " + y);
+    // console.log(route); 
     
   }
   /**
@@ -38,7 +49,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     //Hay una pequeña probabilidad de que no salte en este turno
     let dir = Phaser.Math.Between(0, 4);
     if (dir === 0){
-      this.body.setVelocityY(this.speed);
+      this.body.setVelocityY(this.speed);     
     }
     else if (dir === 1){
       this.body.setVelocityY(-this.speed);
@@ -49,6 +60,9 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     else if (dir === 3){
       this.body.setVelocityX(-this.speed);
     }
+    else if (dir === 4){
+      this.advanceRoom();
+    }
 
     // this.scene.time.addEvent( {
     //   delay: 500, 
@@ -56,15 +70,45 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     //   callbackScope: this,
     //   loop: false
     // });
-    
-
   }
+
+  changeRoom(i){
+    let topLeft = this.rooms[this.route[i]].getTopLeft();
+    let botRight = this.rooms[this.route[i]].getBottomRight();
+    let x = Phaser.Math.Between(topLeft.x, botRight.x);
+    let y = Phaser.Math.Between(topLeft.y, botRight.y);
+    this.x = x;
+    this.y = y;
+  }
+
+  //Envía al pájaro a la siguiente sala marcada por su lista de rutas. Comprueba si está
+  // en la sala central, en ese caso, no avanza. La sala central es siempre la última del array de rutas
+  advanceRoom(){
+    if(this.actualOrderRoom !== this.route.length - 1)
+    { //Equivalente a comparar las habitaciones: if(this.rooms[this.route[this.actualOrderRoom]] !== this.rooms[this.route[this.route.length - 1]])
+
+      //Hemos comprobado en el if que el actualOrderRoom no ha llegado a la última sala, 
+      // podemos confiar en que no se saldrá del tamaño del array de rutas
+      this.actualOrderRoom++;
+      this.changeRoom(this.actualOrderRoom);
+    }
+  }
+
   static electricityActivated = false;
   static electricityCooldown = 0;
 
   static changeStateElectricity(){
     this.electricityActivated = !this.electricityActivated;
     this.electricityCooldown = 0;
+  }
+
+  //Envía al pájaro en la sala anterior a la que está, siempre y cuando no se encuentra en el spawn
+  backRoom(){
+    if(this.actualOrderRoom > 0)
+    {
+      this.actualOrderRoom--;
+      this.changeRoom(this.actualOrderRoom);
+    }
   }
 
   //Detiene al pájaro de su movimiento actual
