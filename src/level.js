@@ -43,9 +43,15 @@ export default class Level extends Phaser.Scene {
     this.birdZones = this.spawnzones.concat(this.rooms);
     console.log(this.birdZones);
 
-
+    //Máximo de pájaros peritido
     this.maxBirds = 15;
+    //Número de pájaros en el nivel
     this.nBirds = 0;
+    //Número de pájaros en la sala del medio
+    this.nBirdsInMiddle = 0;
+    //Máximo de pájaros del juego
+    this.maxBirdsInMiddle = 5;
+
     //temporizador para spawnear pájaros
     this.timer = 0;
     this.spawnTime = Phaser.Math.Between(2000, 4000);
@@ -121,7 +127,7 @@ export default class Level extends Phaser.Scene {
     new SpawnZone(this, -290, -300, 400, 600, this.spawnzones, 'spawn_puerta');
   }
 
-  //Método que crea las habitaciones dle juego
+  //Método que crea las habitaciones del juego
   spawnRooms(){
     new Room(this, 500, 300, 1140, 600, this.rooms, 'fondo_central');  //room3 middle
     new Room(this,1620, 300, 1100, 600, this.rooms, 'fondo_ventana');  //room4 east
@@ -147,7 +153,16 @@ export default class Level extends Phaser.Scene {
     new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones);    
 
   }
-  
+
+  addBirdInMiddle(){
+    this.nBirdsInMiddle++;
+    console.log("Pájaros en medio: " + this.nBirdsInMiddle + "Max: " + this.maxBirdsInMiddle);
+  }
+
+  substractBirdFromMiddle(){
+    this.nBirdsInMiddle--;
+    console.log("Pájaros en medio: " + this.nBirdsInMiddle + "Max: " + this.maxBirdsInMiddle)
+  }
 
   /**
    * La escena se encarga de crear los pájaros cada cierto tiempo, si ha llegado
@@ -162,7 +177,6 @@ export default class Level extends Phaser.Scene {
     if(this.timer > this.spawnTime)
     {
       if(this.nBirds < this.maxBirds){
-
         this.nBirds++;
         this.spawnBird(this.spawnTime);
         this.timer -= this.spawnTime;
@@ -173,8 +187,8 @@ export default class Level extends Phaser.Scene {
       }
       
     }
-    //Si el número de pájaros alcanza el máximo, pierdes y se muestra tu puntuación
-    if (this.nBirds === this.maxBirds){
+    //Si el número de pájaros en el centro alcanza el máximo, pierdes y se muestra tu puntuación
+    if (this.nBirdsInMiddle >= this.maxBirdsInMiddle){
       this.scene.start('end');
     }
 

@@ -76,7 +76,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     let topLeft = this.rooms[this.route[i]].getTopLeft();
     let botRight = this.rooms[this.route[i]].getBottomRight();
     let x = Phaser.Math.Between(topLeft.x, botRight.x);
-    let y = Phaser.Math.Between(topLeft.y, botRight.y);
+    let y = Phaser.Math.Between((botRight.y / 3), botRight.y);
     this.x = x;
     this.y = y;
   }
@@ -91,6 +91,10 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       // podemos confiar en que no se saldrá del tamaño del array de rutas
       this.actualOrderRoom++;
       this.changeRoom(this.actualOrderRoom);
+      if(this.actualOrderRoom === this.route.length - 1)
+      {
+        this.level.addBirdInMiddle();
+      }
     }
   }
 
@@ -104,7 +108,11 @@ export default class Bird extends Phaser.GameObjects.Sprite {
 
   //Envía al pájaro en la sala anterior a la que está, siempre y cuando no se encuentra en el spawn
   backRoom(){
-    if(this.actualOrderRoom > 0)
+    if(this.actualOrderRoom === this.route.length - 1)
+    {
+      this.level.substractBirdFromMiddle();
+    }
+    else if(this.actualOrderRoom > 0)
     {
       this.actualOrderRoom--;
       this.changeRoom(this.actualOrderRoom);
