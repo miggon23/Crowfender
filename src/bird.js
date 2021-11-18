@@ -79,7 +79,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     let topLeft = this.rooms[this.route[i]].getTopLeft();
     let botRight = this.rooms[this.route[i]].getBottomRight();
     let x = Phaser.Math.Between(topLeft.x, botRight.x);
-    let y = Phaser.Math.Between((botRight.y / 3), botRight.y);
+    let y = Phaser.Math.Between((botRight.y - ((botRight.y - topLeft.y) / 3)), botRight.y);
     this.x = x;
     this.y = y;
   }
@@ -110,8 +110,8 @@ export default class Bird extends Phaser.GameObjects.Sprite {
 
 
   //Envía al pájaro en la sala anterior a la que está, siempre y cuando no se encuentra en el spawn o 
-  // sea su último golpe para acabar con su vida
-  backRoom(){
+  // sea su último golpe para acabar con su vida. Se llama cuando el jugador golpea a un pájaro con la escoba
+  hitBird(){
     this.health--;
     if(this.actualOrderRoom === this.route.length - 1)
     {
@@ -119,7 +119,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     }
     
     if(this.heath === 0){
-      this.destoy();
+      this.die();
     }
     else if(this.actualOrderRoom > 0)
     {

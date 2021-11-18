@@ -83,7 +83,7 @@ export default class Level extends Phaser.Scene {
 
     //Colision de la escoba con los pájaros
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
-      o2.die();  
+      o2.hitBird();  
     });
     
 
