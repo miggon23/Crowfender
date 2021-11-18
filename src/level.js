@@ -80,7 +80,7 @@ export default class Level extends Phaser.Scene {
     //Colision de la escoba con los pájaros
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
       //Cambiar este método para espantar al pájaro en vez de matarlo (gestionado por el pájaro)
-      o2.destroy();
+      o2.backRoom();
       //restamos el número de pájaros para que se puedan generar más
       this.subBird();
 

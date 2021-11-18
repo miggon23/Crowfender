@@ -32,6 +32,9 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.delayElectricity = 50;
     this.route = route;
     this.rooms = rooms;
+    
+    //Añadimos la vida
+    this.health = 3;
 
     // En lugar de guardar la habitación actual, guardo el orden de la habitación actual
     // Habitación de spawn = 0, la siguiente = 1... 
@@ -106,11 +109,17 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.electricityCooldown = 0;
   }
 
-  //Envía al pájaro en la sala anterior a la que está, siempre y cuando no se encuentra en el spawn
+  //Envía al pájaro en la sala anterior a la que está, siempre y cuando no se encuentra en el spawn o 
+  // sea su último golpe para acabar con su vida
   backRoom(){
+    this.health--;
     if(this.actualOrderRoom === this.route.length - 1)
     {
       this.level.substractBirdFromMiddle();
+    }
+    
+    if(this.heath === 0){
+      this.destoy();
     }
     else if(this.actualOrderRoom > 0)
     {
