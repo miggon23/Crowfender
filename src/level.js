@@ -27,18 +27,21 @@ export default class Level extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() { 
-
+    
     //Array de zonas de spawn
     this.spawnzones = [];
-
+    
     //Array de habitaciones
     this.rooms = [];
-
-    //Creación de muros, zonas de spawn y habitaciones
-    this.spawnWalls();
-    this.spawnZones();
+    
+    //Creación de habitaciones
     this.spawnRooms();
-  
+    this.spawnWalls();
+    
+    this.spawns = this.add.group(); 
+
+    this.spawnZones();
+    
     //Juntamos los arrays para pasarle al pájaros las posibles zonas por donde puede moverse
     this.birdZones = this.spawnzones.concat(this.rooms);
     console.log(this.birdZones);
@@ -63,10 +66,11 @@ export default class Level extends Phaser.Scene {
     this.chest = new Chest(this, this.player, 250, 1032);
     this.basement = new Basement(this, this.player, 500, 485, true);
     this.basement = new Basement(this, this.player, 500, 1100, false);
-    this.Electricity = new Electricity(this, this.player, -200, 400);
-    this.window = new Blockable(this, this.player, 2030, 295, 'tabla_ventana');
-    this.door = new Blockable(this, this.player, 98, -280, 'tabla_puerta');
-    this.fireplace = new Blockable(this, this.player, -780, 400, 'tabla_chimenea');
+    this.electricityAvailable = true;
+    
+    //Creación de muros, zonas de spawn, interruptores y bloqueables
+    this.spawnElectricitySwitches();
+    this.spawnBlockables();
 
     var camera = this.cameras.main;
     
@@ -79,13 +83,15 @@ export default class Level extends Phaser.Scene {
 
     //Colision de la escoba con los pájaros
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
-      //Cambiar este método para espantar al pájaro en vez de matarlo (gestionado por el pájaro)
-      o2.backRoom();
-      //restamos el número de pájaros para que se puedan generar más
-      this.subBird();
-
+      o2.die();  
     });
-   
+    
+
+    //Colision de los spawns con los pájaros (para la electricidad)
+    this.physics.add.overlap(this.spawns, this.birds, (o1, o2) => {
+      o2.die();     
+    });
+
     this.physics.add.collider(this.player, this.walls)
     this.physics.add.collider(this.birds, this.walls)
     
@@ -97,6 +103,7 @@ export default class Level extends Phaser.Scene {
     this.player.point();
   }
 
+  //Método que crea los muros que delimitan las habitaciones
   spawnWalls(){
     this.walls = this.add.group();
     // Paredes fondo
@@ -120,11 +127,44 @@ export default class Level extends Phaser.Scene {
 
   }
 
+  //Método que crea las zonas bloqueables por el jugador
+  spawnBlockables(){
+    this.window = new Blockable(this, this.player, 2030, 295, 'tabla_ventana');
+    this.door = new Blockable(this, this.player, 98, -280, 'tabla_puerta');
+    this.fireplace = new Blockable(this, this.player, -780, 400, 'tabla_chimenea');
+  }
+
   //Método que crea las zonas de spawn de los pájaros
   spawnZones(){
-    new SpawnZone(this, -570, 100, 1000, 200, this.spawnzones, 'spawn_chimenea');
-    new SpawnZone(this, 2360, 300, 400, 600, this.spawnzones, 'spawn_ventana');
-    new SpawnZone(this, -290, -300, 400, 600, this.spawnzones, 'spawn_puerta');
+    this.spawn_fireplace = new SpawnZone(this, -570, 100, 1000, 200, this.spawnzones, this.spawns, 'spawn_chimenea');
+    this.spawn_window = new SpawnZone(this, 2360, 300, 400, 600, this.spawnzones, this.spawns, 'spawn_ventana');
+    this.spawn_door =new SpawnZone(this, -290, -300, 400, 600, this.spawnzones, this.spawns, 'spawn_puerta');
+   }
+
+  //Método que crea los interruptores de electricidad
+  spawnElectricitySwitches(){
+    this.electricity_fireplace = new Electricity(this, this.player, -200, 400, this.spawn_fireplace);
+    this.electricity_door = new Electricity(this, this.player, 200, -240, this.spawn_door);
+    this.electricity_window = new Electricity(this, this.player, 1800, 300, this.spawn_window);
+  }
+    isElectricityAvailable(){
+    return this.electricityAvailable;
+  }
+
+  //Se ha activado la electricidad: la ponemos en enfriamiento
+  putElectricityOnCooldown(){
+    this.electricityAvailable = false;
+    this.time.addEvent( {
+      delay: 30000, 
+      callback: this.electricityNowAvailable,
+      callbackScope: this,
+      loop: false
+    });
+  }
+
+  //Ponemos disponible de nuevo la electricidad
+  electricityNowAvailable(){
+    this.electricityAvailable = true;
   }
 
   //Método que crea las habitaciones del juego

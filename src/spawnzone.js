@@ -15,7 +15,7 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
    * @param {array} spawnArray array de spawns
    * @param {string} sprite string con el nombre del sprite de la spawnzone
    */
-  constructor(scene, x, y, scaleX, scaleY, spawnArray, sprite) {
+  constructor(scene, x, y, scaleX, scaleY, spawnArray, spawnsGroup, sprite) {
 
     super(scene, x, y, sprite);
     this.x = x;
@@ -25,8 +25,28 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
     this.displayWidth = scaleX;
     this.displayHeight= scaleY;
     this.scene.add.existing(this);
+    this.scene.physics.add.existing(this);
+    spawnsGroup.add(this);
     spawnArray.push(this);
+
+    this.body.enable = false;
+
     //this.visible = false;
   }
- 
+  
+  activateElectricity(){ 
+    this.visible=false
+      this.body.enable= true;
+      this.scene.time.addEvent( {
+        delay: 300, 
+        callback: this.deactivateElectricity,
+        callbackScope: this,
+        loop: false
+      });
+    }
+  deactivateElectricity(){
+    this.visible=true;
+    this.body.enable= false;
+  }
+
 }

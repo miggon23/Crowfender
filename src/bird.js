@@ -101,13 +101,13 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     }
   }
 
-  static electricityActivated = false;
-  static electricityCooldown = 0;
-
-  static changeStateElectricity(){
-    this.electricityActivated = !this.electricityActivated;
-    this.electricityCooldown = 0;
+   //Clase para eliminar al pájaro, bien por la electricidad o porque le hayan dado el último golpe
+   die(){
+    console.log("i die");
+      this.level.subBird(); //Restamos un pájaro del contador y añadimos un punto
+      this.destroy();
   }
+
 
   //Envía al pájaro en la sala anterior a la que está, siempre y cuando no se encuentra en el spawn o 
   // sea su último golpe para acabar con su vida
@@ -152,15 +152,6 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     else if (this.stopMovementTimer >= this.delayToStopMovement){
       this.cancelMovement();
       this.stopMovementTimer = 0;
-    }
-
-    if(Bird.electricityActivated){
-      this.level.subBird(); //Restamos un pájaro del contador y añadimos un punto
-      this.destroy();
-      if(Bird.electricityCooldown > this.delayElectricity){
-        Bird.changeStateElectricity();
-      }
-      
     }
   }  
 }
