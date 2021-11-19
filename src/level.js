@@ -33,6 +33,8 @@ export default class Level extends Phaser.Scene {
     
     //Array de habitaciones
     this.rooms = [];
+
+    this.zones = [];
     
     //Creación de habitaciones
     this.spawnRooms();
@@ -60,27 +62,31 @@ export default class Level extends Phaser.Scene {
     this.spawnTime = Phaser.Math.Between(2000, 4000);
     this.newRand;
     this.birds = this.add.group(); 
-    this.player = new Player(this, 200, 500);
+    this.player = new Player(this, 500, 300);
     let broom = new Broom(this);
     this.player.add(broom);
     this.chest = new Chest(this, this.player, 250, 1032);
-    this.basement = new Basement(this, this.player, 500, 485, true);
-    this.basement = new Basement(this, this.player, 500, 1100, false);
+    var camera = this.cameras.main;
+    this.basement = new Basement(this, this.player, 500, 485, true, camera);
+    this.basement = new Basement(this, this.player, 500, 1100, false, camera);
     this.electricityAvailable = true;
-    
+
+    this.zone1; this.zone2; this.zone3; this.zone4;
+
     //Creación de muros, zonas de spawn, interruptores y bloqueables
     this.spawnElectricitySwitches();
     this.spawnBlockables();
 
-    var camera = this.cameras.main;
     
     camera.x = 0;
     camera.y = 0;
 
-    camera.setZoom(0.35);
+    //camera.setZoom(0.35);
+    //camera.setZoom(1.50);
+   
 
     camera.startFollow(this.player);
-
+    camera.setDeadzone(800, 400);
     //Colision de la escoba con los pájaros
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
       o2.hitBird();  
@@ -91,6 +97,45 @@ export default class Level extends Phaser.Scene {
     this.physics.add.overlap(this.spawns, this.birds, (o1, o2) => {
       o2.die();     
     });
+
+  this.physics.add.overlap(this.player, this.zones, (o1, o2) => {
+    if(o2.name === 'middle' && this.player.whatRoomIs() === 1){
+      this.player.changeRoomNumber(0);
+      this.player.changePlayerPosition(this.player.x - 150, this.player.y);
+      camera.scrollX = -800;
+    } 
+    else if(o2.name === 'middle' && this.player.whatRoomIs() === 2){
+      this.player.changeRoomNumber(0);
+      this.player.changePlayerPosition(this.player.x + 150, this.player.y);
+      camera.scrollX = +800;
+    } 
+    else if(o2.name === 'middle' && this.player.whatRoomIs() === 3){
+      this.player.changeRoomNumber(0);
+      this.player.changePlayerPosition(this.player.x , this.player.y + 150);
+      camera.scrollY = +400;
+    } 
+    else if(o2.name === 'east' && this.player.whatRoomIs() !== 1){
+      camera.scrollX = +800;
+      camera.scrollY = -100;
+      this.player.changeRoomNumber(1);
+      this.player.changePlayerPosition(this.player.x + 150, this.player.y);
+    } 
+    else if(o2.name === 'west' && this.player.whatRoomIs() !== 2){
+      camera.scrollX = -800;
+      camera.scrollY = -100;
+      this.player.changeRoomNumber(2);
+      this.player.changePlayerPosition(this.player.x - 150, this.player.y);
+    } 
+    else if(o2.name === 'upper' && this.player.whatRoomIs() !== 3){
+      this.player.changeRoomNumber(3);
+      camera.scrollX = -700;
+      camera.scrollY = -450;
+      //camera.setDeadzone(500, 300);
+      this.player.changePlayerPosition(this.player.x, this.player.y - 150);
+    } 
+  });
+
+    
 
     this.physics.add.collider(this.player, this.walls)
     this.physics.add.collider(this.birds, this.walls)
@@ -170,11 +215,26 @@ export default class Level extends Phaser.Scene {
   //Método que crea las habitaciones del juego
   spawnRooms(){
     new Room(this, 500, 300, 1140, 600, this.rooms, 'fondo_central');  //room3 middle
+    this.zone1= this.add.zone(0, 0, 990, 900).setOrigin(0).setName('middle');// zone middle
+    this.physics.world.enable(this.zone1);
+    this.zones.push(this.zone1);
     new Room(this,1620, 300, 1100, 600, this.rooms, 'fondo_ventana');  //room4 east
+    this.zone2= this.add.zone(1070, 200, 1100, 600).setOrigin(0).setName('east');// zone east
+    this.physics.world.enable(this.zone2);
+    this.zones.push(this.zone2);
     new Room(this, -570, 400, 1000, 400, this.rooms, 'fondo_chimenea');//room5 west   
+    this.zone3= this.add.zone(-1070, 200, 1000, 400).setOrigin(0).setName('west');// zone west
+    this.physics.world.enable(this.zone3);
+    this.zones.push(this.zone3);
     new Room(this, 490, -300, 1160, 600, this.rooms, 'fondo_puerta');  //room6 upper
-    new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_central');  //room7 sotano
+    this.zone4= this.add.zone(0, -600, 960, 550).setOrigin(0).setName('upper'); // zone upper
+    this.physics.world.enable(this.zone4);
+    this.zones.push(this.zone4);
+    new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_central');  //room7 basement
+    // doesn't need basement zone cause we had the button of the basement
   }
+  
+
 
   /**
    * Método que escoge un spawn de entre los existentes y crea un pájaro en su interior
@@ -227,6 +287,13 @@ export default class Level extends Phaser.Scene {
       }
       
     }
+    this.input.on('gameobjectdown', function (pointer, gameObject) {
+
+      console.log(gameObject.name);
+
+  });
+
+
     //Si el número de pájaros en el centro alcanza el máximo, pierdes y se muestra tu puntuación
     if (this.nBirdsInMiddle >= this.maxBirdsInMiddle){
       this.scene.start('end');
