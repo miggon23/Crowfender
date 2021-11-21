@@ -83,12 +83,12 @@ export default class Level extends Phaser.Scene {
     camera.y = 0;
     
 
-    camera.setZoom(0.20);
+    //camera.setZoom(0.20);
     //camera.setZoom(1.50);
    
 
     camera.startFollow(this.player);
-    camera.setDeadzone(1200, 1200);
+    camera.setDeadzone(925, 600);
     camera.scrollY = 0;
     //Colision de la escoba con los pájaros
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
@@ -105,32 +105,39 @@ export default class Level extends Phaser.Scene {
     if(o2.name === 'middleToEast' && this.player.whatRoomIs() === 0){
       this.player.changeRoomNumber(1);
       this.player.changePlayerPosition(this.player.x + 150, this.player.y);
-      //camera.scrollX = +800;
+      camera.scrollX = +900;
     } 
     else if(o2.name === 'middleToWest' && this.player.whatRoomIs() === 0){
       this.player.changeRoomNumber(2);
       this.player.changePlayerPosition(this.player.x - 150, this.player.y);
-      //camera.scrollX = -800;
+      camera.scrollX = -900;
     } 
     else if(o2.name === 'middleToUpper' && this.player.whatRoomIs() === 0){
       this.player.changeRoomNumber(3);
       this.player.changePlayerPosition(this.player.x, this.player.y -400);
-      //camera.scrollX = -800;
+      camera.setDeadzone(100, 600);
+      camera.scrollY = -600;
+      camera.scrollX = -400;   
     } 
     else if(o2.name === 'eastToMiddle' && this.player.whatRoomIs() === 1){
       this.player.changeRoomNumber(0);
       this.player.changePlayerPosition(this.player.x - 150, this.player.y);
-      //camera.scrollX = -800;
+      camera.setDeadzone(925, 600);
+      camera.scrollX = -900;
+      camera.scrollY = 0;
     } 
     else if(o2.name === 'westToMiddle' && this.player.whatRoomIs() === 2){
       this.player.changeRoomNumber(0);
       this.player.changePlayerPosition(this.player.x + 150, this.player.y);
-      //camera.scrollX = -800;
+      camera.setDeadzone(925, 600);
+      camera.scrollX = +900;
+      camera.scrollY = 0;
     } 
     else if(o2.name === 'upperToMiddle' && this.player.whatRoomIs() === 3){
       this.player.changeRoomNumber(0);
       this.player.changePlayerPosition(this.player.x, this.player.y + 400);
-      //camera.scrollX = -800;
+      camera.setDeadzone(925, 600);
+      camera.scrollX = 10;
     } 
   });
 

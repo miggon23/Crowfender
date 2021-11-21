@@ -20,11 +20,13 @@ export default class Basement extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.overlap(this, player, (o1, o2) => {
             if (Phaser.Input.Keyboard.JustDown(this.k)) {
                 if (i){
-                    camera.scrollY = 70;
+                    camera.setDeadzone(925, 600);
+                    camera.scrollY = +250;
                     player.y += 650;
                 } 
                 else if (!i){
-                    camera.scrollY = 280;
+                    camera.setDeadzone(925, 600);
+                    camera.scrollY = +350;
                     player.y -= 650;
                 } 
             }
