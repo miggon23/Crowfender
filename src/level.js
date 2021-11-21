@@ -269,10 +269,10 @@ export default class Level extends Phaser.Scene {
     this.zone6= this.add.zone(500, -25, 150, 100).setOrigin(0).setName('upperToMiddle'); // zone upperToMiddle
     this.physics.world.enable(this.zone6);
     this.zones.push(this.zone6);
-    this.zone7= this.add.zone(1625, 0, 25, 600).setOrigin(0).setName('scrollEastOn'); // zone scroll eastRoomOn
+    this.zone7= this.add.zone(1625, 0, 10, 600).setOrigin(0).setName('scrollEastOn'); // zone scroll eastRoomOn
     this.physics.world.enable(this.zone7);
     this.zones.push(this.zone7);
-    this.zone8= this.add.zone(1575, 0, 25, 600).setOrigin(0).setName('scrollEastOff'); // zone scroll eastRoomOff
+    this.zone8= this.add.zone(1550, 0, 10, 600).setOrigin(0).setName('scrollEastOff'); // zone scroll eastRoomOff
     this.physics.world.enable(this.zone8);
     this.zones.push(this.zone8);
   }
