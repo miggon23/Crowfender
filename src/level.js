@@ -72,7 +72,7 @@ export default class Level extends Phaser.Scene {
     this.basement = new Basement(this, this.player, 500, 1100, false, camera);
     this.electricityAvailable = true;
 
-    this.zone1; this.zone2; this.zone3; this.zone4; this.zone5; this.zone6;
+    this.zone1; this.zone2; this.zone3; this.zone4; this.zone5; this.zone6; this.zone7; this.zone8;
 
     //Creación de muros, zonas de spawn, interruptores y bloqueables
     this.spawnElectricitySwitches();
@@ -102,16 +102,19 @@ export default class Level extends Phaser.Scene {
     });
 
   this.physics.add.overlap(this.player, this.zones, (o1, o2) => {
+    //Transporta al jugador y a la cámara desde la sala central hasta la sala derecha
     if(o2.name === 'middleToEast' && this.player.whatRoomIs() === 0){
       this.player.changeRoomNumber(1);
       this.player.changePlayerPosition(this.player.x + 150, this.player.y);
       camera.scrollX = +900;
     } 
+    //Transporta al jugador y a la cámara desde la sala central hasta la sala izquierda
     else if(o2.name === 'middleToWest' && this.player.whatRoomIs() === 0){
       this.player.changeRoomNumber(2);
       this.player.changePlayerPosition(this.player.x - 150, this.player.y);
       camera.scrollX = -900;
     } 
+    //Transporta al jugador y a la cámara desde la sala central hasta la sala superior
     else if(o2.name === 'middleToUpper' && this.player.whatRoomIs() === 0){
       this.player.changeRoomNumber(3);
       this.player.changePlayerPosition(this.player.x, this.player.y -400);
@@ -119,6 +122,7 @@ export default class Level extends Phaser.Scene {
       camera.scrollY = -600;
       camera.scrollX = -400;   
     } 
+    //Transporta al jugador y a la cámara desde la sala derecha hasta la central
     else if(o2.name === 'eastToMiddle' && this.player.whatRoomIs() === 1){
       this.player.changeRoomNumber(0);
       this.player.changePlayerPosition(this.player.x - 150, this.player.y);
@@ -126,6 +130,7 @@ export default class Level extends Phaser.Scene {
       camera.scrollX = -900;
       camera.scrollY = 0;
     } 
+    //Transporta al jugador y a la cámara desde la sala izquierda hasta la central
     else if(o2.name === 'westToMiddle' && this.player.whatRoomIs() === 2){
       this.player.changeRoomNumber(0);
       this.player.changePlayerPosition(this.player.x + 150, this.player.y);
@@ -133,11 +138,24 @@ export default class Level extends Phaser.Scene {
       camera.scrollX = +900;
       camera.scrollY = 0;
     } 
+    //Transporta al jugador y a la cámara desde la sala superior hasta la central
     else if(o2.name === 'upperToMiddle' && this.player.whatRoomIs() === 3){
       this.player.changeRoomNumber(0);
       this.player.changePlayerPosition(this.player.x, this.player.y + 400);
       camera.setDeadzone(925, 600);
       camera.scrollX = 10;
+    } 
+    //Activa el scroll en la sala derecha
+    else if(o2.name === 'scrollEastOn' && !this.player.isScrolling()){
+      camera.setDeadzone(100, 600);
+      camera.scrollY = + 0;
+      this.player.switchPlayerScrollToTrue();
+    } 
+    //Desactiva el scroll en la sala derecha
+    else if(o2.name === 'scrollEastOff' && this.player.isScrolling()){
+      camera.setDeadzone(925, 600);
+      camera.scrollY = 0;
+      this.player.switchPlayerScrollToFalse();
     } 
   });
 
@@ -251,6 +269,12 @@ export default class Level extends Phaser.Scene {
     this.zone6= this.add.zone(500, -25, 150, 100).setOrigin(0).setName('upperToMiddle'); // zone upperToMiddle
     this.physics.world.enable(this.zone6);
     this.zones.push(this.zone6);
+    this.zone7= this.add.zone(1625, 0, 25, 600).setOrigin(0).setName('scrollEastOn'); // zone scroll eastRoomOn
+    this.physics.world.enable(this.zone7);
+    this.zones.push(this.zone7);
+    this.zone8= this.add.zone(1575, 0, 25, 600).setOrigin(0).setName('scrollEastOff'); // zone scroll eastRoomOff
+    this.physics.world.enable(this.zone8);
+    this.zones.push(this.zone8);
   }
   
 

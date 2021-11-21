@@ -31,6 +31,7 @@ export default class Player extends Phaser.GameObjects.Container {
     this.d = this.scene.input.keyboard.addKey('D');
     this.wood = false;
     this.hittingState = false;
+    this.scrolling = false;
     this.updateScore();
     this.room = 0;
   }
@@ -91,6 +92,18 @@ export default class Player extends Phaser.GameObjects.Container {
 
   switchPlayerHit(){
     this.hittingState = !this.hittingState;
+  }
+
+  isScrolling(){
+    return this.scrolling;
+  }
+
+  switchPlayerScrollToTrue(){
+    this.scrolling = true;
+  }
+
+  switchPlayerScrollToFalse(){
+    this.scrolling = true;
   }
 
   /**
