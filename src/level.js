@@ -39,6 +39,7 @@ export default class Level extends Phaser.Scene {
     //Creación de habitaciones
     this.spawnRooms();
     this.spawnWalls();
+    this.spawnZonesForTP();
     
     this.spawns = this.add.group(); 
 
@@ -62,7 +63,7 @@ export default class Level extends Phaser.Scene {
     this.spawnTime = Phaser.Math.Between(2000, 4000);
     this.newRand;
     this.birds = this.add.group(); 
-    this.player = new Player(this, 500, 300);
+    this.player = new Player(this, 500, 400);
     let broom = new Broom(this);
     this.player.add(broom);
     this.chest = new Chest(this, this.player, 250, 1032);
@@ -71,7 +72,7 @@ export default class Level extends Phaser.Scene {
     this.basement = new Basement(this, this.player, 500, 1100, false, camera);
     this.electricityAvailable = true;
 
-    this.zone1; this.zone2; this.zone3; this.zone4;
+    this.zone1; this.zone2; this.zone3; this.zone4; this.zone5; this.zone6;
 
     //Creación de muros, zonas de spawn, interruptores y bloqueables
     this.spawnElectricitySwitches();
@@ -80,13 +81,15 @@ export default class Level extends Phaser.Scene {
     
     camera.x = 0;
     camera.y = 0;
+    
 
-    //camera.setZoom(0.35);
+    camera.setZoom(0.20);
     //camera.setZoom(1.50);
    
 
     camera.startFollow(this.player);
-    camera.setDeadzone(800, 400);
+    camera.setDeadzone(1200, 1200);
+    camera.scrollY = 0;
     //Colision de la escoba con los pájaros
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
       o2.hitBird();  
@@ -99,39 +102,35 @@ export default class Level extends Phaser.Scene {
     });
 
   this.physics.add.overlap(this.player, this.zones, (o1, o2) => {
-    if(o2.name === 'middle' && this.player.whatRoomIs() === 1){
-      this.player.changeRoomNumber(0);
-      this.player.changePlayerPosition(this.player.x - 150, this.player.y);
-      camera.scrollX = -800;
-    } 
-    else if(o2.name === 'middle' && this.player.whatRoomIs() === 2){
-      this.player.changeRoomNumber(0);
-      this.player.changePlayerPosition(this.player.x + 150, this.player.y);
-      camera.scrollX = +800;
-    } 
-    else if(o2.name === 'middle' && this.player.whatRoomIs() === 3){
-      this.player.changeRoomNumber(0);
-      this.player.changePlayerPosition(this.player.x , this.player.y + 150);
-      camera.scrollY = +400;
-    } 
-    else if(o2.name === 'east' && this.player.whatRoomIs() !== 1){
-      camera.scrollX = +800;
-      camera.scrollY = -100;
+    if(o2.name === 'middleToEast' && this.player.whatRoomIs() === 0){
       this.player.changeRoomNumber(1);
       this.player.changePlayerPosition(this.player.x + 150, this.player.y);
+      //camera.scrollX = +800;
     } 
-    else if(o2.name === 'west' && this.player.whatRoomIs() !== 2){
-      camera.scrollX = -800;
-      camera.scrollY = -100;
+    else if(o2.name === 'middleToWest' && this.player.whatRoomIs() === 0){
       this.player.changeRoomNumber(2);
       this.player.changePlayerPosition(this.player.x - 150, this.player.y);
+      //camera.scrollX = -800;
     } 
-    else if(o2.name === 'upper' && this.player.whatRoomIs() !== 3){
+    else if(o2.name === 'middleToUpper' && this.player.whatRoomIs() === 0){
       this.player.changeRoomNumber(3);
-      camera.scrollX = -700;
-      camera.scrollY = -450;
-      //camera.setDeadzone(500, 300);
-      this.player.changePlayerPosition(this.player.x, this.player.y - 150);
+      this.player.changePlayerPosition(this.player.x, this.player.y -400);
+      //camera.scrollX = -800;
+    } 
+    else if(o2.name === 'eastToMiddle' && this.player.whatRoomIs() === 1){
+      this.player.changeRoomNumber(0);
+      this.player.changePlayerPosition(this.player.x - 150, this.player.y);
+      //camera.scrollX = -800;
+    } 
+    else if(o2.name === 'westToMiddle' && this.player.whatRoomIs() === 2){
+      this.player.changeRoomNumber(0);
+      this.player.changePlayerPosition(this.player.x + 150, this.player.y);
+      //camera.scrollX = -800;
+    } 
+    else if(o2.name === 'upperToMiddle' && this.player.whatRoomIs() === 3){
+      this.player.changeRoomNumber(0);
+      this.player.changePlayerPosition(this.player.x, this.player.y + 400);
+      //camera.scrollX = -800;
     } 
   });
 
@@ -151,8 +150,8 @@ export default class Level extends Phaser.Scene {
   //Método que crea los muros que delimitan las habitaciones
   spawnWalls(){
     this.walls = this.add.group();
-    // Paredes fondo
-    //new Wall(this, 1000, 170, 2100, 340, this.walls);
+    //Paredes fondo
+    new Wall(this, 1000, 120, 2100, 270, this.walls);
     new Wall(this, 500, 770, 3100, 340, this.walls);
     new Wall(this, 500, 1370, 1000, 340, this.walls);
     new Wall(this, 500, -430, 1000, 340, this.walls);
@@ -164,6 +163,11 @@ export default class Level extends Phaser.Scene {
     new Wall(this, -40, -40, 90, 1000, this.walls);
     new Wall(this, 1040, 1200, 90, 1000, this.walls);
     new Wall(this, 1040, -40, 90, 1000, this.walls);
+
+    new Wall(this, 200, 275, 500, 90, this.walls);
+    new Wall(this, 800, 275, 500, 90, this.walls);
+
+
     new Wall(this, 2090, 450, 90, 1200, this.walls);
     // Cofre
     new Wall(this, 250, 970, 64, 64, this.walls);
@@ -215,23 +219,31 @@ export default class Level extends Phaser.Scene {
   //Método que crea las habitaciones del juego
   spawnRooms(){
     new Room(this, 500, 300, 1140, 600, this.rooms, 'fondo_central');  //room3 middle
-    this.zone1= this.add.zone(0, 0, 990, 900).setOrigin(0).setName('middle');// zone middle
+    new Room(this,1620, 300, 1100, 600, this.rooms, 'fondo_ventana');  //room4 east  
+    new Room(this, -570, 400, 1000, 400, this.rooms, 'fondo_chimenea');//room5 west   
+    new Room(this, 490, -300, 1160, 600, this.rooms, 'fondo_puerta');  //room6 upper
+    new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_central');  //room7 basement   
+  }
+
+  spawnZonesForTP(){
+    this.zone1= this.add.zone(1020, 300, 50, 300).setOrigin(0).setName('middleToEast');// zone middleToEast
     this.physics.world.enable(this.zone1);
     this.zones.push(this.zone1);
-    new Room(this,1620, 300, 1100, 600, this.rooms, 'fondo_ventana');  //room4 east
-    this.zone2= this.add.zone(1070, 200, 1100, 600).setOrigin(0).setName('east');// zone east
+    this.zone2= this.add.zone(-100, 300, 100, 300).setOrigin(0).setName('middleToWest');// zone middleToWest
     this.physics.world.enable(this.zone2);
     this.zones.push(this.zone2);
-    new Room(this, -570, 400, 1000, 400, this.rooms, 'fondo_chimenea');//room5 west   
-    this.zone3= this.add.zone(-1070, 200, 1000, 400).setOrigin(0).setName('west');// zone west
+    this.zone3= this.add.zone(500, 200, 150, 100).setOrigin(0).setName('middleToUpper');// zone middleToUpper
     this.physics.world.enable(this.zone3);
     this.zones.push(this.zone3);
-    new Room(this, 490, -300, 1160, 600, this.rooms, 'fondo_puerta');  //room6 upper
-    this.zone4= this.add.zone(0, -600, 960, 550).setOrigin(0).setName('upper'); // zone upper
+    this.zone4= this.add.zone(1025, 300, 50, 300).setOrigin(0).setName('eastToMiddle'); // zone eastToMiddle
     this.physics.world.enable(this.zone4);
     this.zones.push(this.zone4);
-    new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_central');  //room7 basement
-    // doesn't need basement zone cause we had the button of the basement
+    this.zone5= this.add.zone(-80, 300, 50, 300).setOrigin(0).setName('westToMiddle'); // zone westToMiddle
+    this.physics.world.enable(this.zone5);
+    this.zones.push(this.zone5);
+    this.zone6= this.add.zone(500, -25, 150, 100).setOrigin(0).setName('upperToMiddle'); // zone upperToMiddle
+    this.physics.world.enable(this.zone6);
+    this.zones.push(this.zone6);
   }
   
 
@@ -287,13 +299,17 @@ export default class Level extends Phaser.Scene {
       }
       
     }
+
+
+
     this.input.on('gameobjectdown', function (pointer, gameObject) {
 
+     
+
       console.log(gameObject.name);
+      
 
   });
-
-
     //Si el número de pájaros en el centro alcanza el máximo, pierdes y se muestra tu puntuación
     if (this.nBirdsInMiddle >= this.maxBirdsInMiddle){
       this.scene.start('end');
