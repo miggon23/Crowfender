@@ -68,10 +68,10 @@ export default class Level extends Phaser.Scene {
     this.birds = this.add.group(); 
     let broom = new Broom(this);
     this.player.add(broom);
-    this.chest = new Chest(this, this.player, 250, 1032);
+    this.chest = new Chest(this, this.player, 740, 1000, 250, 200);
     var camera = this.cameras.main;
-    this.basement = new Basement(this, this.player, 500, 485, true, camera);
-    this.basement = new Basement(this, this.player, 500, 1100, false, camera);
+    this.basement = new Basement(this, this.player, 230, 435, 160, 100, true, camera);
+    this.basement = new Basement(this, this.player, 270, 1000, 100, 100, false, camera);
     this.electricityAvailable = true;
 
     this.zone1; this.zone2; this.zone3; this.zone4; this.zone5; this.zone6; this.zone7; this.zone8;
@@ -187,13 +187,13 @@ export default class Level extends Phaser.Scene {
     new Wall(this, 1040, 1200, 90, 1000, this.walls);
     new Wall(this, 1040, -40, 90, 1000, this.walls);
 
-    new Wall(this, 200, 275, 500, 90, this.walls);
-    new Wall(this, 800, 275, 500, 90, this.walls);
+    new Wall(this, 205, 275, 900, 90, this.walls);
+    new Wall(this, 1515, 275, 1400, 90, this.walls);
 
 
     new Wall(this, 2090, 450, 90, 1200, this.walls);
     // Cofre
-    new Wall(this, 250, 970, 64, 64, this.walls);
+    new Wall(this, 740, 1000, 175, 100, this.walls);
     // Chimenea 
     new Wall(this, -780, 360, 170, 128, this.walls);
 
@@ -255,7 +255,7 @@ export default class Level extends Phaser.Scene {
     this.zone2= this.add.zone(-100, 300, 100, 300).setOrigin(0).setName('middleToWest');// zone middleToWest
     this.physics.world.enable(this.zone2);
     this.zones.push(this.zone2);
-    this.zone3= this.add.zone(500, 200, 150, 100).setOrigin(0).setName('middleToUpper');// zone middleToUpper
+    this.zone3= this.add.zone(655, 200, 160, 100).setOrigin(0).setName('middleToUpper');// zone middleToUpper
     this.physics.world.enable(this.zone3);
     this.zones.push(this.zone3);
     this.zone4= this.add.zone(1025, 300, 50, 300).setOrigin(0).setName('eastToMiddle'); // zone eastToMiddle
@@ -264,7 +264,7 @@ export default class Level extends Phaser.Scene {
     this.zone5= this.add.zone(-80, 300, 50, 300).setOrigin(0).setName('westToMiddle'); // zone westToMiddle
     this.physics.world.enable(this.zone5);
     this.zones.push(this.zone5);
-    this.zone6= this.add.zone(500, -25, 150, 100).setOrigin(0).setName('upperToMiddle'); // zone upperToMiddle
+    this.zone6= this.add.zone(655, -25, 160, 100).setOrigin(0).setName('upperToMiddle'); // zone upperToMiddle
     this.physics.world.enable(this.zone6);
     this.zones.push(this.zone6);
     this.zone7= this.add.zone(1625, 0, 10, 600).setOrigin(0).setName('scrollEastOn'); // zone scroll eastRoomOn
