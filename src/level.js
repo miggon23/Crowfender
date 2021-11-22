@@ -74,7 +74,7 @@ export default class Level extends Phaser.Scene {
     this.basement = new Basement(this, this.player, 270, 1000, 100, 100, false, camera);
     this.electricityAvailable = true;
 
-    this.zone1; this.zone2; this.zone3; this.zone4; this.zone5; this.zone6; this.zone7; this.zone8;
+    this.zone1; this.zone2; this.zone3; this.zone4; this.zone5; this.zone6; this.zone7; this.zone8; this.zone9; this.zone10;
 
     
     camera.x = 0;
@@ -116,9 +116,9 @@ export default class Level extends Phaser.Scene {
     else if(o2.name === 'middleToUpper' && this.player.whatRoomIs() === 0){
       this.player.changeRoomNumber(3);
       this.player.changePlayerPosition(this.player.x, this.player.y -400);
-      camera.setDeadzone(100, 600);
-      camera.scrollY = -600;
-      camera.scrollX = -400;   
+      camera.setDeadzone(925, 600);
+       camera.scrollY = -600;
+       camera.scrollX = 0;   
     } 
     //Transporta al jugador y a la cámara desde la sala derecha hasta la central
     else if(o2.name === 'eastToMiddle' && this.player.whatRoomIs() === 1){
@@ -148,11 +148,28 @@ export default class Level extends Phaser.Scene {
       camera.setDeadzone(100, 600);
       camera.scrollY = + 0;
       this.player.switchPlayerScrollToTrue();
+      console.log(this.player.isScrolling());
+      
     } 
     //Desactiva el scroll en la sala derecha
     else if(o2.name === 'scrollEastOff' && this.player.isScrolling()){
       camera.setDeadzone(925, 600);
       camera.scrollY = 0;
+      camera.scrollX = +1090;
+      this.player.switchPlayerScrollToFalse();
+      console.log(this.player.isScrolling());
+    } 
+    else if(o2.name === 'scrollUpperOn' && !this.player.isScrolling()){
+      camera.setDeadzone(100, 600);
+      camera.scrollX = 0;
+      camera.scrollY = -600;
+      this.player.switchPlayerScrollToTrue();
+    } 
+    //Desactiva el scroll en la sala derecha
+    else if(o2.name === 'scrollUpperOff' && this.player.isScrolling()){
+      camera.setDeadzone(925, 600);
+      camera.scrollY = -600;
+      camera.scrollX = -45;
       this.player.switchPlayerScrollToFalse();
     } 
   });
@@ -267,12 +284,18 @@ export default class Level extends Phaser.Scene {
     this.zone6= this.add.zone(655, -25, 160, 100).setOrigin(0).setName('upperToMiddle'); // zone upperToMiddle
     this.physics.world.enable(this.zone6);
     this.zones.push(this.zone6);
-    this.zone7= this.add.zone(1625, 0, 10, 600).setOrigin(0).setName('scrollEastOn'); // zone scroll eastRoomOn
+    this.zone7= this.add.zone(1635, 0, 10, 600).setOrigin(0).setName('scrollEastOn'); // zone scroll eastRoomOn
     this.physics.world.enable(this.zone7);
     this.zones.push(this.zone7);
-    this.zone8= this.add.zone(1550, 0, 10, 600).setOrigin(0).setName('scrollEastOff'); // zone scroll eastRoomOff
+    this.zone8= this.add.zone(1530, 0, 10, 600).setOrigin(0).setName('scrollEastOff'); // zone scroll eastRoomOff
     this.physics.world.enable(this.zone8);
     this.zones.push(this.zone8);
+    this.zone9= this.add.zone(455, -325, 25, 300).setOrigin(0).setName('scrollUpperOn'); // zone scroll upperRoomOn
+    this.physics.world.enable(this.zone9);
+    this.zones.push(this.zone9);
+    this.zone10= this.add.zone(555, -325, 25, 300).setOrigin(0).setName('scrollUpperOff'); // zone scroll upperRoomOff
+    this.physics.world.enable(this.zone10);
+    this.zones.push(this.zone10);
   }
   
 

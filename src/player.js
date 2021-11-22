@@ -103,7 +103,7 @@ export default class Player extends Phaser.GameObjects.Container {
   }
 
   switchPlayerScrollToFalse(){
-    this.scrolling = true;
+    this.scrolling = false;
   }
 
   /**
