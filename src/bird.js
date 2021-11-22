@@ -64,8 +64,10 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       this.body.setVelocityX(-this.speed);
     }
     else if (dir === 4){
-      this.advanceRoom();
+      if (this.iCanAdvance())
+        this.advanceRoom();
     }
+
 
     // this.scene.time.addEvent( {
     //   delay: 500, 
@@ -73,6 +75,26 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     //   callbackScope: this,
     //   loop: false
     // });
+  }
+
+  //Comprueba que puede pasar a la siguiente sala. Si está en la sala del spawn 
+  //comprobará el blockeable. En cualquier otro caso, comprobará simplemente que no haya llegado
+  //al final de su ruta
+  iCanAdvance(){
+    if(this.actualOrderRoom === 0)
+    {
+      //return !this.rooms[this.route[0]].spawnBlocked(); 
+      if(!this.rooms[this.route[0]].spawnBlocked()){
+        
+        return true;
+      }
+      else{
+        console.log("esta blockeado");
+        return false;
+      }
+    }
+    else
+      return (this.actualOrderRoom !== this.route.length - 1);   
   }
 
   changeRoom(i){
@@ -87,10 +109,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   //Envía al pájaro a la siguiente sala marcada por su lista de rutas. Comprueba si está
   // en la sala central, en ese caso, no avanza. La sala central es siempre la última del array de rutas
   advanceRoom(){
-    if(this.actualOrderRoom !== this.route.length - 1)
-    { //Equivalente a comparar las habitaciones: if(this.rooms[this.route[this.actualOrderRoom]] !== this.rooms[this.route[this.route.length - 1]])
-
-      //Hemos comprobado en el if que el actualOrderRoom no ha llegado a la última sala, 
+    //Hemos comprobado en el if que el actualOrderRoom no ha llegado a la última sala, 
       // podemos confiar en que no se saldrá del tamaño del array de rutas
       this.actualOrderRoom++;
       this.changeRoom(this.actualOrderRoom);
@@ -98,7 +117,6 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       {
         this.level.addBirdInMiddle();
       }
-    }
   }
 
    //Clase para eliminar al pájaro, bien por la electricidad o porque le hayan dado el último golpe

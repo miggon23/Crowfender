@@ -14,8 +14,9 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
    * @param {number} scaleY display en el eje y
    * @param {array} spawnArray array de spawns
    * @param {string} sprite string con el nombre del sprite de la spawnzone
+   * @param {blockable} blockable Blockable asociado al spawn
    */
-  constructor(scene, x, y, scaleX, scaleY, spawnArray, spawnsGroup, sprite) {
+  constructor(scene, x, y, scaleX, scaleY, spawnArray, spawnsGroup, sprite, blockable) {
 
     super(scene, x, y, sprite);
     this.x = x;
@@ -30,6 +31,7 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
     spawnArray.push(this);
 
     this.body.enable = false;
+    this.blockable = blockable;
 
     //this.visible = false;
   }
@@ -47,6 +49,10 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
   deactivateElectricity(){
     this.visible=true;
     this.body.enable= false;
+  }
+
+  spawnBlocked(){
+    return this.blockable.isBlocked();
   }
 
 }

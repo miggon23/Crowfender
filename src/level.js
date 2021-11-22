@@ -36,14 +36,17 @@ export default class Level extends Phaser.Scene {
 
     this.zones = [];
     
-    //Creación de habitaciones
+    //Creación de habitaciones y elementos del juego
     this.spawnRooms();
     this.spawnWalls();
+    this.player = new Player(this, 500, 400);
     this.spawnZonesForTP();
     
     this.spawns = this.add.group(); 
 
+    this.spawnBlockables();
     this.spawnZones();
+    this.spawnElectricitySwitches();
     
     //Juntamos los arrays para pasarle al pájaros las posibles zonas por donde puede moverse
     this.birdZones = this.spawnzones.concat(this.rooms);
@@ -63,7 +66,6 @@ export default class Level extends Phaser.Scene {
     this.spawnTime = Phaser.Math.Between(2000, 4000);
     this.newRand;
     this.birds = this.add.group(); 
-    this.player = new Player(this, 500, 400);
     let broom = new Broom(this);
     this.player.add(broom);
     this.chest = new Chest(this, this.player, 250, 1032);
@@ -73,10 +75,6 @@ export default class Level extends Phaser.Scene {
     this.electricityAvailable = true;
 
     this.zone1; this.zone2; this.zone3; this.zone4; this.zone5; this.zone6; this.zone7; this.zone8;
-
-    //Creación de muros, zonas de spawn, interruptores y bloqueables
-    this.spawnElectricitySwitches();
-    this.spawnBlockables();
 
     
     camera.x = 0;
@@ -210,10 +208,10 @@ export default class Level extends Phaser.Scene {
 
   //Método que crea las zonas de spawn de los pájaros
   spawnZones(){
-    this.spawn_fireplace = new SpawnZone(this, -570, 100, 1000, 200, this.spawnzones, this.spawns, 'spawn_chimenea');
-    this.spawn_window = new SpawnZone(this, 2360, 300, 400, 600, this.spawnzones, this.spawns, 'spawn_ventana');
-    this.spawn_door =new SpawnZone(this, -290, -300, 400, 600, this.spawnzones, this.spawns, 'spawn_puerta');
-   }
+    this.spawn_fireplace = new SpawnZone(this, -570, 100, 1000, 200, this.spawnzones, this.spawns, 'spawn_chimenea', this.fireplace);
+    this.spawn_window = new SpawnZone(this, 2360, 300, 400, 600, this.spawnzones, this.spawns, 'spawn_ventana', this.window);
+    this.spawn_door =new SpawnZone(this, -290, -300, 400, 600, this.spawnzones, this.spawns, 'spawn_puerta', this.door);
+  }
 
   //Método que crea los interruptores de electricidad
   spawnElectricitySwitches(){
