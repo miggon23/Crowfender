@@ -215,9 +215,9 @@ export default class Level extends Phaser.Scene {
 
   //Método que crea los interruptores de electricidad
   spawnElectricitySwitches(){
-    this.electricity_fireplace = new Electricity(this, this.player, -200, 400, this.spawn_fireplace);
-    this.electricity_door = new Electricity(this, this.player, 200, -240, this.spawn_door);
-    this.electricity_window = new Electricity(this, this.player, 1800, 300, this.spawn_window);
+    this.electricity_fireplace = new Electricity(this, this.player, -352, 380, this.spawn_fireplace);
+    this.electricity_door = new Electricity(this, this.player, 276, -300, this.spawn_door);
+    this.electricity_window = new Electricity(this, this.player, 1800, 304, this.spawn_window);
   }
     isElectricityAvailable(){
     return this.electricityAvailable;
@@ -245,7 +245,7 @@ export default class Level extends Phaser.Scene {
     new Room(this,1620, 300, 1100, 600, this.rooms, 'fondo_ventana');  //room4 east  
     new Room(this, -570, 400, 1000, 400, this.rooms, 'fondo_chimenea');//room5 west   
     new Room(this, 490, -300, 1160, 600, this.rooms, 'fondo_puerta');  //room6 upper
-    new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_central');  //room7 basement   
+    new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_sotano');  //room7 basement   
   }
 
   spawnZonesForTP(){

@@ -14,7 +14,7 @@
      */
     
     constructor(scene, player, x, y, spawn) {
-      super(scene, x, y, 'electricity');
+      super(scene, x, y, 'electricidad_verde');
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this, true);
       this.k = this.scene.input.keyboard.addKey('K');
@@ -24,7 +24,18 @@
           this.scene.putElectricityOnCooldown();
       }
       });
+      
     } 
+      preUpdate(t,dt) {
+        super.preUpdate(t, dt);
+
+        if(this.scene.isElectricityAvailable()){
+          this.setTexture('electricidad_verde');
+        }
+        else{
+          this.setTexture('electricidad_rojo');
+        }
+    }
 }
 
   
