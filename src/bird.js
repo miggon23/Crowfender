@@ -32,6 +32,9 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.delayElectricity = 50;
     this.route = route;
     this.rooms = rooms;
+    
+    //Añadimos la vida
+    this.health = 3;
 
     // En lugar de guardar la habitación actual, guardo el orden de la habitación actual
     // Habitación de spawn = 0, la siguiente = 1... 
@@ -61,8 +64,10 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       this.body.setVelocityX(-this.speed);
     }
     else if (dir === 4){
-      this.advanceRoom();
+      if (this.iCanAdvance())
+        this.advanceRoom();
     }
+
 
     // this.scene.time.addEvent( {
     //   delay: 500, 
@@ -72,11 +77,31 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     // });
   }
 
+  //Comprueba que puede pasar a la siguiente sala. Si está en la sala del spawn 
+  //comprobará el blockeable. En cualquier otro caso, comprobará simplemente que no haya llegado
+  //al final de su ruta
+  iCanAdvance(){
+    if(this.actualOrderRoom === 0)
+    {
+      //return !this.rooms[this.route[0]].spawnBlocked(); 
+      if(!this.rooms[this.route[0]].spawnBlocked()){
+        
+        return true;
+      }
+      else{
+        console.log("esta blockeado");
+        return false;
+      }
+    }
+    else
+      return (this.actualOrderRoom !== this.route.length - 1);   
+  }
+
   changeRoom(i){
     let topLeft = this.rooms[this.route[i]].getTopLeft();
     let botRight = this.rooms[this.route[i]].getBottomRight();
     let x = Phaser.Math.Between(topLeft.x, botRight.x);
-    let y = Phaser.Math.Between((botRight.y / 3), botRight.y);
+    let y = Phaser.Math.Between((botRight.y - ((botRight.y - topLeft.y) / 3)), botRight.y);
     this.x = x;
     this.y = y;
   }
@@ -84,10 +109,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   //Envía al pájaro a la siguiente sala marcada por su lista de rutas. Comprueba si está
   // en la sala central, en ese caso, no avanza. La sala central es siempre la última del array de rutas
   advanceRoom(){
-    if(this.actualOrderRoom !== this.route.length - 1)
-    { //Equivalente a comparar las habitaciones: if(this.rooms[this.route[this.actualOrderRoom]] !== this.rooms[this.route[this.route.length - 1]])
-
-      //Hemos comprobado en el if que el actualOrderRoom no ha llegado a la última sala, 
+    //Hemos comprobado en el if que el actualOrderRoom no ha llegado a la última sala, 
       // podemos confiar en que no se saldrá del tamaño del array de rutas
       this.actualOrderRoom++;
       this.changeRoom(this.actualOrderRoom);
@@ -95,22 +117,27 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       {
         this.level.addBirdInMiddle();
       }
-    }
   }
 
-  static electricityActivated = false;
-  static electricityCooldown = 0;
-
-  static changeStateElectricity(){
-    this.electricityActivated = !this.electricityActivated;
-    this.electricityCooldown = 0;
+   //Clase para eliminar al pájaro, bien por la electricidad o porque le hayan dado el último golpe
+   die(){
+    console.log("i die");
+      this.level.subBird(); //Restamos un pájaro del contador y añadimos un punto
+      this.destroy();
   }
 
-  //Envía al pájaro en la sala anterior a la que está, siempre y cuando no se encuentra en el spawn
-  backRoom(){
+
+  //Envía al pájaro en la sala anterior a la que está, siempre y cuando no se encuentra en el spawn o 
+  // sea su último golpe para acabar con su vida. Se llama cuando el jugador golpea a un pájaro con la escoba
+  hitBird(){
+    this.health--;
     if(this.actualOrderRoom === this.route.length - 1)
     {
       this.level.substractBirdFromMiddle();
+    }
+    
+    if(this.heath === 0){
+      this.die();
     }
     else if(this.actualOrderRoom > 0)
     {
@@ -143,15 +170,6 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     else if (this.stopMovementTimer >= this.delayToStopMovement){
       this.cancelMovement();
       this.stopMovementTimer = 0;
-    }
-
-    if(Bird.electricityActivated){
-      this.level.subBird(); //Restamos un pájaro del contador y añadimos un punto
-      this.destroy();
-      if(Bird.electricityCooldown > this.delayElectricity){
-        Bird.changeStateElectricity();
-      }
-      
     }
   }  
 }

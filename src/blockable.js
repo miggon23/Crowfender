@@ -48,5 +48,9 @@
       this.blocked = false;
       this.visible = false;
     }
+
+    isBlocked(){
+      return this.blocked;
+    }
   }
   

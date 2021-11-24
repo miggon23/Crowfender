@@ -31,7 +31,9 @@ export default class Player extends Phaser.GameObjects.Container {
     this.d = this.scene.input.keyboard.addKey('D');
     this.wood = false;
     this.hittingState = false;
+    this.scrolling = false;
     this.updateScore();
+    this.room = 0;
   }
 
     /**
@@ -54,6 +56,19 @@ export default class Player extends Phaser.GameObjects.Container {
    * con la chimenea, la ventana o la puerta, el jugador gasta la madera. En ambos casos
    * se actualiza en pantalla si lleva madera encima o no
    */
+  whatRoomIs(){
+    return this.room;
+  }
+
+  changeRoomNumber(roomNumber){
+    this.room = roomNumber;
+  }
+
+  changePlayerPosition(x, y){
+    this.x = x;
+    this.y = y;
+  }
+
   pickWood(){
     this.wood = true;
     this.updateScore();
@@ -77,6 +92,18 @@ export default class Player extends Phaser.GameObjects.Container {
 
   switchPlayerHit(){
     this.hittingState = !this.hittingState;
+  }
+
+  isScrolling(){
+    return this.scrolling;
+  }
+
+  switchPlayerScrollToTrue(){
+    this.scrolling = true;
+  }
+
+  switchPlayerScrollToFalse(){
+    this.scrolling = false;
   }
 
   /**

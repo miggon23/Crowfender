@@ -23,6 +23,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('fondo_chimenea', 'fondo_chimenea.png');
     this.load.image('fondo_ventana', 'fondo_ventana.png');
     this.load.image('fondo_puerta', 'fondo_puerta.png');
+    this.load.image('fondo_sotano', 'fondo_sotano.png');
     this.load.image('tabla_puerta', 'tabla_puerta.png');
     this.load.image('tabla_ventana', 'tabla_ventana.png');
     this.load.image('tabla_chimenea', 'tabla_chimenea.png');
@@ -38,6 +39,8 @@ export default class Boot extends Phaser.Scene {
     this.load.image('window_bloq', 'ventana_bloq.png');
     this.load.image('empty', 'empty.png');
     this.load.image('sotano', 'sotano.png');
+    this.load.image('electricidad_rojo', 'electricidad_rojo.png');
+    this.load.image('electricidad_verde', 'electricidad_verde.png');
   }
 
   /**
