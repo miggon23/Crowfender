@@ -7,7 +7,6 @@ import Broom from './broom.js';
 import Blockable from './blockable.js';
 import Wall from './wall.js';
 import Room from './room.js';
-import SalaCentral from './salacentral.js';
 import SpawnZone from './spawnzone.js';
 import Basement from './basement.js';
 
