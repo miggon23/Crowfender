@@ -181,10 +181,9 @@ export default class Level extends Phaser.Scene {
     
   }
 
-  //Resta un pájaro del contador y suma un punto
+  //Resta un pájaro del contador
   subBird(){
     this.nBirds--;
-    this.player.point();
   }
 
   //Método que crea los muros que delimitan las habitaciones
