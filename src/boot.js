@@ -19,6 +19,8 @@ export default class Boot extends Phaser.Scene {
   preload() {
     // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     this.load.setPath('assets/sprites/');
+    this.load.image('playbutton', 'playbutton.png')
+	this.load.image('optionsbutton', 'optionsbutton.png')
     this.load.image('fondo_central', 'fondo_central.png');
     this.load.image('fondo_chimenea', 'fondo_chimenea.png');
     this.load.image('fondo_ventana', 'fondo_ventana.png');
@@ -48,6 +50,6 @@ export default class Boot extends Phaser.Scene {
    * nivel del juego
    */
   create() {
-    this.scene.start('level');
+    this.scene.start('menu');
   }
 }
