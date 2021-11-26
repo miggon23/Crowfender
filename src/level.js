@@ -132,7 +132,7 @@ export default class Level extends Phaser.Scene {
       this.player.changeRoomNumber(0);
       this.player.changePlayerPosition(this.player.x + 150, this.player.y);
       camera.setDeadzone(925, 600);
-      camera.scrollX = +900;
+      camera.scrollX = +0;
       camera.scrollY = 0;
     } 
     //Transporta al jugador y a la cámara desde la sala superior hasta la central
