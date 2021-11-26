@@ -121,7 +121,6 @@ export default class Bird extends Phaser.GameObjects.Sprite {
 
    //Clase para eliminar al pájaro, bien por la electricidad o porque le hayan dado el último golpe
    die(){
-    console.log("i die");
       this.level.subBird(); //Restamos un pájaro del contador y añadimos un punto
       this.destroy();
   }

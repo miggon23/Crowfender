@@ -41,12 +41,12 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
       this.body.enable= true;
       this.scene.time.addEvent( {
         delay: 300, 
-        callback: this.deactivateElectricity,
+        callback: this.desactivateElectricity,
         callbackScope: this,
         loop: false
       });
     }
-  deactivateElectricity(){
+  desactivateElectricity(){
     this.visible=true;
     this.body.enable= false;
   }

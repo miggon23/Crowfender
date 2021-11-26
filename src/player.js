@@ -15,7 +15,6 @@ export default class Player extends Phaser.GameObjects.Container {
   constructor(scene, x, y) {
     let spriteShown = scene.add.sprite(30, 32, 'player');
     super(scene, x, y, spriteShown);
-    this.score = 0;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     // Queremos que el jugador no se salga de los límites del mundo
@@ -32,7 +31,6 @@ export default class Player extends Phaser.GameObjects.Container {
     this.wood = false;
     this.hittingState = false;
     this.scrolling = false;
-    this.updateScore();
     this.room = 0;
   }
 
@@ -41,16 +39,6 @@ export default class Player extends Phaser.GameObjects.Container {
      * por lo que se le desplazará en y abajo.
      * */
 
-
-  /**
-   * El jugador ha acabado con un pájaro por lo que este método añade un punto y
-   * actualiza la UI con la puntuación actual.
-   */
-  point() {
-    this.score++;
-    this.updateScore();
-  }
-  
   /**
    * Al interactuar con el cofre, el jugador recoge madera, mientras que al interactuar
    * con la chimenea, la ventana o la puerta, el jugador gasta la madera. En ambos casos
@@ -71,23 +59,14 @@ export default class Player extends Phaser.GameObjects.Container {
 
   pickWood(){
     this.wood = true;
-    this.updateScore();
   }
 
   getWood(){
     if(this.wood){
       this.wood = false;
-      this.updateScore();
       return true;
     }
     else return false;
-  }
-
-  /**
-   * Actualiza la UI con la puntuación actual y la madera
-   */
-  updateScore() {
-    this.label.text = 'Puntuación: ' + this.score + '\nMadera: ' + this.wood;
   }
 
   switchPlayerHit(){

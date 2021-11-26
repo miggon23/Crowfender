@@ -7,7 +7,6 @@ import Broom from './broom.js';
 import Blockable from './blockable.js';
 import Wall from './wall.js';
 import Room from './room.js';
-import SalaCentral from './salacentral.js';
 import SpawnZone from './spawnzone.js';
 import Basement from './basement.js';
 
@@ -125,15 +124,15 @@ export default class Level extends Phaser.Scene {
       this.player.changeRoomNumber(0);
       this.player.changePlayerPosition(this.player.x - 150, this.player.y);
       camera.setDeadzone(925, 600);
-      camera.scrollX = -900;
-      camera.scrollY = 0;
+      camera.scrollX = +0;
+      camera.scrollY = +0;
     } 
     //Transporta al jugador y a la cámara desde la sala izquierda hasta la central
     else if(o2.name === 'westToMiddle' && this.player.whatRoomIs() === 2){
       this.player.changeRoomNumber(0);
       this.player.changePlayerPosition(this.player.x + 150, this.player.y);
       camera.setDeadzone(925, 600);
-      camera.scrollX = +900;
+      camera.scrollX = +0;
       camera.scrollY = 0;
     } 
     //Transporta al jugador y a la cámara desde la sala superior hasta la central
@@ -148,8 +147,6 @@ export default class Level extends Phaser.Scene {
       camera.setDeadzone(100, 600);
       camera.scrollY = + 0;
       this.player.switchPlayerScrollToTrue();
-      console.log(this.player.isScrolling());
-      
     } 
     //Desactiva el scroll en la sala derecha
     else if(o2.name === 'scrollEastOff' && this.player.isScrolling()){
@@ -157,7 +154,6 @@ export default class Level extends Phaser.Scene {
       camera.scrollY = 0;
       camera.scrollX = +1090;
       this.player.switchPlayerScrollToFalse();
-      console.log(this.player.isScrolling());
     } 
     else if(o2.name === 'scrollUpperOn' && !this.player.isScrolling()){
       camera.setDeadzone(100, 600);
@@ -181,10 +177,9 @@ export default class Level extends Phaser.Scene {
     
   }
 
-  //Resta un pájaro del contador y suma un punto
+  //Resta un pájaro del contador
   subBird(){
     this.nBirds--;
-    this.player.point();
   }
 
   //Método que crea los muros que delimitan las habitaciones
@@ -266,7 +261,7 @@ export default class Level extends Phaser.Scene {
   }
 
   spawnZonesForTP(){
-    this.zone1= this.add.zone(1020, 300, 50, 300).setOrigin(0).setName('middleToEast');// zone middleToEast
+    this.zone1= this.add.zone(1010, 300, 20, 300).setOrigin(0).setName('middleToEast');// zone middleToEast
     this.physics.world.enable(this.zone1);
     this.zones.push(this.zone1);
     this.zone2= this.add.zone(-100, 300, 100, 300).setOrigin(0).setName('middleToWest');// zone middleToWest
@@ -275,7 +270,7 @@ export default class Level extends Phaser.Scene {
     this.zone3= this.add.zone(655, 200, 160, 100).setOrigin(0).setName('middleToUpper');// zone middleToUpper
     this.physics.world.enable(this.zone3);
     this.zones.push(this.zone3);
-    this.zone4= this.add.zone(1025, 300, 50, 300).setOrigin(0).setName('eastToMiddle'); // zone eastToMiddle
+    this.zone4= this.add.zone(1050, 300, 20, 300).setOrigin(0).setName('eastToMiddle'); // zone eastToMiddle
     this.physics.world.enable(this.zone4);
     this.zones.push(this.zone4);
     this.zone5= this.add.zone(-80, 300, 50, 300).setOrigin(0).setName('westToMiddle'); // zone westToMiddle
