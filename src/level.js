@@ -25,6 +25,12 @@ export default class Level extends Phaser.Scene {
   /**
    * Creación de los elementos de la escena principal de juego
    */
+
+    init(data) {
+        this.multiplier = data.multiplier;
+    }
+
+
   create() { 
     
     //Array de zonas de spawn
@@ -336,7 +342,7 @@ export default class Level extends Phaser.Scene {
     if(this.timer > this.spawnTime)
     {
       if(this.nBirds < this.maxBirds){
-        this.nBirds++;
+        this.nBirds += this.multiplier;
         this.spawnBird(this.spawnTime);
         this.timer -= this.spawnTime;
         this.spawnTime = Phaser.Math.Between(1400, 4000);

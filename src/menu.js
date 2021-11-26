@@ -10,14 +10,10 @@ import Button from "./button.js";
      * Constructor de la escena
      * @param {Phaser.Scene} scene Escena a la que pertenece el jugador
      */
-    constructor() {
-      super({ key: 'menu' });
-    }
 
-    init()
-	{
-		this.cursors = this.input.keyboard.createCursorKeys()
-	}
+     constructor() {
+         super({ key: 'menu' });
+     }
 
     create()
     {
@@ -27,17 +23,29 @@ import Button from "./button.js";
         camera.x = 0;
         camera.y = 0;
 
-        this.clickButton = new Button(this, 470, 250, 'JUGAR', { fill: '#0f0' });
-        this.add.existing(this.clickButton);
-        this.clickButton.on('pointerup', () => {
-            this.scene.start('level');
+        this.optionsButton = new Button(this, 460, 300, 'OPCIONES', { fill: '#0f0' });
+        this.add.existing(this.optionsButton);
+
+        this.playButton = new Button(this, 470, 250, 'JUGAR', { fill: '#0f0' });
+        this.add.existing(this.playButton);
+        this.playButton.on('pointerup', () => {
+            this.easyButton = new Button(this, 410, 270, 'Facil', { fill: '#0f0' });
+            this.add.existing(this.easyButton);
+            this.easyButton.on('pointerup', () => {
+                this.scene.start('level', { multiplier: 1 });
+            });
+            this.normalButton = new Button(this, 470, 270, 'Normal', { fill: '#0f0' });
+            this.add.existing(this.normalButton);
+            this.normalButton.on('pointerup', () => {
+                this.scene.start('level', { multiplier: 2 });
+            });
+            this.difficultButton = new Button(this, 540, 270, 'Dificil', { fill: '#0f0' });
+            this.add.existing(this.difficultButton);
+            this.difficultButton.on('pointerup', () => {
+                this.scene.start('level', { multiplier: 3 });
+            });
+
+            // this.scene.start('level');
         });
-
-        this.clickButton = new Button(this, 460, 300, 'OPCIONES', { fill: '#0f0' });
-        this.add.existing(this.clickButton);
-
-     }
-
-     update() {
      }
 }
