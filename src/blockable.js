@@ -16,6 +16,11 @@
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this, true);
       this.blocked = false;
+      this.spriteName = sprite;
+      this.fireplaceSoundBlock = this.scene.sound.add("fireplaceBlocked");
+      this.fireplaceSoundUnblock = this.scene.sound.add("fireplaceUnblocked");
+      this.otherSoundBlock = this.scene.sound.add("otherBlockableBlocked");
+      this.otherSoundUnblock = this.scene.sound.add("otherBlockableUnblocked");
       this.k = this.scene.input.keyboard.addKey('K');
       this.scene.physics.add.overlap(this, player, (o1, o2) => {
           if(Phaser.Input.Keyboard.JustDown(this.k) && !this.blocked){
@@ -32,6 +37,8 @@
     *Bloquea la entrada a los pájaros por un tiempo, en este caso 10 segundos
     */
     block(){
+      if(this.spriteName == 'tabla_chimenea') this.fireplaceSoundBlock.play();
+      else this.otherSoundBlock.play();
       this.blocked = true;
       this.visible = true;
       this.scene.time.addEvent( {
@@ -45,6 +52,8 @@
     *Desbloquea la entrada
     */
     unblock(){
+      if(this.spriteName == 'tabla_chimenea') this.fireplaceSoundUnblock.play();
+      else this.otherSoundUnblock.play();
       this.blocked = false;
       this.visible = false;
     }

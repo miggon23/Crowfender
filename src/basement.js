@@ -22,8 +22,10 @@ export default class Basement extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.existing(this, true);
         this.k = this.scene.input.keyboard.addKey('K');
         this.visible = false;
+        this.ladderSound = this.scene.sound.add("ladderSound");
         this.scene.physics.add.overlap(this, player, (o1, o2) => {
             if (Phaser.Input.Keyboard.JustDown(this.k)) {
+                this.ladderSound.play();
                 if (i){
                     camera.setDeadzone(925, 600);
                     camera.scrollY = +250;

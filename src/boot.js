@@ -20,7 +20,7 @@ export default class Boot extends Phaser.Scene {
     // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
     this.load.setPath('assets/sprites/');
     this.load.image('playbutton', 'playbutton.png')
-	this.load.image('optionsbutton', 'optionsbutton.png')
+	  this.load.image('optionsbutton', 'optionsbutton.png')
     this.load.image('fondo_central', 'fondo_central.png');
     this.load.image('fondo_chimenea', 'fondo_chimenea.png');
     this.load.image('fondo_ventana', 'fondo_ventana.png');
@@ -43,6 +43,23 @@ export default class Boot extends Phaser.Scene {
     this.load.image('sotano', 'sotano.png');
     this.load.image('electricidad_rojo', 'electricidad_rojo.png');
     this.load.image('electricidad_verde', 'electricidad_verde.png');
+
+
+    //Carga de audios
+    this.load.setPath('assets/audio/');
+    this.load.audio('clockSound','clock.wav');
+    //Sonidos player
+    this.load.audio('playerAttack','player_attack.wav');
+
+    //Sonidos de la puerta, chimenea y ventana
+    this.load.audio('fireplaceBlocked','fire_block.wav');
+    this.load.audio('fireplaceUnblocked','fire_unblock.wav');
+    this.load.audio('otherBlockableBlocked','wood_block.wav');
+    this.load.audio('otherBlockableUnblocked','wood_unblock.wav');
+
+    //Sonidos del sotano
+    this.load.audio('woodTake','wood_take.wav');
+    this.load.audio('ladderSound','player_ladder.wav');
   }
 
   /**
