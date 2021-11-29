@@ -18,7 +18,8 @@ import Button from "./button.js";
     create()
     {
         this.buttonSound = this.sound.add("button");
-
+        this.menuMusic = this.sound.add("menuMusic");
+        this.menuMusic.play();
 		var camera = this.cameras.main;
 
         camera.x = 0;
@@ -35,18 +36,21 @@ import Button from "./button.js";
             this.add.existing(this.easyButton);
             this.easyButton.on('pointerup', () => {
                 this.buttonSound.play();
+                this.menuMusic.stop();
                 this.scene.start('level', { multiplier: 1 });
             });
             this.normalButton = new Button(this, 470, 270, 'Normal', { fill: '#0f0' });
             this.add.existing(this.normalButton);
             this.normalButton.on('pointerup', () => {
                 this.buttonSound.play();
+                this.menuMusic.stop();
                 this.scene.start('level', { multiplier: 2 });
             });
             this.difficultButton = new Button(this, 540, 270, 'Dificil', { fill: '#0f0' });
             this.add.existing(this.difficultButton);
             this.difficultButton.on('pointerup', () => {
                 this.buttonSound.play();
+                this.menuMusic.stop();
                 this.scene.start('level', { multiplier: 3 });
             });
 

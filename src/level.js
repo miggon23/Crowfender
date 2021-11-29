@@ -81,9 +81,21 @@ export default class Level extends Phaser.Scene {
 
     this.zone1; this.zone2; this.zone3; this.zone4; this.zone5; this.zone6; this.zone7; this.zone8; this.zone9; this.zone10;
 
+    //Sonidos 
+    const config = {
+      mute: false,
+      volume: 0.1,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0,
+    }; 
     this.playerChangeRoomSound = this.sound.add("playerChangeRoom");
     this.electricityReady = this.sound.add("electricityReady");
     this.deadSound = this.sound.add("birdDeath");
+    this.gameMusic = this.sound.add("gameMusic", config);
+    this.gameMusic.play();
 
     camera.x = 0;
     camera.y = 0;
@@ -376,6 +388,7 @@ export default class Level extends Phaser.Scene {
   });
     //Si el número de pájaros en el centro alcanza el máximo, pierdes y se muestra tu puntuación
     if (this.nBirdsInMiddle >= this.maxBirdsInMiddle){
+      this.gameMusic.stop();
       this.scene.start('end');
     }
 

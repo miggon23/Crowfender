@@ -64,6 +64,10 @@ export default class Boot extends Phaser.Scene {
     //Carga de audios
     this.load.setPath('assets/audio/');
     
+    //Carga de música de menú y de juego
+    this.load.audio('gameMusic','music_no_piano.mp3');
+    this.load.audio('menuMusic','music_piano.mp3');
+    
     //Sonidos botones, victoria y derrota
     this.load.audio('button','game_button.wav');
     this.load.audio('lose','game_lose.wav');
