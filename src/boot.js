@@ -61,6 +61,12 @@ export default class Boot extends Phaser.Scene {
     //Sonidos del sotano
     this.load.audio('woodTake','wood_take.wav');
     this.load.audio('ladderSound','player_ladder.wav');
+
+    //Sonidos de la electricidad
+    this.load.audio('electricitySwitch','electricity_switch.wav');
+    this.load.audio('electricityZap','electricity_zap.wav');
+    this.load.audio('electricityReady','electricity_ready.wav');
+    this.load.audio('electricitySwitchNotCharged','electricity_switch_not_charged.wav');
   }
 
   /**

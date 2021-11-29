@@ -82,7 +82,8 @@ export default class Level extends Phaser.Scene {
     this.zone1; this.zone2; this.zone3; this.zone4; this.zone5; this.zone6; this.zone7; this.zone8; this.zone9; this.zone10;
 
     this.playerChangeRoomSound = this.sound.add("playerChangeRoom");
-    
+    this.electricityReady = this.sound.add("electricityReady");
+
     camera.x = 0;
     camera.y = 0;
     
@@ -261,6 +262,7 @@ export default class Level extends Phaser.Scene {
 
   //Ponemos disponible de nuevo la electricidad
   electricityNowAvailable(){
+    this.electricityReady.play();
     this.electricityAvailable = true;
   }
 
