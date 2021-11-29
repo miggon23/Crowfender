@@ -29,13 +29,17 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.timer = 0;
     this.stopMovementTimer = 0;
     this.delayToStopMovement = 500;
-    this.delayElectricity = 50;
     this.route = route;
     this.rooms = rooms;
     this.hitSound = this.scene.sound.add("birdHit");
     this.deadSound = this.scene.sound.add("birdDeath");
     //Añadimos la vida
     this.health = 3;
+
+    //Sonidos de los pájaros al llegar al centro
+    this.center1 = this.scene.sound.add("bird1Center");
+    this.center2 = this.scene.sound.add("bird2Center");
+    this.center3 = this.scene.sound.add("bird1Center");
 
     // En lugar de guardar la habitación actual, guardo el orden de la habitación actual
     // Habitación de spawn = 0, la siguiente = 1... 
@@ -116,6 +120,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       this.changeRoom(this.actualOrderRoom);
       if(this.actualOrderRoom === this.route.length - 1)
       {
+        this.center1.play();
         this.level.addBirdInMiddle();
       }
   }
@@ -161,7 +166,6 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     super.preUpdate(t,dt);
     this.timer += dt;
     this.stopMovementTimer += dt;
-    this.electricityTimer += dt;
     if (this.timer >= this.delayToMove)
     {
       this.moveBird();

@@ -17,32 +17,48 @@ export default class Boot extends Phaser.Scene {
    * Carga de los assets del juego
    */
   preload() {
-    // Con setPath podemos establecer el prefijo que se añadirá a todos los load que aparecen a continuación
+    // Cargamos las imagenes
     this.load.setPath('assets/sprites/');
+
+    // Cargamos los botones
     this.load.image('playbutton', 'playbutton.png')
 	  this.load.image('optionsbutton', 'optionsbutton.png')
+
+    //Cargamos los fondos
     this.load.image('fondo_central', 'fondo_central.png');
     this.load.image('fondo_chimenea', 'fondo_chimenea.png');
     this.load.image('fondo_ventana', 'fondo_ventana.png');
     this.load.image('fondo_puerta', 'fondo_puerta.png');
     this.load.image('fondo_sotano', 'fondo_sotano.png');
-    this.load.image('tabla_puerta', 'tabla_puerta.png');
-    this.load.image('tabla_ventana', 'tabla_ventana.png');
-    this.load.image('tabla_chimenea', 'tabla_chimenea.png');
     this.load.image('spawn_chimenea', 'spawn_chimenea.png');
     this.load.image('spawn_puerta', 'spawn_puerta.png');
     this.load.image('spawn_ventana', 'spawn_ventana.png');
+    this.load.image('sotano', 'sotano.png');
+
+    //Cargamos los bloqueables
+    this.load.image('tabla_puerta', 'tabla_puerta.png');
+    this.load.image('tabla_ventana', 'tabla_ventana.png');
+    this.load.image('tabla_chimenea', 'tabla_chimenea.png');
+  
+    //Cargamos los pájaros
     this.load.image('bird', 'bird.png');
+
+    //Cargamos al player
     this.load.image('player', 'player.png');
     this.load.image('broom', 'escoba.png');
-    this.load.image('electricity', 'electricity.png');
-    this.load.image('chest', 'cofre.png');
-    this.load.image('window', 'ventana.png');
-    this.load.image('window_bloq', 'ventana_bloq.png');
+    
+    
     this.load.image('empty', 'empty.png');
-    this.load.image('sotano', 'sotano.png');
+
+
+    //Cargamos el cofre
+    this.load.image('chest', 'cofre.png');
+
+    //Se cargan imágenes relacionadas con la electricidad
+    this.load.image('electricity', 'electricity.png');
     this.load.image('electricidad_rojo', 'electricidad_rojo.png');
     this.load.image('electricidad_verde', 'electricidad_verde.png');
+
 
 
     //Carga de audios
