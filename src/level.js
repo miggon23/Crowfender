@@ -83,6 +83,7 @@ export default class Level extends Phaser.Scene {
 
     this.playerChangeRoomSound = this.sound.add("playerChangeRoom");
     this.electricityReady = this.sound.add("electricityReady");
+    this.deadSound = this.sound.add("birdDeath");
 
     camera.x = 0;
     camera.y = 0;
@@ -103,6 +104,7 @@ export default class Level extends Phaser.Scene {
 
     //Colision de los spawns con los pájaros (para la electricidad)
     this.physics.add.overlap(this.spawns, this.birds, (o1, o2) => {
+      this.deadSound.play();
       o2.die();     
     });
 

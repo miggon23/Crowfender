@@ -32,7 +32,8 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.delayElectricity = 50;
     this.route = route;
     this.rooms = rooms;
-    
+    this.hitSound = this.scene.sound.add("birdHit");
+    this.deadSound = this.scene.sound.add("birdDeath");
     //Añadimos la vida
     this.health = 3;
 
@@ -136,10 +137,12 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     }
     
     if(this.heath === 0){
+      this.deadSound.play();
       this.die();
     }
     else if(this.actualOrderRoom > 0)
     {
+      this.hitSound.play();
       this.actualOrderRoom--;
       this.changeRoom(this.actualOrderRoom);
     }

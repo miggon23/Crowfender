@@ -47,10 +47,32 @@ export default class Boot extends Phaser.Scene {
 
     //Carga de audios
     this.load.setPath('assets/audio/');
+    
+    //Sonidos botones, victoria y derrota
+    this.load.audio('button','game_button.wav');
+    this.load.audio('lose','game_lose.wav');
+    this.load.audio('win','game_win.wav');
+
+    //Sonidos ambiente
     this.load.audio('clockSound','clock.wav');
+    this.load.audio('tension1','tension_1.wav');
+    this.load.audio('tension2','tension_2.wav');
+    this.load.audio('tension3','tension_3.wav');
+    this.load.audio('tension4','tension_4.wav');
+
     //Sonidos player
     this.load.audio('playerAttack','player_attack.wav');
     this.load.audio('playerChangeRoom','player_change_room.wav');
+
+    //Sonidos de los pájaros
+    this.load.audio('bird1Center','bird_center_1.wav');
+    this.load.audio('bird2Center','bird_center_2.wav');
+    this.load.audio('bird3Center','bird_center_3.wav');
+    this.load.audio('bird1Fly','bird_wings_1.wav');
+    this.load.audio('bird2Fly','bird_wings_2.wav');
+    this.load.audio('bird3Fly','bird_wings_3.wav');
+    this.load.audio('birdDeath','bird_death.wav');
+    this.load.audio('birdHit','bird_hit.wav');
 
     //Sonidos de la puerta, chimenea y ventana
     this.load.audio('fireplaceBlocked','fire_block.wav');
