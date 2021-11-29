@@ -81,6 +81,7 @@ export default class Level extends Phaser.Scene {
 
     this.zone1; this.zone2; this.zone3; this.zone4; this.zone5; this.zone6; this.zone7; this.zone8; this.zone9; this.zone10;
 
+    this.playerChangeRoomSound = this.sound.add("playerChangeRoom");
     
     camera.x = 0;
     camera.y = 0;
@@ -110,12 +111,14 @@ export default class Level extends Phaser.Scene {
       this.player.changeRoomNumber(1);
       this.player.changePlayerPosition(this.player.x + 150, this.player.y);
       camera.scrollX = +900;
+      this.playerChangeRoomSound.play();
     } 
     //Transporta al jugador y a la cámara desde la sala central hasta la sala izquierda
     else if(o2.name === 'middleToWest' && this.player.whatRoomIs() === 0){
       this.player.changeRoomNumber(2);
       this.player.changePlayerPosition(this.player.x - 150, this.player.y);
       camera.scrollX = -900;
+      this.playerChangeRoomSound.play();
     } 
     //Transporta al jugador y a la cámara desde la sala central hasta la sala superior
     else if(o2.name === 'middleToUpper' && this.player.whatRoomIs() === 0){
@@ -124,6 +127,7 @@ export default class Level extends Phaser.Scene {
       camera.setDeadzone(925, 600);
        camera.scrollY = -600;
        camera.scrollX = 0;   
+       this.playerChangeRoomSound.play();
     } 
     //Transporta al jugador y a la cámara desde la sala derecha hasta la central
     else if(o2.name === 'eastToMiddle' && this.player.whatRoomIs() === 1){
@@ -132,6 +136,7 @@ export default class Level extends Phaser.Scene {
       camera.setDeadzone(925, 600);
       camera.scrollX = +0;
       camera.scrollY = +0;
+      this.playerChangeRoomSound.play();
     } 
     //Transporta al jugador y a la cámara desde la sala izquierda hasta la central
     else if(o2.name === 'westToMiddle' && this.player.whatRoomIs() === 2){
@@ -140,6 +145,7 @@ export default class Level extends Phaser.Scene {
       camera.setDeadzone(925, 600);
       camera.scrollX = +0;
       camera.scrollY = 0;
+      this.playerChangeRoomSound.play();
     } 
     //Transporta al jugador y a la cámara desde la sala superior hasta la central
     else if(o2.name === 'upperToMiddle' && this.player.whatRoomIs() === 3){
@@ -147,6 +153,7 @@ export default class Level extends Phaser.Scene {
       this.player.changePlayerPosition(this.player.x, this.player.y + 400);
       camera.setDeadzone(925, 600);
       camera.scrollX = 10;
+      this.playerChangeRoomSound.play();
     } 
     //Activa el scroll en la sala derecha
     else if(o2.name === 'scrollEastOn' && !this.player.isScrolling()){

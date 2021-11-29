@@ -50,6 +50,7 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('clockSound','clock.wav');
     //Sonidos player
     this.load.audio('playerAttack','player_attack.wav');
+    this.load.audio('playerChangeRoom','player_change_room.wav');
 
     //Sonidos de la puerta, chimenea y ventana
     this.load.audio('fireplaceBlocked','fire_block.wav');
