@@ -387,7 +387,7 @@ export default class Level extends Phaser.Scene {
 
   });
     //Si el número de pájaros en el centro alcanza el máximo, pierdes y se muestra tu puntuación
-    if (this.nBirdsInMiddle >= this.maxBirdsInMiddle){
+    if (this.nBirdsInMiddle >= this.maxBirdsInMiddle && this.player.whatRoomIs() === 0){
       this.gameMusic.stop();
       this.scene.start('end');
     }

@@ -37,9 +37,9 @@ export default class Basement extends Phaser.GameObjects.Sprite {
                 } 
                 else if (!i){
                     camera.setDeadzone(925, 600);
-                    camera.scrollY = +350;
+                    camera.scrollY = +250;
                     camera.scrollX = +0;
-                    player.y -= 650;
+                    player.y -= 550;
                 } 
             }
         });
