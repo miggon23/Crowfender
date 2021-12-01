@@ -23,7 +23,7 @@ export default class Wall extends Phaser.GameObjects.Sprite {
     wallsGroup.add(this);
     
     // Comentar para mostrar los muros
-    //this.visible = false;
+    this.visible = false;
   }
 
 }

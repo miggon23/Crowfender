@@ -101,7 +101,7 @@ export default class Level extends Phaser.Scene {
     camera.y = 0;
     
 
-    camera.setZoom(0.20);
+    //camera.setZoom(0.20);
     //camera.setZoom(1.50);
    
 
