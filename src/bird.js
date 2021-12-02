@@ -41,6 +41,9 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.center1 = this.scene.sound.add("bird1Center");
     this.center2 = this.scene.sound.add("bird2Center");
     this.center3 = this.scene.sound.add("bird1Center");
+    this.birdFly1 = this.scene.sound.add("bird1Fly");
+    this.birdFly2 = this.scene.sound.add("bird2Fly");
+    this.birdFly3 = this.scene.sound.add("bird3Fly");
 
     // En lugar de guardar la habitación actual, guardo el orden de la habitación actual
     // Habitación de spawn = 0, la siguiente = 1... 
@@ -119,6 +122,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   // en la sala central, en ese caso, no avanza. La sala central es siempre la última del array de rutas
   advanceRoom(){
     if(this.actualOrderRoom === 0){ //Si sale del spawn, lo restamos del spawn para que no rebase el limite de pajaros del spawn
+      this.birdFly1.play();
       this.rooms[this.route[0]].subBirdInSpawn();
     }
 
