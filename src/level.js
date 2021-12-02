@@ -107,6 +107,12 @@ export default class Level extends Phaser.Scene {
     this.winSound = this.sound.add("win");
     this.loseSound = this.sound.add("lose");
     this.gameMusic = this.sound.add("gameMusic", config);
+    this.clockSound1 = this.sound.add("clockSound1");
+    this.clockSound2 = this.sound.add("clockSound2");
+    this.clockSound3 = this.sound.add("clockSound3");
+    this.clockSound4 = this.sound.add("clockSound4");
+    this.clockSound5 = this.sound.add("clockSound5");
+    this.clockSound6 = this.sound.add("clockSound6");
     this.gameMusic.play();
 
     camera.x = 0;
@@ -390,9 +396,17 @@ export default class Level extends Phaser.Scene {
    * @param {*} dt 
    */
   update(t, dt){
-    this.timer += dt;
+    this.timer += dt; //120000 180000 300000
     this.victoryTimer += dt;
+    console.log(this.victoryTimer);
+    if(this.victoryTimer > this.winTime / 6 && this.victoryTimer < (this.winTime / 6) + 20)   this.clockSound1.play();
+    else if(this.victoryTimer > this.winTime / 3 && this.victoryTimer < (this.winTime / 3) + 20) this.clockSound2.play();
+    else if(this.victoryTimer > this.winTime / 2 && this.victoryTimer < (this.winTime / 2) + 20) this.clockSound3.play();
+    else if(this.victoryTimer > this.winTime / 1.5 && this.victoryTimer < (this.winTime / 1.5) + 20) this.clockSound4.play();
+    else if(this.victoryTimer > this.winTime / 1.2 && this.victoryTimer < (this.winTime / 1.2) + 20) this.clockSound5.play();
+    else if(this.victoryTimer > this.winTime && this.victoryTimer < this.winTime  + 20) this.clockSound6.play();
     
+
     //Spawn de pájaros
     if(this.timer > this.spawnTime)
     {
