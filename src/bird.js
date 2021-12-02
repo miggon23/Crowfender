@@ -55,7 +55,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    */
   moveBird(){
     //Hay una pequeña probabilidad de que no salte en este turno
-    let dir = Phaser.Math.Between(0, 4);
+    let dir = Phaser.Math.Between(0, 5);
     if (dir === 0){
       this.body.setVelocityY(this.speed);     
     }
@@ -171,7 +171,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     {
       this.moveBird();
       this.timer -= this.delayToMove;
-      this.stopMovementTimer = Phaser.Math.Between(2000, 5000);
+      this.stopMovementTimer = Phaser.Math.Between(3000, 5500);
       this.stopMovementTimer = 0;
     }
     else if (this.stopMovementTimer >= this.delayToStopMovement){

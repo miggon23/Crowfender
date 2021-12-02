@@ -27,8 +27,8 @@ export default class Level extends Phaser.Scene {
    * @param {data} data Contiene multiplier y timeToWin, el tiempo en minutos para ganar que se guarda en init
    */
   init(data) {
-      this.multiplier = data.multiplier;
-      this.winTime = data.timeToWin * 1000 * 60;
+    this.multiplier = data.multiplier;
+    this.winTime = data.timeToWin * 1000 * 60;
   }
 
   /* Creación de los elementos de la escena principal de juego
@@ -76,6 +76,8 @@ export default class Level extends Phaser.Scene {
     //Temporizador para ganar
     this.victoryTimer = 0;
 
+    //Booleano que marca cuando un pájaro se puede spawnear
+    this.stopSpawning = false;
 
     this.newRand;
     this.birds = this.add.group(); 
@@ -383,23 +385,31 @@ export default class Level extends Phaser.Scene {
     this.timer += dt;
     this.victoryTimer += dt;
     
+    //Spawn de pájaros
     if(this.timer > this.spawnTime)
     {
-      if(this.nBirds < this.maxBirds){
+      if(this.nBirds < this.maxBirds && !this.stopSpawning){
         this.nBirds += this.multiplier;
         this.spawnBird(this.spawnTime);
         this.timer -= this.spawnTime;
-        this.spawnTime = Phaser.Math.Between(1400, 4000);
+        this.spawnTime = Phaser.Math.Between(4000, 7000);
       }
       else{
         this.timer = 0;
       }
       
     }
-    if(this.victoryTimer >= this.winTime && this.birds.getLength() == 0)
+
+    //condición de victoria, si ha pasado el tiempo
+    if(this.victoryTimer >= this.winTime)
     {
-      this.gameMusic.stop();
-      this.scene.start('win');
+      this.stopSpawning = true; //Tras ese tiempo, dejan de spawnearse pájaros
+      if(this.birds.getLength() == 0) //Y además no quedan pájaros en la casa
+      {
+
+        this.gameMusic.stop();
+        this.scene.start('win');
+      }
     }
 
 
