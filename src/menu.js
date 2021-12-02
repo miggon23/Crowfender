@@ -37,21 +37,21 @@ import Button from "./button.js";
             this.easyButton.on('pointerup', () => {
                 this.buttonSound.play();
                 this.menuMusic.stop();
-                this.scene.start('level', { multiplier: 1 });
+                this.scene.start('level', { multiplier: 1, timeToWin: 2 });
             });
             this.normalButton = new Button(this, 470, 270, 'Normal', { fill: '#0f0' });
             this.add.existing(this.normalButton);
             this.normalButton.on('pointerup', () => {
                 this.buttonSound.play();
                 this.menuMusic.stop();
-                this.scene.start('level', { multiplier: 2 });
+                this.scene.start('level', { multiplier: 2, timeToWin: 3 });
             });
             this.difficultButton = new Button(this, 540, 270, 'Dificil', { fill: '#0f0' });
             this.add.existing(this.difficultButton);
             this.difficultButton.on('pointerup', () => {
                 this.buttonSound.play();
                 this.menuMusic.stop();
-                this.scene.start('level', { multiplier: 3 });
+                this.scene.start('level', { multiplier: 3, timeToWin: 5 });
             });
 
             // this.scene.start('level');

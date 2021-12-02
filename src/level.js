@@ -23,14 +23,16 @@ export default class Level extends Phaser.Scene {
   }
 
   /**
-   * Creación de los elementos de la escena principal de juego
+   * Inicialización de variables que dependen del nivel de dificultad elegida por el jugador en el menú
+   * @param {data} data Contiene multiplier y timeToWin, el tiempo en minutos para ganar que se guarda en init
    */
+  init(data) {
+      this.multiplier = data.multiplier;
+      this.winTime = data.timeToWin * 1000 * 60;
+  }
 
-    init(data) {
-        this.multiplier = data.multiplier;
-    }
-
-
+  /* Creación de los elementos de la escena principal de juego
+  */
   create() { 
     
     //Array de zonas de spawn
@@ -39,6 +41,7 @@ export default class Level extends Phaser.Scene {
     //Array de habitaciones
     this.rooms = [];
 
+    //Array donde se guardan las zonas de spawn junto con las habitaciones
     this.zones = [];
     
     //Creación de habitaciones y elementos del juego
@@ -57,7 +60,7 @@ export default class Level extends Phaser.Scene {
     this.birdZones = this.spawnzones.concat(this.rooms);
     console.log(this.birdZones);
 
-    //Máximo de pájaros peritido
+    //Máximo de pájaros permitido
     this.maxBirds = 15;
     //Número de pájaros en el nivel
     this.nBirds = 0;
@@ -68,7 +71,12 @@ export default class Level extends Phaser.Scene {
 
     //temporizador para spawnear pájaros
     this.timer = 0;
-    this.spawnTime = Phaser.Math.Between(2000, 4000);
+    this.spawnTime = Phaser.Math.Between(4000, 7000);
+
+    //Temporizador para ganar
+    this.victoryTimer = 0;
+
+
     this.newRand;
     this.birds = this.add.group(); 
     let broom = new Broom(this);
@@ -101,7 +109,7 @@ export default class Level extends Phaser.Scene {
     camera.y = 0;
     
 
-    //camera.setZoom(0.20);
+    //camera.setZoom(0.30);
     //camera.setZoom(1.50);
    
 
@@ -367,12 +375,13 @@ export default class Level extends Phaser.Scene {
   /**
    * La escena se encarga de crear los pájaros cada cierto tiempo, si ha llegado
    * al límite de pájaros de la escena, se resetea el timer a 0 para que no spawnea
-   * inmediatamente otro pájaro nada más echar a otro.
+   * inmediatamente otro pájaro nada más echar a uno. Vigila si el jugador ha perdido o si ha ganado
    * @param {*} t 
    * @param {*} dt 
    */
   update(t, dt){
     this.timer += dt;
+    this.victoryTimer += dt;
     
     if(this.timer > this.spawnTime)
     {
@@ -387,7 +396,11 @@ export default class Level extends Phaser.Scene {
       }
       
     }
-
+    if(this.victoryTimer >= this.winTime && this.birds.getLength() == 0)
+    {
+      this.gameMusic.stop();
+      this.scene.start('win');
+    }
 
 
     this.input.on('gameobjectdown', function (pointer, gameObject) {

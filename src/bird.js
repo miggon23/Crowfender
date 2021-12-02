@@ -94,7 +94,6 @@ export default class Bird extends Phaser.GameObjects.Sprite {
         return true;
       }
       else{
-        console.log("esta blockeado");
         return false;
       }
     }
@@ -105,8 +104,10 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   changeRoom(i){
     let topLeft = this.rooms[this.route[i]].getTopLeft();
     let botRight = this.rooms[this.route[i]].getBottomRight();
-    let x = Phaser.Math.Between(topLeft.x, botRight.x);
-    let y = Phaser.Math.Between((botRight.y - ((botRight.y - topLeft.y) / 3)), botRight.y);
+    let offsetX = this.width / 2;
+    let offsetY = this.height / 2;
+    let x = Phaser.Math.Between(topLeft.x + offsetX, botRight.x - offsetX);
+    let y = Phaser.Math.Between((botRight.y - ((botRight.y - topLeft.y) / 4)) + offsetY, botRight.y - offsetY);
     this.x = x;
     this.y = y;
   }
