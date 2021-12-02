@@ -29,6 +29,9 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this);
     spawnsGroup.add(this);
     spawnArray.push(this);
+    //Limite de pájaros que pueden estar a la vez en un spawn
+    this.spawnLimit = 6;
+    this.birdsInSpawn = 0;
 
     this.body.enable = false;
     this.blockable = blockable;
@@ -51,8 +54,28 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
     this.body.enable= false;
   }
 
+  //Devuelve un booleano que indica si el spawn está tapiado (bloqueado)
   spawnBlocked(){
     return this.blockable.isBlocked();
   }
 
+  //Añade un pájaro al contador del spawn
+  addBirdInSpawn()
+  {
+    this.birdsInSpawn++;
+    console.log("Pajaro añadido en este spawn " + this.birdsInSpawn);
+  }
+
+  //Resta un pájaro al contador del spawn
+  subBirdInSpawn()
+  {
+    this.birdsInSpawn--;
+    console.log("Un pájaro salió del spawn");
+  }
+
+  //Devuelve true si en el spawn no caben más pájaros
+  spawnFull()
+  {
+    return this.birdsInSpawn === this.spawnLimit;
+  }
 }

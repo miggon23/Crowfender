@@ -22,6 +22,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     birdsGroup.add(this);
+
     this.level = level;
     //Velocidad de movimiento
     this.speed = 300;
@@ -45,8 +46,9 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     // Habitación de spawn = 0, la siguiente = 1... 
     this.actualOrderRoom = 0;
 
-    // console.log("Bird : x: " + x + " y: " + y);
-    // console.log(route); 
+    
+    //Añadimos un pájaro al contador del spawn
+    this.rooms[route[0]].addBirdInSpawn();
     
   }
   /**
@@ -101,6 +103,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       return (this.actualOrderRoom !== this.route.length - 1);   
   }
 
+  //Cambia a la habitación i de su ruta tomando las coordenadas del la sala y calculando donde debería estar el suelo
   changeRoom(i){
     let topLeft = this.rooms[this.route[i]].getTopLeft();
     let botRight = this.rooms[this.route[i]].getBottomRight();
@@ -115,21 +118,25 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   //Envía al pájaro a la siguiente sala marcada por su lista de rutas. Comprueba si está
   // en la sala central, en ese caso, no avanza. La sala central es siempre la última del array de rutas
   advanceRoom(){
+    if(this.actualOrderRoom === 0){ //Si sale del spawn, lo restamos del spawn para que no rebase el limite de pajaros del spawn
+      this.rooms[this.route[0]].subBirdInSpawn();
+    }
+
     //Hemos comprobado en el if que el actualOrderRoom no ha llegado a la última sala, 
-      // podemos confiar en que no se saldrá del tamaño del array de rutas
-      this.actualOrderRoom++;
-      this.changeRoom(this.actualOrderRoom);
-      if(this.actualOrderRoom === this.route.length - 1)
-      {
-        this.center1.play();
-        this.level.addBirdInMiddle();
-      }
+    // podemos confiar en que no se saldrá del tamaño del array de rutas
+    this.actualOrderRoom++;
+    this.changeRoom(this.actualOrderRoom);
+    if(this.actualOrderRoom === this.route.length - 1) //Llega al centro
+    {
+      this.center1.play();
+      this.level.addBirdInMiddle();
+    }
   }
 
-   //Clase para eliminar al pájaro, bien por la electricidad o porque le hayan dado el último golpe
-   die(){
-      this.level.subBird(); //Restamos un pájaro del contador y añadimos un punto
-      this.destroy();
+  //Clase para eliminar al pájaro, bien por la electricidad o porque le hayan dado el último golpe
+  die(){
+    this.level.subBird(); //Restamos un pájaro del contador y añadimos un punto
+    this.destroy();
   }
 
 

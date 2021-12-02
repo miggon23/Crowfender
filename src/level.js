@@ -354,13 +354,18 @@ export default class Level extends Phaser.Scene {
     let index = Phaser.Math.Between(0, this.spawnzones.length - 1);
     //Guardamos la spawnzone de una variable para acceder más facilmente a sus métodos
     let birdSpawnZone = this.spawnzones[index];
-    let topLeft = birdSpawnZone.getTopLeft();
-    let botRight = birdSpawnZone.getBottomRight();
-
-    let newX = Phaser.Math.Between(topLeft.x, botRight.x);
-    let newY = Phaser.Math.Between(topLeft.y, botRight.y);
-
-    new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones);    
+    if(!birdSpawnZone.spawnFull())   //Si no está lleno el spawn añadimos un pájaro
+    {
+      let topLeft = birdSpawnZone.getTopLeft();
+      let botRight = birdSpawnZone.getBottomRight();
+  
+      let newX = Phaser.Math.Between(topLeft.x, botRight.x);
+      let newY = Phaser.Math.Between(topLeft.y, botRight.y);
+  
+      new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones); 
+    }
+    else
+      console.log("Spawn lleno");
 
   }
 
@@ -404,7 +409,7 @@ export default class Level extends Phaser.Scene {
     if(this.victoryTimer >= this.winTime)
     {
       this.stopSpawning = true; //Tras ese tiempo, dejan de spawnearse pájaros
-      if(this.birds.getLength() == 0) //Y además no quedan pájaros en la casa
+      if(this.nBirds == 0) //Y además no quedan pájaros en la escena
       {
 
         this.gameMusic.stop();
