@@ -104,6 +104,8 @@ export default class Level extends Phaser.Scene {
     this.playerChangeRoomSound = this.sound.add("playerChangeRoom");
     this.electricityReady = this.sound.add("electricityReady");
     this.deadSound = this.sound.add("birdDeath");
+    this.winSound = this.sound.add("win");
+    this.loseSound = this.sound.add("lose");
     this.gameMusic = this.sound.add("gameMusic", config);
     this.gameMusic.play();
 
@@ -178,6 +180,7 @@ export default class Level extends Phaser.Scene {
       this.player.changePlayerPosition(this.player.x, this.player.y + 400);
       camera.setDeadzone(925, 600);
       camera.scrollX = 10;
+      camera.scrollY = 0;
       this.playerChangeRoomSound.play();
     } 
     //Activa el scroll en la sala derecha
@@ -411,7 +414,7 @@ export default class Level extends Phaser.Scene {
       this.stopSpawning = true; //Tras ese tiempo, dejan de spawnearse pájaros
       if(this.nBirds == 0) //Y además no quedan pájaros en la escena
       {
-
+        this.winSound.play();
         this.gameMusic.stop();
         this.scene.start('win');
       }
@@ -429,6 +432,7 @@ export default class Level extends Phaser.Scene {
     //Si el número de pájaros en el centro alcanza el máximo, pierdes y se muestra tu puntuación
     if (this.nBirdsInMiddle >= this.maxBirdsInMiddle && this.player.whatRoomIs() === 0){
       this.gameMusic.stop();
+      this.loseSound.play();
       this.scene.start('end');
     }
 
