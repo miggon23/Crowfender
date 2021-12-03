@@ -1,4 +1,4 @@
-
+import BirdZone from './birdzone.js';
 /**
  * Clase que representa las zonas de spawn de cada sala
  */
@@ -35,20 +35,23 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
 
     this.body.enable = false;
     this.blockable = blockable;
-
+    //Zona a la que se mueven los pajaros al pasar de habitacion
+    this.birdZone = new BirdZone(scene, x, y, scaleX * 0.7 , scaleY * 0.7);
+    
     //this.visible = false;
   }
   
   activateElectricity(){ 
     this.visible=false
-      this.body.enable= true;
-      this.scene.time.addEvent( {
-        delay: 300, 
-        callback: this.desactivateElectricity,
-        callbackScope: this,
-        loop: false
-      });
-    }
+    this.body.enable= true;
+    this.scene.time.addEvent( {
+      delay: 300, 
+      callback: this.desactivateElectricity,
+      callbackScope: this,
+      loop: false
+    });
+  }
+
   desactivateElectricity(){
     this.visible=true;
     this.body.enable= false;

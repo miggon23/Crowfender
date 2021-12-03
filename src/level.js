@@ -125,7 +125,7 @@ export default class Level extends Phaser.Scene {
     camera.y = 0;
     
 
-    //camera.setZoom(0.30);
+    //camera.setZoom(0.40);
     //camera.setZoom(1.50);
    
 
@@ -266,7 +266,7 @@ export default class Level extends Phaser.Scene {
     this.birdWalls = this.add.group();
     new Wall(this, 500, -410, 1000, 430, this.birdWalls);
     new Wall(this, 1000, 190, 2100, 430, this.birdWalls);
-    new Wall(this, 500, 790, 3200, 430, this.birdWalls);
+    new Wall(this, 500, 810, 3200, 430, this.birdWalls);
     new Wall(this, 500, 1390, 1000, 430, this.birdWalls);
     new Wall(this, -600, 440, 1000, 100, this.birdWalls);
     

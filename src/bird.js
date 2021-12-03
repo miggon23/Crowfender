@@ -61,30 +61,29 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   moveBird(){
     //Hay una pequeña probabilidad de que no salte en este turno
     let dir = Phaser.Math.Between(0, 5);
-    if (dir === 0){
-      this.body.setVelocityY(this.speed);     
+    if(this.actualOrderRoom !== 0){
+        
+      if (dir === 0){
+        this.body.setVelocityY(this.speed);     
+      }
+      else if (dir === 1){
+        this.body.setVelocityY(-this.speed);
+      }
+      else if (dir === 2){
+        this.body.setVelocityX(this.speed);
+      }
+      else if (dir === 3){
+        this.body.setVelocityX(-this.speed);
+      }
     }
-    else if (dir === 1){
-      this.body.setVelocityY(-this.speed);
-    }
-    else if (dir === 2){
-      this.body.setVelocityX(this.speed);
-    }
-    else if (dir === 3){
-      this.body.setVelocityX(-this.speed);
-    }
-    else if (dir === 4){
+    
+    if (dir === 4){
       if (this.iCanAdvance())
         this.advanceRoom();
     }
 
 
-    // this.scene.time.addEvent( {
-    //   delay: 500, 
-    //   callback: this.cancelMovement,
-    //   callbackScope: this,
-    //   loop: false
-    // });
+    
   }
 
   //Comprueba que puede pasar a la siguiente sala. Si está en la sala del spawn 
