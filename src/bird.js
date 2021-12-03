@@ -18,10 +18,35 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    * @param {array of Room} rooms array que guarda las habitaciones visitables por el pájaro
    */
   constructor(scene, x, y, birdsGroup, level, route, rooms) {
-    super(scene, x, y, 'bird');
+    super(scene, x, y, 'bird1');
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     birdsGroup.add(this);
+
+    this.scene.anims.create({
+      key: 'bird_idle',
+      frames: this.anims.generateFrameNumbers('bird1', { start: 0, end: 1 }),
+      frameRate: 10, // Velocidad de la animación
+      repeat: -1   // Animación en bucle
+    });
+
+    this.scene.anims.create({
+      key: 'bird_jump',
+      frames: this.anims.generateFrameNumbers('bird1', { start: 2, end: 3 }),
+      frameRate: 10, // Velocidad de la animación
+      yoyo: true,
+      repeat: -1   // Animación en bucle
+    });
+
+    this.scene.anims.create({
+      key: 'bird_fly',
+      frames: this.anims.generateFrameNumbers('bird1', { start: 4, end: 7 }),
+      frameRate: 10, // Velocidad de la animación
+      yoyo: true,
+      repeat: -1   // Animación en bucle
+    });
+
+    this.play('bird_fly')
 
     this.level = level;
     //Velocidad de movimiento
@@ -77,6 +102,10 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       }
       else if (dir === 3){
         this.body.setVelocityX(-this.speed);
+      }
+
+      if(dir !==4){
+        this.play('bird_jump')
       }
     }  
   }
@@ -174,6 +203,12 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   //Detiene al pájaro de su movimiento actual
   cancelMovement(){
     this.body.setVelocity(0, 0);
+    if(this.actualOrderRoom !== 0){
+      this.play('bird_idle');
+    }
+    else{
+      this.play('bird_fly');
+    }
   }
 
   /**
