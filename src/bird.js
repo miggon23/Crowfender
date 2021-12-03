@@ -107,12 +107,12 @@ export default class Bird extends Phaser.GameObjects.Sprite {
 
   //Cambia a la habitación i de su ruta tomando las coordenadas del la sala y calculando donde debería estar el suelo
   changeRoom(i){
-    let topLeft = this.rooms[this.route[i]].getTopLeft();
-    let botRight = this.rooms[this.route[i]].getBottomRight();
+    let topLeft = this.rooms[this.route[i]].birdZone.getTopLeft();
+    let botRight = this.rooms[this.route[i]].birdZone.getBottomRight();
     let offsetX = this.width / 2;
     let offsetY = this.height / 2;
-    let x = Phaser.Math.Between(topLeft.x + offsetX, botRight.x - offsetX);
-    let y = Phaser.Math.Between((botRight.y - ((botRight.y - topLeft.y) / 4)) + offsetY, botRight.y - offsetY);
+    let x = Phaser.Math.Between(topLeft.x, botRight.x);
+    let y = Phaser.Math.Between(botRight.y, botRight.y);
     this.x = x;
     this.y = y;
   }

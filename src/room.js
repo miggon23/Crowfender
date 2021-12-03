@@ -25,7 +25,7 @@ export default class Room extends Phaser.GameObjects.Sprite {
     this.displayHeight= scaleY;
     this.scene.add.existing(this);
     roomArray.push(this);
-    this.birdZone = new BirdZone(scene, x, y + (scaleY / 3), scaleX * 0.65, scaleY * 0.18);
+    this.birdZone = new BirdZone(scene, x, y + (scaleY / 3), scaleX * 0.6, scaleY * 0.15);
     
   }
 }
