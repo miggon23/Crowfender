@@ -1,22 +1,21 @@
 /**
- * Escena de fin de juego. Cuando se han recogido todas las estrellas, se presenta un
- * texto que indica que el juego se ha acabado.
+ * Escena de fin de juego, cuando el jugador perde
  * Si se pulsa cualquier tecla, se vuelve a iniciar el juego.
  */
-export default class Win extends Phaser.Scene {
+ export default class Victory extends Phaser.Scene {
   /**
    * Constructor de la escena
    */
   constructor() {
-    super({ key: 'win' });
+    super({ key: 'victory' });
   }
 
   /**
-   * Creación de la escena. Muestra en pantalla que el jugador ha ganado, y la información necesaria
+   * Creación de la escena. Tan solo contiene el texto que indica que el juego se ha acabado
    * @override
    */
   create() {
-    this.add.text(500, 250, '¡Pero qué bien hecho, eliminaste a todos los pájaros!')
+    this.add.text(500, 250, 'Pero que bien hecho, pprevaleciste sobre los pájaros y ganaste. Eres todo un conchetumadre.')
         .setOrigin(0.5, 0.5)  // Colocamos el pivote en el centro de cuadro de texto 
         .setAlign('center');  // Centramos el texto dentro del cuadro de texto
 

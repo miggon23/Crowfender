@@ -128,6 +128,7 @@ export default class Level extends Phaser.Scene {
     //camera.setZoom(0.40);
     //camera.setZoom(1.50);
    
+    
 
     camera.startFollow(this.player);
     camera.setDeadzone(925, 600);
@@ -294,10 +295,12 @@ export default class Level extends Phaser.Scene {
   spawnElectricitySwitches(){
     this.electricity_fireplace = new Electricity(this, this.player, -352, 380, this.spawn_fireplace);
     this.electricity_door = new Electricity(this, this.player, 276, -300, this.spawn_door);
-    this.electricity_window = new Electricity(this, this.player, 1800, 304, this.spawn_window);
+    this.
+    electricity_window = new Electricity(this, this.player, 1800, 304, this.spawn_window);
   }
-    isElectricityAvailable(){
-    return this.electricityAvailable;
+
+  isElectricityAvailable(){
+  return this.electricityAvailable;
   }
 
   //Se ha activado la electricidad: la ponemos en enfriamiento
@@ -393,6 +396,8 @@ export default class Level extends Phaser.Scene {
     this.nBirdsInMiddle--;
     console.log("Pájaros en medio: " + this.nBirdsInMiddle + "Max: " + this.maxBirdsInMiddle)
   }
+
+  
 
   /**
    * La escena se encarga de crear los pájaros cada cierto tiempo, si ha llegado

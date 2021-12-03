@@ -1,6 +1,5 @@
 /**
- * Escena de fin de juego. Cuando se han recogido todas las estrellas, se presenta un
- * texto que indica que el juego se ha acabado.
+ * Escena de fin de juego, cuando el jugador perde
  * Si se pulsa cualquier tecla, se vuelve a iniciar el juego.
  */
 export default class End extends Phaser.Scene {
