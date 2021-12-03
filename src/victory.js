@@ -2,12 +2,12 @@
  * Escena de fin de juego, cuando el jugador perde
  * Si se pulsa cualquier tecla, se vuelve a iniciar el juego.
  */
-export default class End extends Phaser.Scene {
+ export default class Victory extends Phaser.Scene {
   /**
    * Constructor de la escena
    */
   constructor() {
-    super({ key: 'end' });
+    super({ key: 'victory' });
   }
 
   /**
@@ -15,7 +15,7 @@ export default class End extends Phaser.Scene {
    * @override
    */
   create() {
-    this.add.text(500, 250, '¡Se acabó, demasiados pájaros invadieron la escena!\nPulsa cualquier tecla para volver a jugar')
+    this.add.text(500, 250, 'Pero que bien hecho, pprevaleciste sobre los pájaros y ganaste. Eres todo un conchetumadre.')
         .setOrigin(0.5, 0.5)  // Colocamos el pivote en el centro de cuadro de texto 
         .setAlign('center');  // Centramos el texto dentro del cuadro de texto
 

@@ -19,10 +19,12 @@ export default class Chest extends Phaser.GameObjects.Sprite {
     this.displayWidth = scaleX;
     this.displayHeight= scaleY;
     this.scene.physics.add.existing(this, true);
-    this.visible =  false;
+    this.visible = false;
+    this.woodSound = this.scene.sound.add("woodTake");
     this.k = this.scene.input.keyboard.addKey('K');
     this.scene.physics.add.overlap(this, player, (o1, o2) => {
         if(Phaser.Input.Keyboard.JustDown(this.k)){
+          this.woodSound.play();
             player.pickWood();
         }
     });

@@ -17,12 +17,24 @@
       super(scene, x, y, 'electricidad_verde');
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this, true);
+      this.switchReady = this.scene.sound.add("electricitySwitch");
+      this.switchNotReady = this.scene.sound.add("electricitySwitchNotCharged");
+      this.electricityZap = this.scene.sound.add("electricityZap");
       this.k = this.scene.input.keyboard.addKey('K');
       this.scene.physics.add.overlap(this, player, (o1, o2) => {
-        if(Phaser.Input.Keyboard.JustDown(this.k) && this.scene.isElectricityAvailable()){
-          spawn.activateElectricity();
-          this.scene.putElectricityOnCooldown();
+        if(Phaser.Input.Keyboard.JustDown(this.k)){
+          if(this.scene.isElectricityAvailable()){
+            this.electricityZap.play();
+            this.switchReady.play();
+            spawn.activateElectricity();
+            this.scene.putElectricityOnCooldown();
+          }
+          else if(!this.scene.isElectricityAvailable())
+          {
+            this.switchNotReady.play();
+          } 
       }
+
       });
       
     } 

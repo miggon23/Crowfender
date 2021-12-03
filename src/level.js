@@ -23,8 +23,16 @@ export default class Level extends Phaser.Scene {
   }
 
   /**
-   * Creación de los elementos de la escena principal de juego
+   * Inicialización de variables que dependen del nivel de dificultad elegida por el jugador en el menú
+   * @param {data} data Contiene multiplier y timeToWin, el tiempo en minutos para ganar que se guarda en init
    */
+  init(data) {
+    this.multiplier = data.multiplier;
+    this.winTime = data.timeToWin * 1000 * 60;
+  }
+
+  /* Creación de los elementos de la escena principal de juego
+  */
   create() { 
     
     //Array de zonas de spawn
@@ -33,6 +41,7 @@ export default class Level extends Phaser.Scene {
     //Array de habitaciones
     this.rooms = [];
 
+    //Array donde se guardan las zonas de spawn junto con las habitaciones
     this.zones = [];
     
     //Creación de habitaciones y elementos del juego
@@ -51,7 +60,7 @@ export default class Level extends Phaser.Scene {
     this.birdZones = this.spawnzones.concat(this.rooms);
     console.log(this.birdZones);
 
-    //Máximo de pájaros peritido
+    //Máximo de pájaros permitido
     this.maxBirds = 15;
     //Número de pájaros en el nivel
     this.nBirds = 0;
@@ -62,7 +71,14 @@ export default class Level extends Phaser.Scene {
 
     //temporizador para spawnear pájaros
     this.timer = 0;
-    this.spawnTime = Phaser.Math.Between(2000, 4000);
+    this.spawnTime = Phaser.Math.Between(4000, 7000);
+
+    //Temporizador para ganar
+    this.victoryTimer = 0;
+
+    //Booleano que marca cuando un pájaro se puede spawnear
+    this.stopSpawning = false;
+
     this.newRand;
     this.birds = this.add.group(); 
     let broom = new Broom(this);
@@ -75,14 +91,44 @@ export default class Level extends Phaser.Scene {
 
     this.zone1; this.zone2; this.zone3; this.zone4; this.zone5; this.zone6; this.zone7; this.zone8; this.zone9; this.zone10;
 
-    
+    //Sonidos 
+    const config = {
+      mute: false,
+      volume: 0.1,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0,
+    }; 
+    this.randomForTensionSound;
+    this.timerForTensionSounds = 10000;
+
+    this.playerChangeRoomSound = this.sound.add("playerChangeRoom");
+    this.electricityReady = this.sound.add("electricityReady");
+    this.deadSound = this.sound.add("birdDeath");
+    this.winSound = this.sound.add("win");
+    this.loseSound = this.sound.add("lose");
+    this.gameMusic = this.sound.add("gameMusic", config);
+    this.clockSound1 = this.sound.add("clockSound1");
+    this.clockSound2 = this.sound.add("clockSound2");
+    this.clockSound3 = this.sound.add("clockSound3");
+    this.clockSound4 = this.sound.add("clockSound4");
+    this.clockSound5 = this.sound.add("clockSound5");
+    this.clockSound6 = this.sound.add("clockSound6");
+    this.tension1 = this.sound.add("tension1");
+    this.tension2 = this.sound.add("tension2");
+    this.tension3 = this.sound.add("tension3");
+    this.gameMusic.play();
+
     camera.x = 0;
     camera.y = 0;
     
 
-    //camera.setZoom(0.20);
+    //camera.setZoom(0.40);
     //camera.setZoom(1.50);
    
+    
 
     camera.startFollow(this.player);
     camera.setDeadzone(925, 600);
@@ -95,6 +141,7 @@ export default class Level extends Phaser.Scene {
 
     //Colision de los spawns con los pájaros (para la electricidad)
     this.physics.add.overlap(this.spawns, this.birds, (o1, o2) => {
+      this.deadSound.play();
       o2.die();     
     });
 
@@ -104,12 +151,14 @@ export default class Level extends Phaser.Scene {
       this.player.changeRoomNumber(1);
       this.player.changePlayerPosition(this.player.x + 150, this.player.y);
       camera.scrollX = +900;
+      this.playerChangeRoomSound.play();
     } 
     //Transporta al jugador y a la cámara desde la sala central hasta la sala izquierda
     else if(o2.name === 'middleToWest' && this.player.whatRoomIs() === 0){
       this.player.changeRoomNumber(2);
       this.player.changePlayerPosition(this.player.x - 150, this.player.y);
       camera.scrollX = -900;
+      this.playerChangeRoomSound.play();
     } 
     //Transporta al jugador y a la cámara desde la sala central hasta la sala superior
     else if(o2.name === 'middleToUpper' && this.player.whatRoomIs() === 0){
@@ -118,6 +167,7 @@ export default class Level extends Phaser.Scene {
       camera.setDeadzone(925, 600);
        camera.scrollY = -600;
        camera.scrollX = 0;   
+       this.playerChangeRoomSound.play();
     } 
     //Transporta al jugador y a la cámara desde la sala derecha hasta la central
     else if(o2.name === 'eastToMiddle' && this.player.whatRoomIs() === 1){
@@ -126,6 +176,7 @@ export default class Level extends Phaser.Scene {
       camera.setDeadzone(925, 600);
       camera.scrollX = +0;
       camera.scrollY = +0;
+      this.playerChangeRoomSound.play();
     } 
     //Transporta al jugador y a la cámara desde la sala izquierda hasta la central
     else if(o2.name === 'westToMiddle' && this.player.whatRoomIs() === 2){
@@ -134,6 +185,7 @@ export default class Level extends Phaser.Scene {
       camera.setDeadzone(925, 600);
       camera.scrollX = +0;
       camera.scrollY = 0;
+      this.playerChangeRoomSound.play();
     } 
     //Transporta al jugador y a la cámara desde la sala superior hasta la central
     else if(o2.name === 'upperToMiddle' && this.player.whatRoomIs() === 3){
@@ -141,6 +193,8 @@ export default class Level extends Phaser.Scene {
       this.player.changePlayerPosition(this.player.x, this.player.y + 400);
       camera.setDeadzone(925, 600);
       camera.scrollX = 10;
+      camera.scrollY = 0;
+      this.playerChangeRoomSound.play();
     } 
     //Activa el scroll en la sala derecha
     else if(o2.name === 'scrollEastOn' && !this.player.isScrolling()){
@@ -173,7 +227,7 @@ export default class Level extends Phaser.Scene {
     
 
     this.physics.add.collider(this.player, this.walls)
-    this.physics.add.collider(this.birds, this.walls)
+    this.physics.add.collider(this.birds, this.birdWalls)
     
   }
 
@@ -209,6 +263,18 @@ export default class Level extends Phaser.Scene {
     // Chimenea 
     new Wall(this, -780, 360, 170, 128, this.walls);
 
+
+    this.birdWalls = this.add.group();
+    new Wall(this, 500, -410, 1000, 430, this.birdWalls);
+    new Wall(this, 1000, 190, 2100, 430, this.birdWalls);
+    new Wall(this, 500, 810, 3200, 430, this.birdWalls);
+    new Wall(this, 500, 1390, 1000, 430, this.birdWalls);
+    new Wall(this, -600, 420, 1000, 100, this.birdWalls);
+    
+    new Wall(this, -1090, 450, 120, 1200, this.birdWalls);
+    new Wall(this, -40, 200, 90, 2000, this.birdWalls);
+    new Wall(this, 1040, 200, 90, 2000, this.birdWalls);
+    new Wall(this, 2060, 450, 120, 1200, this.birdWalls);
   }
 
   //Método que crea las zonas bloqueables por el jugador
@@ -229,10 +295,12 @@ export default class Level extends Phaser.Scene {
   spawnElectricitySwitches(){
     this.electricity_fireplace = new Electricity(this, this.player, -352, 380, this.spawn_fireplace);
     this.electricity_door = new Electricity(this, this.player, 276, -300, this.spawn_door);
-    this.electricity_window = new Electricity(this, this.player, 1800, 304, this.spawn_window);
+    this.
+    electricity_window = new Electricity(this, this.player, 1800, 304, this.spawn_window);
   }
-    isElectricityAvailable(){
-    return this.electricityAvailable;
+
+  isElectricityAvailable(){
+  return this.electricityAvailable;
   }
 
   //Se ha activado la electricidad: la ponemos en enfriamiento
@@ -248,6 +316,7 @@ export default class Level extends Phaser.Scene {
 
   //Ponemos disponible de nuevo la electricidad
   electricityNowAvailable(){
+    this.electricityReady.play();
     this.electricityAvailable = true;
   }
 
@@ -303,13 +372,18 @@ export default class Level extends Phaser.Scene {
     let index = Phaser.Math.Between(0, this.spawnzones.length - 1);
     //Guardamos la spawnzone de una variable para acceder más facilmente a sus métodos
     let birdSpawnZone = this.spawnzones[index];
-    let topLeft = birdSpawnZone.getTopLeft();
-    let botRight = birdSpawnZone.getBottomRight();
-
-    let newX = Phaser.Math.Between(topLeft.x, botRight.x);
-    let newY = Phaser.Math.Between(topLeft.y, botRight.y);
-
-    new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones);    
+    if(!birdSpawnZone.spawnFull())   //Si no está lleno el spawn añadimos un pájaro
+    {
+      let topLeft = birdSpawnZone.getTopLeft();
+      let botRight = birdSpawnZone.getBottomRight();
+  
+      let newX = Phaser.Math.Between(topLeft.x, botRight.x);
+      let newY = Phaser.Math.Between(topLeft.y, botRight.y);
+  
+      new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones); 
+    }
+    else
+      console.log("Spawn lleno");
 
   }
 
@@ -323,23 +397,52 @@ export default class Level extends Phaser.Scene {
     console.log("Pájaros en medio: " + this.nBirdsInMiddle + "Max: " + this.maxBirdsInMiddle)
   }
 
+  
+
   /**
    * La escena se encarga de crear los pájaros cada cierto tiempo, si ha llegado
    * al límite de pájaros de la escena, se resetea el timer a 0 para que no spawnea
-   * inmediatamente otro pájaro nada más echar a otro.
+   * inmediatamente otro pájaro nada más echar a uno. Vigila si el jugador ha perdido o si ha ganado
    * @param {*} t 
    * @param {*} dt 
    */
   update(t, dt){
-    this.timer += dt;
+    this.timer += dt; 
+    this.victoryTimer += dt;
+    this.timerForTensionSounds += dt;
+    this.randomForTensionSound = Phaser.Math.Between(0, 100);
+
+    if(this.timerForTensionSounds >  10000 && this.randomForTensionSound === 0){
+      this.tension1.play();
+      this.timerForTensionSounds = 0;
+    }
+    else if(this.timerForTensionSounds >  10000  && this.randomForTensionSound === 1){
+      this.tension2.play();
+      this.timerForTensionSounds = 0;
+    } 
+    else if(this.timerForTensionSounds >  10000 && this.randomForTensionSound === 2){
+      this.tension3.play();
+      this.timerForTensionSounds = 0;
+    } 
+ 
+
+    //Sonidos del reloj, tic por hora para cualquier timer que pongamos
+    if(this.victoryTimer > this.winTime / 6 && this.victoryTimer < (this.winTime / 6) + 20)   this.clockSound1.play();
+    else if(this.victoryTimer > this.winTime / 3 && this.victoryTimer < (this.winTime / 3) + 20) this.clockSound2.play();
+    else if(this.victoryTimer > this.winTime / 2 && this.victoryTimer < (this.winTime / 2) + 20) this.clockSound3.play();
+    else if(this.victoryTimer > this.winTime / 1.5 && this.victoryTimer < (this.winTime / 1.5) + 20) this.clockSound4.play();
+    else if(this.victoryTimer > this.winTime / 1.2 && this.victoryTimer < (this.winTime / 1.2) + 20) this.clockSound5.play();
+    else if(this.victoryTimer > this.winTime && this.victoryTimer < this.winTime  + 20) this.clockSound6.play();
     
+
+    //Spawn de pájaros
     if(this.timer > this.spawnTime)
     {
-      if(this.nBirds < this.maxBirds){
-        this.nBirds++;
+      if(this.nBirds < this.maxBirds && !this.stopSpawning){
+        this.nBirds += this.multiplier;
         this.spawnBird(this.spawnTime);
         this.timer -= this.spawnTime;
-        this.spawnTime = Phaser.Math.Between(1400, 4000);
+        this.spawnTime = Phaser.Math.Between(4000, 7000);
       }
       else{
         this.timer = 0;
@@ -347,6 +450,17 @@ export default class Level extends Phaser.Scene {
       
     }
 
+    //condición de victoria, si ha pasado el tiempo
+    if(this.victoryTimer >= this.winTime)
+    {
+      this.stopSpawning = true; //Tras ese tiempo, dejan de spawnearse pájaros
+      if(this.nBirds == 0) //Y además no quedan pájaros en la escena
+      {
+        this.winSound.play();
+        this.gameMusic.stop();
+        this.scene.start('win');
+      }
+    }
 
 
     this.input.on('gameobjectdown', function (pointer, gameObject) {
@@ -358,7 +472,9 @@ export default class Level extends Phaser.Scene {
 
   });
     //Si el número de pájaros en el centro alcanza el máximo, pierdes y se muestra tu puntuación
-    if (this.nBirdsInMiddle >= this.maxBirdsInMiddle){
+    if (this.nBirdsInMiddle >= this.maxBirdsInMiddle && this.player.whatRoomIs() === 0){
+      this.gameMusic.stop();
+      this.loseSound.play();
       this.scene.start('end');
     }
 

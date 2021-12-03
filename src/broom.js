@@ -19,6 +19,7 @@
       this.j = this.scene.input.keyboard.addKey('J');
       this.timer = 0;
       this.cooldown = 1500;
+      this.hitSound = this.scene.sound.add("playerAttack");
     }
 
     //El jugador se movió a la izquierda, por lo tanto la escoba está a su izquierda
@@ -71,6 +72,7 @@
       //Vammos acumualndo en timer el tiempo en cada frame
       this.timer += dt;
       if (this.timer >= this.cooldown && Phaser.Input.Keyboard.JustDown(this.j)){
+          this.hitSound.play();
           this.hit();
           this.parentContainer.switchPlayerHit();
           this.timer = 0;

@@ -1,4 +1,4 @@
-
+import BirdZone from './birdzone.js';
 /**
  * Clase que representa las zonas de spawn de cada sala
  */
@@ -29,30 +29,56 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this);
     spawnsGroup.add(this);
     spawnArray.push(this);
+    //Limite de pájaros que pueden estar a la vez en un spawn
+    this.spawnLimit = 6;
+    this.birdsInSpawn = 0;
 
     this.body.enable = false;
     this.blockable = blockable;
-
+    //Zona a la que se mueven los pajaros al pasar de habitacion
+    this.birdZone = new BirdZone(scene, x, y, scaleX * 0.7 , scaleY * 0.7);
+    
     //this.visible = false;
   }
   
   activateElectricity(){ 
     this.visible=false
-      this.body.enable= true;
-      this.scene.time.addEvent( {
-        delay: 300, 
-        callback: this.desactivateElectricity,
-        callbackScope: this,
-        loop: false
-      });
-    }
+    this.body.enable= true;
+    this.scene.time.addEvent( {
+      delay: 300, 
+      callback: this.desactivateElectricity,
+      callbackScope: this,
+      loop: false
+    });
+  }
+
   desactivateElectricity(){
     this.visible=true;
     this.body.enable= false;
   }
 
+  //Devuelve un booleano que indica si el spawn está tapiado (bloqueado)
   spawnBlocked(){
     return this.blockable.isBlocked();
   }
 
+  //Añade un pájaro al contador del spawn
+  addBirdInSpawn()
+  {
+    this.birdsInSpawn++;
+    console.log("Pajaro añadido en este spawn " + this.birdsInSpawn);
+  }
+
+  //Resta un pájaro al contador del spawn
+  subBirdInSpawn()
+  {
+    this.birdsInSpawn--;
+    console.log("Un pájaro salió del spawn");
+  }
+
+  //Devuelve true si en el spawn no caben más pájaros
+  spawnFull()
+  {
+    return this.birdsInSpawn === this.spawnLimit;
+  }
 }

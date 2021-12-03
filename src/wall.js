@@ -1,7 +1,6 @@
 /**
- * Clase que representa las plataformas que aparecen en el escenario de juego.
- * Cada plataforma es responsable de crear la base que aparece sobre ella y en la 
- * que, durante el juego, puede aparecer una estrella
+ * Clase que representan los distintos tipos de muro con los que se puede topar un GameObject
+ * En principio hay un grupo de muros para el jugador y otro para los pájaros
  */
 export default class Wall extends Phaser.GameObjects.Sprite {
   
@@ -9,7 +8,7 @@ export default class Wall extends Phaser.GameObjects.Sprite {
    * Constructor de la Plataforma
    * @param {Phaser.Scene} scene Escena a la que pertenece la plataforma
    * @param {Player} player Jugador del juego
-   * @param {Phaser.GameObjects.Group} baseGroup Grupo en el que se incluirá la base creada por la plataforma
+   * @param {Phaser.GameObjects.Group} wallsGroup Grupo en el que se incluirá la base creada por la plataforma
    * @param {number} x Coordenada x
    * @param {number} y Coordenada y
    */
