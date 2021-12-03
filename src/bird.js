@@ -37,6 +37,9 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     //Añadimos la vida
     this.health = 3;
 
+    this.changeRoomTimer = 0;
+    this.delayToChangeRoom = Phaser.Math.Between(7000, 12000);
+
     //Sonidos de los pájaros al llegar al centro
     this.center1 = this.scene.sound.add("bird1Center");
     this.center2 = this.scene.sound.add("bird2Center");
@@ -60,9 +63,9 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    */
   moveBird(){
     //Hay una pequeña probabilidad de que no salte en este turno
-    let dir = Phaser.Math.Between(0, 5);
+    
     if(this.actualOrderRoom !== 0){
-        
+      let dir = Phaser.Math.Between(0, 4);  
       if (dir === 0){
         this.body.setVelocityY(this.speed);     
       }
@@ -75,15 +78,19 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       else if (dir === 3){
         this.body.setVelocityX(-this.speed);
       }
-    }
-    
-    if (dir === 4){
-      if (this.iCanAdvance())
-        this.advanceRoom();
-    }
+    }  
+  }
 
-
-    
+  /**
+  * Método que avisa al pájaro para cambiar de sala, consultando antes si es es viable este cambio
+  */
+  goToNextRoom()
+  {
+    this.cancelMovement()
+    if (this.iCanAdvance())
+    {
+      this.advanceRoom();
+    }
   }
 
   //Comprueba que puede pasar a la siguiente sala. Si está en la sala del spawn 
@@ -109,8 +116,8 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   changeRoom(i){
     let topLeft = this.rooms[this.route[i]].birdZone.getTopLeft();
     let botRight = this.rooms[this.route[i]].birdZone.getBottomRight();
-    let offsetX = this.width / 2;
-    let offsetY = this.height / 2;
+    // let offsetX = this.width / 2;
+    // let offsetY = this.height / 2;
     let x = Phaser.Math.Between(topLeft.x, botRight.x);
     let y = Phaser.Math.Between(botRight.y, botRight.y);
     this.x = x;
@@ -152,7 +159,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       this.level.substractBirdFromMiddle();
     }
     
-    if(this.heath === 0){
+    if(this.health === 0){
       this.deadSound.play();
       this.die();
     }
@@ -177,16 +184,25 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     super.preUpdate(t,dt);
     this.timer += dt;
     this.stopMovementTimer += dt;
+    this.changeRoomTimer += dt;
     if (this.timer >= this.delayToMove)
     {
       this.moveBird();
       this.timer -= this.delayToMove;
-      this.stopMovementTimer = Phaser.Math.Between(3000, 5500);
+      //Generamos otro aleatorio para el siguiente movimiento
+      this.delayToMove = Phaser.Math.Between(3000, 5500);
       this.stopMovementTimer = 0;
     }
     else if (this.stopMovementTimer >= this.delayToStopMovement){
       this.cancelMovement();
       this.stopMovementTimer = 0;
     }
+    
+    if(this.changeRoomTimer >= this.delayToChangeRoom)
+    {
+      this.goToNextRoom();
+      this.changeRoomTimer = 0;
+    }
+
   }  
 }

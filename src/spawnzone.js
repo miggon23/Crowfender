@@ -30,7 +30,7 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
     spawnsGroup.add(this);
     spawnArray.push(this);
     //Limite de pájaros que pueden estar a la vez en un spawn
-    this.spawnLimit = 6;
+    this.spawnLimit = 1;
     this.birdsInSpawn = 0;
 
     this.body.enable = false;
