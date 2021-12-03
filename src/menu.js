@@ -20,6 +20,8 @@ import Button from "./button.js";
         this.buttonSound = this.sound.add("button");
         this.menuMusic = this.sound.add("menuMusic");
         this.menuMusic.play();
+        this.menuImage = this.add.image(0, 0, 'fondo_menu');
+        this.menuImage.setOrigin(0, 0)
 		var camera = this.cameras.main;
 
         camera.x = 0;
