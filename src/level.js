@@ -369,7 +369,7 @@ export default class Level extends Phaser.Scene {
    */
   spawnBird() { 
     let routes = [[0, 5, 3], [1, 4, 3], [2, 6, 3]];
-    let index = Phaser.Math.Between(0, this.spawnzones.length - 1);
+    let index = 1 //Phaser.Math.Between(0, this.spawnzones.length - 1);
     //Guardamos la spawnzone de una variable para acceder más facilmente a sus métodos
     let birdSpawnZone = this.spawnzones[index];
     if(!birdSpawnZone.spawnFull())   //Si no está lleno el spawn añadimos un pájaro
