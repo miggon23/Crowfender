@@ -101,6 +101,9 @@ export default class Level extends Phaser.Scene {
       loop: false,
       delay: 0,
     }; 
+    this.randomForTensionSound;
+    this.permissionForTensionSound = true;
+
     this.playerChangeRoomSound = this.sound.add("playerChangeRoom");
     this.electricityReady = this.sound.add("electricityReady");
     this.deadSound = this.sound.add("birdDeath");
@@ -113,6 +116,9 @@ export default class Level extends Phaser.Scene {
     this.clockSound4 = this.sound.add("clockSound4");
     this.clockSound5 = this.sound.add("clockSound5");
     this.clockSound6 = this.sound.add("clockSound6");
+    this.tension1 = this.sound.add("tension1");
+    this.tension2 = this.sound.add("tension2");
+    this.tension3 = this.sound.add("tension3");
     this.gameMusic.play();
 
     camera.x = 0;
@@ -388,6 +394,9 @@ export default class Level extends Phaser.Scene {
     console.log("Pájaros en medio: " + this.nBirdsInMiddle + "Max: " + this.maxBirdsInMiddle)
   }
 
+  randomForTensionSoundTrue(){
+    this.permissionForTensionSound = true;
+  }
   /**
    * La escena se encarga de crear los pájaros cada cierto tiempo, si ha llegado
    * al límite de pájaros de la escena, se resetea el timer a 0 para que no spawnea
@@ -396,9 +405,44 @@ export default class Level extends Phaser.Scene {
    * @param {*} dt 
    */
   update(t, dt){
-    this.timer += dt; //120000 180000 300000
+    this.timer += dt; 
     this.victoryTimer += dt;
-    console.log(this.victoryTimer);
+    this.randomForTensionSound = Phaser.Math.Between(0, 100);
+    console.log(this.permissionForTensionSound);
+
+    if(this.permissionForTensionSound && this.randomForTensionSound === 0){
+      this.tension1.play();
+      this.permissionForTensionSound = false;
+      // this.time.addEvent( {
+      //   delay: 5000, 
+      //   callback: this.randomForTensionSoundTrue(),
+      //   callbackScope: this,
+      //   loop: false
+      // });
+    }
+    else if(this.permissionForTensionSound && this.randomForTensionSound === 1){
+      this.tension2.play();
+      this.permissionForTensionSound = false;
+      // this.time.addEvent( {
+      //   delay: 5000, 
+      //   callback: this.randomForTensionSoundTrue(),
+      //   callbackScope: this,
+      //   loop: false
+      // });
+    } 
+    else if(this.permissionForTensionSound && this.randomForTensionSound === 2){
+      this.tension3.play();
+      this.permissionForTensionSound = false;
+      // this.time.addEvent( {
+      //   delay: 5000, 
+      //   callback: this.randomForTensionSoundTrue(),
+      //   callbackScope: this,
+      //   loop: false
+      // });
+    } 
+ 
+
+    //Sonidos del reloj, tic por hora para cualquier timer que pongamos
     if(this.victoryTimer > this.winTime / 6 && this.victoryTimer < (this.winTime / 6) + 20)   this.clockSound1.play();
     else if(this.victoryTimer > this.winTime / 3 && this.victoryTimer < (this.winTime / 3) + 20) this.clockSound2.play();
     else if(this.victoryTimer > this.winTime / 2 && this.victoryTimer < (this.winTime / 2) + 20) this.clockSound3.play();

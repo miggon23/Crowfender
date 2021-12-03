@@ -81,9 +81,9 @@ export default class Boot extends Phaser.Scene {
     this.load.audio('clockSound5','clock5.wav');
     this.load.audio('clockSound6','clock6.wav');
     this.load.audio('tension1','tension_1.wav');
-    this.load.audio('tension2','tension_2.wav');
-    this.load.audio('tension3','tension_3.wav');
-    this.load.audio('tension4','tension_4.wav');
+    //this.load.audio('tension2','tension_2.wav');
+    this.load.audio('tension2','tension_3.wav');
+    this.load.audio('tension3','tension_4.wav');
 
     //Sonidos player
     this.load.audio('playerAttack','player_attack.wav');
