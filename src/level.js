@@ -102,7 +102,7 @@ export default class Level extends Phaser.Scene {
       delay: 0,
     }; 
     this.randomForTensionSound;
-    this.permissionForTensionSound = true;
+    this.timerForTensionSounds = 10000;
 
     this.playerChangeRoomSound = this.sound.add("playerChangeRoom");
     this.electricityReady = this.sound.add("electricityReady");
@@ -394,9 +394,6 @@ export default class Level extends Phaser.Scene {
     console.log("Pájaros en medio: " + this.nBirdsInMiddle + "Max: " + this.maxBirdsInMiddle)
   }
 
-  randomForTensionSoundTrue(){
-    this.permissionForTensionSound = true;
-  }
   /**
    * La escena se encarga de crear los pájaros cada cierto tiempo, si ha llegado
    * al límite de pájaros de la escena, se resetea el timer a 0 para que no spawnea
@@ -407,38 +404,20 @@ export default class Level extends Phaser.Scene {
   update(t, dt){
     this.timer += dt; 
     this.victoryTimer += dt;
+    this.timerForTensionSounds += dt;
     this.randomForTensionSound = Phaser.Math.Between(0, 100);
-    console.log(this.permissionForTensionSound);
 
-    if(this.permissionForTensionSound && this.randomForTensionSound === 0){
+    if(this.timerForTensionSounds >  10000 && this.randomForTensionSound === 0){
       this.tension1.play();
-      this.permissionForTensionSound = false;
-      // this.time.addEvent( {
-      //   delay: 5000, 
-      //   callback: this.randomForTensionSoundTrue(),
-      //   callbackScope: this,
-      //   loop: false
-      // });
+      this.timerForTensionSounds = 0;
     }
-    else if(this.permissionForTensionSound && this.randomForTensionSound === 1){
+    else if(this.timerForTensionSounds >  10000  && this.randomForTensionSound === 1){
       this.tension2.play();
-      this.permissionForTensionSound = false;
-      // this.time.addEvent( {
-      //   delay: 5000, 
-      //   callback: this.randomForTensionSoundTrue(),
-      //   callbackScope: this,
-      //   loop: false
-      // });
+      this.timerForTensionSounds = 0;
     } 
-    else if(this.permissionForTensionSound && this.randomForTensionSound === 2){
+    else if(this.timerForTensionSounds >  10000 && this.randomForTensionSound === 2){
       this.tension3.play();
-      this.permissionForTensionSound = false;
-      // this.time.addEvent( {
-      //   delay: 5000, 
-      //   callback: this.randomForTensionSoundTrue(),
-      //   callbackScope: this,
-      //   loop: false
-      // });
+      this.timerForTensionSounds = 0;
     } 
  
 
