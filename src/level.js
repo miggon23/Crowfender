@@ -129,11 +129,13 @@ export default class Level extends Phaser.Scene {
     new Door(this,this.player, camera, 1, 0, this.rooms);
     new Door(this,this.player, camera, 2, 0, this.rooms);
     new Door(this,this.player, camera, 3, 0, this.rooms);
+    new Door(this,this.player, camera, 1, 1, this.rooms);
+    new Door(this,this.player, camera, 3, 3, this.rooms);
 
 
 
     camera.startFollow(this.player);
-    camera.setDeadzone(600, 600); //925
+    camera.setDeadzone(925, 600); 
     camera.scrollY = 0;
     //Colision de la escoba con los pájaros
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
@@ -399,16 +401,6 @@ export default class Level extends Phaser.Scene {
         this.scene.start('win');
       }
     }
-
-
-    this.input.on('gameobjectdown', function (pointer, gameObject) {
-
-     
-
-      console.log(gameObject.name);
-      
-
-  });
     //Si el número de pájaros en el centro alcanza el máximo, pierdes y se muestra tu puntuación
     if (this.nBirdsInMiddle >= this.maxBirdsInMiddle && this.player.whatRoomIs() === 0){
       this.gameMusic.stop();
