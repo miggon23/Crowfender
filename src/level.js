@@ -38,22 +38,15 @@ export default class Level extends Phaser.Scene {
     
     //Array de zonas de spawn
     this.spawnzones = [];
-    
     //Array de habitaciones
     this.rooms = [];
+    //Grupo de spawns
+    this.spawns = this.add.group();
 
-    //Array donde se guardan las zonas de spawn junto con las habitaciones
-    this.zones = [];
-    
     //Creación de habitaciones y elementos del juego
     this.spawnRooms();
     this.spawnWalls();
     this.player = new Player(this, 500, 400);
-    //this.spawnZonesForTP();
-   
-    
-    this.spawns = this.add.group(); 
-
     this.spawnBlockables();
     this.spawnZones();
     this.spawnElectricitySwitches();
@@ -91,7 +84,7 @@ export default class Level extends Phaser.Scene {
     this.basement = new Basement(this, this.player, 270, 1000, 100, 100, false, camera);
     this.electricityAvailable = true;
 
-    this.zone1; this.zone2; this.zone3; this.zone4; this.zone5; this.zone6; this.zone7; this.zone8; this.zone9; this.zone10;
+    this.zone7; this.zone8; this.zone9; this.zone10;
 
     //Sonidos 
     const config = {
@@ -130,10 +123,17 @@ export default class Level extends Phaser.Scene {
     //camera.setZoom(0.70);
     //camera.setZoom(1.50);
    
-    this.door = new Door(this, 0, 1, 200,200, this.zones, this.rooms);
+    new Door(this,this.player, camera, 0, 1, this.rooms);
+    new Door(this,this.player, camera, 0, 2, this.rooms);
+    new Door(this,this.player, camera, 0, 3, this.rooms);
+    new Door(this,this.player, camera, 1, 0, this.rooms);
+    new Door(this,this.player, camera, 2, 0, this.rooms);
+    new Door(this,this.player, camera, 3, 0, this.rooms);
+
+
 
     camera.startFollow(this.player);
-    camera.setDeadzone(925, 600);
+    camera.setDeadzone(600, 600); //925
     camera.scrollY = 0;
     //Colision de la escoba con los pájaros
     this.physics.add.overlap(broom, this.birds, (o1, o2) => {
@@ -147,57 +147,11 @@ export default class Level extends Phaser.Scene {
       o2.die();     
     });
 
+
+
   // this.physics.add.overlap(this.player, this.zones, (o1, o2) => {
   //   //Transporta al jugador y a la cámara desde la sala central hasta la sala derecha
-  //   if(o2.name === 'middleToEast' && this.player.whatRoomIs() === 0){
-  //     this.player.changeRoomNumber(1);
-  //     this.player.changePlayerPosition(this.player.x + 150, this.player.y);
-  //     camera.scrollX = +900;
-  //     this.playerChangeRoomSound.play();
-  //   } 
-  //   //Transporta al jugador y a la cámara desde la sala central hasta la sala izquierda
-  //   else if(o2.name === 'middleToWest' && this.player.whatRoomIs() === 0){
-  //     this.player.changeRoomNumber(2);
-  //     this.player.changePlayerPosition(this.player.x - 150, this.player.y);
-  //     camera.scrollX = -900;
-  //     this.playerChangeRoomSound.play();
-  //   } 
-  //   //Transporta al jugador y a la cámara desde la sala central hasta la sala superior
-  //   else if(o2.name === 'middleToUpper' && this.player.whatRoomIs() === 0){
-  //     this.player.changeRoomNumber(3);
-  //     this.player.changePlayerPosition(this.player.x, this.player.y -400);
-  //     camera.setDeadzone(925, 600);
-  //      camera.scrollY = -600;
-  //      camera.scrollX = 0;   
-  //      this.playerChangeRoomSound.play();
-  //   } 
-  //   //Transporta al jugador y a la cámara desde la sala derecha hasta la central
-  //   else if(o2.name === 'eastToMiddle' && this.player.whatRoomIs() === 1){
-  //     this.player.changeRoomNumber(0);
-  //     this.player.changePlayerPosition(this.player.x - 150, this.player.y);
-  //     camera.setDeadzone(925, 600);
-  //     camera.scrollX = +0;
-  //     camera.scrollY = +0;
-  //     this.playerChangeRoomSound.play();
-  //   } 
-  //   //Transporta al jugador y a la cámara desde la sala izquierda hasta la central
-  //   else if(o2.name === 'westToMiddle' && this.player.whatRoomIs() === 2){
-  //     this.player.changeRoomNumber(0);
-  //     this.player.changePlayerPosition(this.player.x + 150, this.player.y);
-  //     camera.setDeadzone(925, 600);
-  //     camera.scrollX = +0;
-  //     camera.scrollY = 0;
-  //     this.playerChangeRoomSound.play();
-  //   } 
-  //   //Transporta al jugador y a la cámara desde la sala superior hasta la central
-  //   else if(o2.name === 'upperToMiddle' && this.player.whatRoomIs() === 3){
-  //     this.player.changeRoomNumber(0);
-  //     this.player.changePlayerPosition(this.player.x, this.player.y + 400);
-  //     camera.setDeadzone(925, 600);
-  //     camera.scrollX = 10;
-  //     camera.scrollY = 0;
-  //     this.playerChangeRoomSound.play();
-  //   } 
+  //  
   //   //Activa el scroll en la sala derecha
   //   else if(o2.name === 'scrollEastOn' && !this.player.isScrolling()){
   //     camera.setDeadzone(100, 600);
@@ -332,24 +286,6 @@ export default class Level extends Phaser.Scene {
   }
 
   spawnZonesForTP(){
-    this.zone1= this.add.zone(1010, 300, 20, 300).setOrigin(0).setName('middleToEast');// zone middleToEast
-    this.physics.world.enable(this.zone1);
-    this.zones.push(this.zone1);
-    this.zone2= this.add.zone(-100, 300, 100, 300).setOrigin(0).setName('middleToWest');// zone middleToWest
-    this.physics.world.enable(this.zone2);
-    this.zones.push(this.zone2);
-    this.zone3= this.add.zone(655, 200, 160, 100).setOrigin(0).setName('middleToUpper');// zone middleToUpper
-    this.physics.world.enable(this.zone3);
-    this.zones.push(this.zone3);
-    this.zone4= this.add.zone(1050, 300, 20, 300).setOrigin(0).setName('eastToMiddle'); // zone eastToMiddle
-    this.physics.world.enable(this.zone4);
-    this.zones.push(this.zone4);
-    this.zone5= this.add.zone(-80, 300, 50, 300).setOrigin(0).setName('westToMiddle'); // zone westToMiddle
-    this.physics.world.enable(this.zone5);
-    this.zones.push(this.zone5);
-    this.zone6= this.add.zone(655, -25, 160, 100).setOrigin(0).setName('upperToMiddle'); // zone upperToMiddle
-    this.physics.world.enable(this.zone6);
-    this.zones.push(this.zone6);
     this.zone7= this.add.zone(1635, 0, 10, 600).setOrigin(0).setName('scrollEastOn'); // zone scroll eastRoomOn
     this.physics.world.enable(this.zone7);
     this.zones.push(this.zone7);
