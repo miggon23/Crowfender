@@ -20,10 +20,6 @@ export default class Boot extends Phaser.Scene {
     // Cargamos las imagenes
     this.load.setPath('assets/sprites/');
 
-    // Cargamos los botones
-    this.load.image('playbutton', 'playbutton.png')
-	  this.load.image('optionsbutton', 'optionsbutton.png')
-
     //Cargamos los fondos
     this.load.image('fondo_central', 'fondo_central.png');
     this.load.image('fondo_chimenea', 'fondo_chimenea.png');
@@ -55,7 +51,6 @@ export default class Boot extends Phaser.Scene {
     this.load.image('chest', 'cofre.png');
 
     //Se cargan imágenes relacionadas con la electricidad
-    this.load.image('electricity', 'electricity.png');
     this.load.image('electricidad_rojo', 'electricidad_rojo.png');
     this.load.image('electricidad_verde', 'electricidad_verde.png');
 
