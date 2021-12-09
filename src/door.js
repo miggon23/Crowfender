@@ -59,11 +59,11 @@ export default class Door extends Phaser.GameObjects.Sprite {
         {
           if(nextRoom === 1){
             player.changePlayerPosition(roomArray[nextRoom].getBottomLeft().x + this.horizontalMovement,roomArray[nextRoom].getBottomLeft().y - this.verticalMovement);
-            camera.scrollX = 1075;
+            camera.setScroll(1075, 0);
           }
           else if(nextRoom === 2){
             player.changePlayerPosition(roomArray[nextRoom].getBottomRight().x - this.horizontalMovement,roomArray[nextRoom].getBottomRight().y - this.verticalMovement);
-            camera.scrollX = -1075;
+            camera.setScroll(-1075, 0);
           }
           else if(nextRoom === 3){
             player.changePlayerPosition(roomArray[nextRoom].getBottomCenter().x + this.horizontalMovement,roomArray[nextRoom].getBottomCenter().y - this.verticalMovement);
@@ -73,19 +73,20 @@ export default class Door extends Phaser.GameObjects.Sprite {
         else{
           if(currentRoom === 1){
             player.changePlayerPosition(roomArray[nextRoom].getBottomRight().x - this.horizontalMovement,roomArray[nextRoom].getBottomRight().y - this.verticalMovement);
+            camera.setScroll(0, 0);
           }
           if(currentRoom === 2){
             player.changePlayerPosition(roomArray[nextRoom].getBottomLeft().x + this.horizontalMovement,roomArray[nextRoom].getBottomLeft().y - this.verticalMovement);
+            camera.setScroll(0, 0);
           }
           if(currentRoom === 3){
             player.changePlayerPosition(roomArray[nextRoom].getBottomCenter().x + this.horizontalMovement,roomArray[nextRoom].getBottomCenter().y - this.verticalMovement);
             camera.scrollY = -90;
+            camera.setScroll(0, -90);
           }
-          camera.scrollX = 0;
         }
       }
-    });
-    
+    }); 
   }
 
   update(){
