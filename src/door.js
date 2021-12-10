@@ -17,6 +17,7 @@ export default class Door extends Phaser.GameObjects.Sprite {
     this.zone;
     this.horizontalMovement = 180;
     this.verticalMovement = 80;
+    //scene.add.existing(this);
     //Dependiendo de la sala actual y la siguiente se crea en una sala diferente
     if(currentRoom !== nextRoom){
         if(currentRoom === 0)

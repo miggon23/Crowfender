@@ -149,41 +149,6 @@ export default class Level extends Phaser.Scene {
       o2.die();     
     });
 
-
-
-  // this.physics.add.overlap(this.player, this.zones, (o1, o2) => {
-  //   //Transporta al jugador y a la cámara desde la sala central hasta la sala derecha
-  //  
-  //   //Activa el scroll en la sala derecha
-  //   else if(o2.name === 'scrollEastOn' && !this.player.isScrolling()){
-  //     camera.setDeadzone(100, 600);
-  //     camera.scrollY = + 0;
-  //     this.player.switchPlayerScrollToTrue();
-  //   } 
-  //   //Desactiva el scroll en la sala derecha
-  //   else if(o2.name === 'scrollEastOff' && this.player.isScrolling()){
-  //     camera.setDeadzone(925, 600);
-  //     camera.scrollY = 0;
-  //     camera.scrollX = +1090;
-  //     this.player.switchPlayerScrollToFalse();
-  //   } 
-  //   else if(o2.name === 'scrollUpperOn' && !this.player.isScrolling()){
-  //     camera.setDeadzone(100, 600);
-  //     camera.scrollX = 0;
-  //     camera.scrollY = -600;
-  //     this.player.switchPlayerScrollToTrue();
-  //   } 
-  //   //Desactiva el scroll en la sala derecha
-  //   else if(o2.name === 'scrollUpperOff' && this.player.isScrolling()){
-  //     camera.setDeadzone(925, 600);
-  //     camera.scrollY = -600;
-  //     camera.scrollX = -45;
-  //     this.player.switchPlayerScrollToFalse();
-  //   } 
-  // });
-
-    
-
     this.physics.add.collider(this.player, this.walls)
     this.physics.add.collider(this.birds, this.birdWalls)
     
@@ -286,23 +251,6 @@ export default class Level extends Phaser.Scene {
     new Room(this, 490, -300, 1160, 600, this.rooms, 'fondo_puerta');  //room6 upper
     new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_sotano');  //room7 basement   
   }
-
-  spawnZonesForTP(){
-    this.zone7= this.add.zone(1635, 0, 10, 600).setOrigin(0).setName('scrollEastOn'); // zone scroll eastRoomOn
-    this.physics.world.enable(this.zone7);
-    this.zones.push(this.zone7);
-    this.zone8= this.add.zone(1530, 0, 10, 600).setOrigin(0).setName('scrollEastOff'); // zone scroll eastRoomOff
-    this.physics.world.enable(this.zone8);
-    this.zones.push(this.zone8);
-    this.zone9= this.add.zone(455, -325, 25, 300).setOrigin(0).setName('scrollUpperOn'); // zone scroll upperRoomOn
-    this.physics.world.enable(this.zone9);
-    this.zones.push(this.zone9);
-    this.zone10= this.add.zone(555, -325, 25, 300).setOrigin(0).setName('scrollUpperOff'); // zone scroll upperRoomOff
-    this.physics.world.enable(this.zone10);
-    this.zones.push(this.zone10);
-  }
-  
-
 
   /**
    * Método que escoge un spawn de entre los existentes y crea un pájaro en su interior

@@ -52,6 +52,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.speed = 300;
     this.delayToMove = Phaser.Math.Between(2000, 5000);
     this.timer = 0;
+    
     this.stopMovementTimer = 0;
     this.delayToStopMovement = 500;
     this.route = route;
@@ -98,9 +99,11 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       }
       else if (dir === 2){
         this.body.setVelocityX(this.speed);
+        this.flipX = false;
       }
       else if (dir === 3){
         this.body.setVelocityX(-this.speed);
+        this.flipX = true;
       }
 
       if(dir !==4){
@@ -150,8 +153,10 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     let newX = Phaser.Math.Between(topLeft.x, botRight.x);
     let newY = Phaser.Math.Between(botRight.y, botRight.y);
     
+   
     this.play('bird_fly')
-
+    if(newX >= this.x) this.flipX = false;
+    else  this.flipX = true;
     this.body.enable = false;
     this.scene.tweens.add({
       targets:  this ,
@@ -222,7 +227,6 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       this.hitSound.play();
       this.actualOrderRoom--;
       this.changeRoom(this.actualOrderRoom);
-      console.log(this.x + " " + this.y);
     }
   }
 
