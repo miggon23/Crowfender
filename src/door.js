@@ -12,7 +12,7 @@ export default class Door extends Phaser.GameObjects.Sprite {
    * @param {array} zoneArray Array de spawns
    * @param {array} roomArray Array de rooms
    */
-  constructor(scene, player, camera, currentRoom, nextRoom, roomArray) {
+  constructor(scene, player, camera, currentRoom, nextRoom, roomArray){
     super(scene);
     this.zone;
     this.horizontalMovement = 180;
@@ -89,7 +89,7 @@ export default class Door extends Phaser.GameObjects.Sprite {
     }); 
   }
 
-  update(){
+  preUpdate(){
     //Estoy en verdad no funciona :(
     console.log("funsiona");
     if(scene.physics.collide(player, this.zone)) {

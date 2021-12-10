@@ -22,7 +22,6 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     birdsGroup.add(this);
-
     this.scene.anims.create({
       key: 'bird_idle',
       frames: this.anims.generateFrameNumbers('bird1', { start: 0, end: 1 }),
@@ -147,10 +146,36 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     let botRight = this.rooms[this.route[i]].birdZone.getBottomRight();
     // let offsetX = this.width / 2;
     // let offsetY = this.height / 2;
-    let x = Phaser.Math.Between(topLeft.x, botRight.x);
-    let y = Phaser.Math.Between(botRight.y, botRight.y);
-    this.x = x;
-    this.y = y;
+    
+    let newX = Phaser.Math.Between(topLeft.x, botRight.x);
+    let newY = Phaser.Math.Between(botRight.y, botRight.y);
+    
+    this.play('bird_fly')
+
+    this.body.enable = false;
+    this.scene.tweens.add({
+      targets:  this ,
+      alpha: 0,
+      duration: 600,
+      ease: 'Sine.easeOutExpo',
+      repeat: 0,
+      yoyo: true,
+      hold: 800,
+    });
+
+    this.tween = this.scene.tweens.add({
+      targets:  this ,
+       x: newX,
+       y: newY,
+      duration: 2000,
+      ease: 'Sine.easeInOutExpo',
+      repeat: 0,
+    })
+    this.tween.on('complete', this.listener, this);
+  }
+
+  listener() {
+    this.body.enable = true;
   }
 
   //Envía al pájaro a la siguiente sala marcada por su lista de rutas. Comprueba si está
@@ -197,6 +222,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       this.hitSound.play();
       this.actualOrderRoom--;
       this.changeRoom(this.actualOrderRoom);
+      console.log(this.x + " " + this.y);
     }
   }
 
@@ -215,7 +241,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    * Métodos preUpdate de Phaser. En este caso se encarga del movimiento del pajaro y de su eliminación por electricidad.
    * @override
    */
-   preUpdate(t,dt) {
+    preUpdate(t,dt) {
     super.preUpdate(t,dt);
     this.timer += dt;
     this.stopMovementTimer += dt;
