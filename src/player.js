@@ -52,20 +52,23 @@ export default class Player extends Phaser.GameObjects.Sprite {
       repeat: -1   // Animación en bucle
     });
     this.scene.anims.create({
-        key: 'player_walk',
-        frames: this.anims.generateFrameNumbers('player', { start: 13, end: 18 }),
-        frameRate: 10, // Velocidad de la animación
-        yoyo: true,
-        repeat: -1   // Animación en bucle
-      });
-      this.scene.anims.create({
-        key: 'player_walk_wood',
-        frames: this.anims.generateFrameNumbers('player', { start: 19, end: 24 }),
-        frameRate: 10, // Velocidad de la animación
-        yoyo: true,
-        repeat: -1   // Animación en bucle
-      });
-    this.on('animationcomplete', this.switchPlayerHit);
+      key: 'player_walk',
+      frames: this.anims.generateFrameNumbers('player', { start: 13, end: 18 }),
+      frameRate: 10, // Velocidad de la animación
+      yoyo: true,
+      repeat: -1   // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'player_walk_wood',
+      frames: this.anims.generateFrameNumbers('player', { start: 19, end: 24 }),
+      frameRate: 10, // Velocidad de la animación
+      yoyo: true,
+      repeat: -1   // Animación en bucle
+    });
+     
+    this.on('animationcomplete-player_hit', () => {
+      console.log("aqui estoy");
+          });
     this.play('player_idle');
     }
     
@@ -135,12 +138,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
         if(!this.hittingState){
           this.switchPlayerHit();
           if(this.wood){
-            this.play('player_hit_wood');
+            this.play('player_hit_wood', false);
           }
           else{
-            this.play('player_hit');
+            this.play('player_hit', false);
           }
-          this.switchPlayerHit();
         }
       }
       if (this.w.isDown) {
