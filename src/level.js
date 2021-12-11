@@ -122,7 +122,7 @@ export default class Level extends Phaser.Scene {
     camera.y = 0;
     
 
-    camera.setZoom(0.50);
+    camera.setZoom(0.30);
     //camera.setZoom(1.50);
    
     new Door(this,this.player, camera, 0, 1, this.rooms);
@@ -270,7 +270,19 @@ export default class Level extends Phaser.Scene {
       let newX = Phaser.Math.Between(topLeft.x, botRight.x);
       let newY = Phaser.Math.Between(topLeft.y, botRight.y);
   
-      new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones); 
+     
+      this.birdSpawned = Phaser.Math.Between(0, 2);
+      if(this.birdSpawned === 0){
+        new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones, 'bird1'); 
+      }
+      else if(this.birdSpawned === 1){       
+        new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones, 'bird2'); 
+      }
+      else{
+        new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones, 'bird3'); 
+      }
+     
+     
     }
     else
       console.log("Spawn lleno");
@@ -355,6 +367,7 @@ export default class Level extends Phaser.Scene {
     if (this.nBirdsInMiddle >= this.maxBirdsInMiddle && this.player.whatRoomIs() === 0){
       this.gameMusic.stop();
       this.loseSound.play();
+      
       this.scene.start('end');
     }
 

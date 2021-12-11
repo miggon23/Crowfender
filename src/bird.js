@@ -17,35 +17,87 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    * @param {array of numbers} route salas que sigue el pájaro en orden, desde el spawn a la sala central
    * @param {array of Room} rooms array que guarda las habitaciones visitables por el pájaro
    */
-  constructor(scene, x, y, birdsGroup, level, route, rooms) {
-    super(scene, x, y, 'bird1');
+  constructor(scene, x, y, birdsGroup, level, route, rooms, sprite) {
+    console.log(sprite);
+    super(scene, x, y, sprite);
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     birdsGroup.add(this);
+    this.birdSprite = sprite;
     this.scene.anims.create({
-      key: 'bird_idle',
+      key: 'bird_idle1',
       frames: this.anims.generateFrameNumbers('bird1', { start: 0, end: 1 }),
+      frameRate: 10, // Velocidad de la animación
+      repeat: -1   // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'bird_idle2',
+      frames: this.anims.generateFrameNumbers('bird2', { start: 0, end: 1 }),
+      frameRate: 10, // Velocidad de la animación
+      repeat: -1   // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'bird_idle3',
+      frames: this.anims.generateFrameNumbers('bird3', { start: 0, end: 1 }),
       frameRate: 10, // Velocidad de la animación
       repeat: -1   // Animación en bucle
     });
 
     this.scene.anims.create({
-      key: 'bird_jump',
+      key: 'bird_jump1',
       frames: this.anims.generateFrameNumbers('bird1', { start: 2, end: 3 }),
       frameRate: 10, // Velocidad de la animación
       yoyo: true,
       repeat: -1   // Animación en bucle
     });
-
     this.scene.anims.create({
-      key: 'bird_fly',
-      frames: this.anims.generateFrameNumbers('bird1', { start: 4, end: 7 }),
+      key: 'bird_jump2',
+      frames: this.anims.generateFrameNumbers('bird2', { start: 2, end: 3 }),
+      frameRate: 10, // Velocidad de la animación
+      yoyo: true,
+      repeat: -1   // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'bird_jump3',
+      frames: this.anims.generateFrameNumbers('bird3', { start: 2, end: 3 }),
       frameRate: 10, // Velocidad de la animación
       yoyo: true,
       repeat: -1   // Animación en bucle
     });
 
-    this.play('bird_fly')
+    this.scene.anims.create({
+      key: 'bird_fly1',
+      frames: this.anims.generateFrameNumbers('bird1', { start: 4, end: 7 }),
+      frameRate: 10, // Velocidad de la animación
+      yoyo: true,
+      repeat: -1   // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'bird_fly2',
+      frames: this.anims.generateFrameNumbers('bird2', { start: 4, end: 7 }),
+      frameRate: 10, // Velocidad de la animación
+      yoyo: true,
+      repeat: -1   // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'bird_fly3',
+      frames: this.anims.generateFrameNumbers('bird3', { start: 4, end: 7 }),
+      frameRate: 10, // Velocidad de la animación
+      yoyo: true,
+      repeat: -1   // Animación en bucle
+    });
+
+    if(this.birdSprite === 'bird1'){
+      this.play('bird_fly1')
+    }
+    else if(this.birdSprite === 'bird2'){
+      this.play('bird_fly2')
+    }
+    else{
+      this.play('bird_fly3')
+    }
+ 
+    
 
     this.level = level;
     //Velocidad de movimiento
@@ -60,15 +112,27 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.hitSound = this.scene.sound.add("birdHit");
     this.deadSound = this.scene.sound.add("birdDeath");
     //Añadimos la vida
-    this.health = 3;
+    this.delayToChangeRoom;
+    if(this.birdSprite === ' bird1'){
+      this.health = 1;
+      this.delayToChangeRoom = Phaser.Math.Between(5000, 8000);
+    }
+    else if(this.birdSprite === ' bird2'){
+      this.health = 3;
+      this.delayToChangeRoom = Phaser.Math.Between(7000, 10000);
+    }
+    else{
+      this.health = 2;
+      this.delayToChangeRoom = Phaser.Math.Between(3000, 5000);
+    }
+   
 
     this.changeRoomTimer = 0;
-    this.delayToChangeRoom = Phaser.Math.Between(7000, 12000);
 
     //Sonidos de los pájaros al llegar al centro
     this.center1 = this.scene.sound.add("bird1Center");
     this.center2 = this.scene.sound.add("bird2Center");
-    this.center3 = this.scene.sound.add("bird1Center");
+    this.center3 = this.scene.sound.add("bird3Center");
     this.birdFly1 = this.scene.sound.add("bird1Fly");
     this.birdFly2 = this.scene.sound.add("bird2Fly");
     this.birdFly3 = this.scene.sound.add("bird3Fly");
@@ -107,7 +171,15 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       }
 
       if(dir !==4){
-        this.play('bird_jump')
+        if(this.birdSprite === 'bird1'){
+          this.play('bird_jump1')        }
+        else if(this.birdSprite === 'bird2'){
+          this.play('bird_jump2'); 
+        }
+        else{
+          this.play('bird_jump3')
+        }
+        
       }
     }  
   }
@@ -154,7 +226,16 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     let newY = Phaser.Math.Between(botRight.y, botRight.y);
     
    
-    this.play('bird_fly')
+    if(this.birdSprite === 'bird1'){
+      this.play('bird_fly1')
+    }
+    else if(this.birdSprite === 'bird2'){
+      this.play('bird_fly2')
+    }
+    else{
+      this.play('bird_fly3')
+    }
+
     if(newX >= this.x) this.flipX = false;
     else  this.flipX = true;
     this.body.enable = false;
@@ -187,7 +268,16 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   // en la sala central, en ese caso, no avanza. La sala central es siempre la última del array de rutas
   advanceRoom(){
     if(this.actualOrderRoom === 0){ //Si sale del spawn, lo restamos del spawn para que no rebase el limite de pajaros del spawn
-      this.birdFly1.play();
+      if(this.birdSprite === 'bird1'){
+        this.birdFly1.play();
+      }
+      else if(this.birdSprite === 'bird2'){
+        this.birdFly2.play();
+      }
+      else{
+        this.birdFly3.play();
+      }
+     
       this.rooms[this.route[0]].subBirdInSpawn();
     }
 
@@ -197,7 +287,15 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.changeRoom(this.actualOrderRoom);
     if(this.actualOrderRoom === this.route.length - 1) //Llega al centro
     {
-      this.center1.play();
+      if(this.birdSprite === 'bird1'){
+        this.center1.play();
+      }
+      else if(this.birdSprite === 'bird2'){
+        this.center2.play();
+      }
+      else{
+        this.center3.play();
+      }
       this.level.addBirdInMiddle();
     }
   }
@@ -234,10 +332,26 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   cancelMovement(){
     this.body.setVelocity(0, 0);
     if(this.actualOrderRoom !== 0){
-      this.play('bird_idle');
+      if(this.birdSprite === 'bird1'){
+        this.play('bird_idle1')
+        }
+        else if(this.birdSprite === 'bird2'){
+          this.play('bird_idle2')
+        }
+        else{
+          this.play('bird_idle3')
+        }
     }
     else{
-      this.play('bird_fly');
+      if(this.birdSprite === 'bird1'){
+      this.play('bird_fly1')
+      }
+      else if(this.birdSprite === 'bird2'){
+        this.play('bird_fly2')
+      }
+      else{
+        this.play('bird_fly3')
+      }
     }
   }
 
