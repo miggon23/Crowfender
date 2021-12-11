@@ -13,10 +13,26 @@ export default class Player extends Phaser.GameObjects.Container {
    * @param {bool} sentido false = izquierda, true = derecha
    */
   constructor(scene, x, y) {
-    let spriteShown = scene.add.sprite(30, 32, 'player');
+    let spriteShown = scene.add.sprite(15, -64, 'player');
     super(scene, x, y, spriteShown);
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
+
+
+    // this.scene.anims.create({
+    //   key: 'player_idle',
+    //   frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1 }),
+    //   frameRate: 10, // Velocidad de la animación
+    //   repeat: -1   // Animación en bucle
+    // });
+
+    // this.scene.anims.create({
+    //   key: 'player_attack',
+    //   frames: this.anims.generateFrameNumbers('player', { start: 2, end: 3 }),
+    //   frameRate: 10, // Velocidad de la animación
+    //   repeat: -1   // Animación en bucle
+    // });
+
     // Queremos que el jugador no se salga de los límites del mundo
     //this.body.setCollideWorldBounds();
     this.horizontalSpeed = 300;
@@ -101,11 +117,13 @@ export default class Player extends Phaser.GameObjects.Container {
     }
     if (this.d.isDown) {
       this.body.setVelocityX(this.horizontalSpeed);
-      this.sentido = true;
+        this.sentido = true;
+        this.scaleX = -1;
     }
     else if (this.a.isDown) {
       this.body.setVelocityX(-this.horizontalSpeed);
-      this.sentido = false;
+        this.sentido = false;
+        this.scaleX = 1;
     }
     else{
       this.body.setVelocityX(0);

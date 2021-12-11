@@ -40,7 +40,7 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('bird1', 'bird1_sprite_sheet.png', { frameWidth: 64, frameHeight: 64 })
 
     //Cargamos al player
-    this.load.image('player', 'player.png');
+    this.load.spritesheet('player', 'player_sprite_sheet.png', { frameWidth: 256, frameHeight: 384 })
     this.load.image('broom', 'escoba.png');
     
     
