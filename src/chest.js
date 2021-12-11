@@ -1,4 +1,4 @@
-
+import Wall from './wall.js';
 /**
  * Clase para el cofre, del que conseguiremos madera
  */
@@ -13,7 +13,7 @@ export default class Chest extends Phaser.GameObjects.Sprite {
    * @param {number} scaleX display en el eje x
    * @param {number} scaleY display en el eje y
    */
-  constructor(scene, player, x, y, scaleX, scaleY) {
+  constructor(scene, player, x, y, scaleX, scaleY, wallGroup) {
     super(scene, x, y, 'chest');
     this.scene.add.existing(this);
     this.displayWidth = scaleX;
@@ -22,6 +22,7 @@ export default class Chest extends Phaser.GameObjects.Sprite {
     this.visible = false;
     this.woodSound = this.scene.sound.add("woodTake");
     this.k = this.scene.input.keyboard.addKey('K');
+    this.solid = new Wall (scene, x, y, scaleX * 0.7, scaleY * 0.3, wallGroup)
     this.scene.physics.add.overlap(this, player, (o1, o2) => {
         if(Phaser.Input.Keyboard.JustDown(this.k)){
           this.woodSound.play();

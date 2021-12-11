@@ -5,7 +5,6 @@ import Chest from './chest.js';
 import Electricity from './electricity.js';
 import Broom from './broom.js';
 import Blockable from './blockable.js';
-import Wall from './wall.js';
 import Room from './room.js';
 import Door from './door.js';
 import SpawnZone from './spawnzone.js';
@@ -43,6 +42,9 @@ export default class Level extends Phaser.Scene {
     //Grupo de spawns
     this.spawns = this.add.group();
 
+    this.walls = this.add.group();
+    this.birdWalls = this.add.group();
+
     //Creación de habitaciones y elementos del juego
     this.spawnRooms();
     this.spawnWalls();
@@ -78,7 +80,7 @@ export default class Level extends Phaser.Scene {
     this.birds = this.add.group(); 
     let broom = new Broom(this);
     this.player.add(broom);
-    this.chest = new Chest(this, this.player, 740, 1000, 250, 200);
+    this.chest = new Chest(this, this.player, 740, 1000, 250, 200, this.walls);
     var camera = this.cameras.main;
     this.basement = new Basement(this, this.player, 230, 435, 160, 100, true, camera);
     this.basement = new Basement(this, this.player, 270, 1000, 100, 100, false, camera);
@@ -120,7 +122,7 @@ export default class Level extends Phaser.Scene {
     camera.y = 0;
     
 
-    //camera.setZoom(0.70);
+    camera.setZoom(0.50);
     //camera.setZoom(1.50);
    
     new Door(this,this.player, camera, 0, 1, this.rooms);
@@ -161,43 +163,43 @@ export default class Level extends Phaser.Scene {
 
   //Método que crea los muros que delimitan las habitaciones
   spawnWalls(){
-    this.walls = this.add.group();
-    //Paredes fondo
-    new Wall(this, 1000, 120, 2100, 270, this.walls);
-    new Wall(this, 500, 770, 3100, 340, this.walls);
-    new Wall(this, 500, 1370, 1000, 340, this.walls);
-    new Wall(this, 500, -430, 1000, 340, this.walls);
-    //Sala chimenea
-    new Wall(this, -550, 320, 1000, 140, this.walls);
-    // Paredes laterales
-    new Wall(this, -1090, 450, 120, 1200, this.walls);
-    new Wall(this, -40, 1200, 90, 1000, this.walls);
-    new Wall(this, -40, -40, 90, 1000, this.walls);
-    new Wall(this, 1040, 1200, 90, 1000, this.walls);
-    new Wall(this, 1040, -40, 90, 1000, this.walls);
-
-    new Wall(this, 205, 275, 900, 90, this.walls);
-    new Wall(this, 1515, 275, 1400, 90, this.walls);
-
-
-    new Wall(this, 2090, 450, 90, 1200, this.walls);
-    // Cofre
-    new Wall(this, 740, 1000, 175, 100, this.walls);
-    // Chimenea 
-    new Wall(this, -780, 360, 170, 128, this.walls);
-
-
-    this.birdWalls = this.add.group();
-    new Wall(this, 500, -410, 1000, 430, this.birdWalls);
-    new Wall(this, 1000, 190, 2100, 430, this.birdWalls);
-    new Wall(this, 500, 810, 3200, 430, this.birdWalls);
-    new Wall(this, 500, 1390, 1000, 430, this.birdWalls);
-    new Wall(this, -600, 420, 1000, 100, this.birdWalls);
     
-    new Wall(this, -1090, 450, 120, 1200, this.birdWalls);
-    new Wall(this, -40, 200, 90, 2000, this.birdWalls);
-    new Wall(this, 1040, 200, 90, 2000, this.birdWalls);
-    new Wall(this, 2060, 450, 120, 1200, this.birdWalls);
+    // //Paredes fondo
+    // new Wall(this, 1000, 120, 2100, 270, this.walls);
+    // new Wall(this, 500, 770, 3100, 340, this.walls);
+    // new Wall(this, 500, 1370, 1000, 340, this.walls);
+    // new Wall(this, 500, -430, 1000, 340, this.walls);
+    // //Sala chimenea
+    // new Wall(this, -550, 320, 1000, 140, this.walls);
+    // // Paredes laterales
+    // new Wall(this, -1090, 450, 120, 1200, this.walls);
+    // new Wall(this, -40, 1200, 90, 1000, this.walls);
+    // new Wall(this, -40, -40, 90, 1000, this.walls);
+    // new Wall(this, 1040, 1200, 90, 1000, this.walls);
+    // new Wall(this, 1040, -40, 90, 1000, this.walls);
+
+    // new Wall(this, 205, 275, 900, 90, this.walls);
+    // new Wall(this, 1515, 275, 1400, 90, this.walls);
+
+
+    // new Wall(this, 2090, 450, 90, 1200, this.walls);
+    // // Cofre
+    // new Wall(this, 740, 1000, 175, 100, this.walls);
+    // // Chimenea 
+    // new Wall(this, -780, 360, 170, 128, this.walls);
+
+
+    // 
+    // new Wall(this, 500, -410, 1000, 430, this.birdWalls);
+    // new Wall(this, 1000, 190, 2100, 430, this.birdWalls);
+    // new Wall(this, 500, 810, 3200, 430, this.birdWalls);
+    // new Wall(this, 500, 1390, 1000, 430, this.birdWalls);
+    // new Wall(this, -600, 420, 1000, 100, this.birdWalls);
+    
+    // new Wall(this, -1090, 450, 120, 1200, this.birdWalls);
+    // new Wall(this, -40, 200, 90, 2000, this.birdWalls);
+    // new Wall(this, 1040, 200, 90, 2000, this.birdWalls);
+    // new Wall(this, 2060, 450, 120, 1200, this.birdWalls);
   }
 
   //Método que crea las zonas bloqueables por el jugador
@@ -245,11 +247,11 @@ export default class Level extends Phaser.Scene {
 
   //Método que crea las habitaciones del juego
   spawnRooms(){
-    new Room(this, 500, 300, 1140, 600, this.rooms, 'fondo_central');  //room3 middle
-    new Room(this,1620, 300, 1100, 600, this.rooms, 'fondo_ventana');  //room4 east  
-    new Room(this, -570, 400, 1000, 400, this.rooms, 'fondo_chimenea');//room5 west   
-    new Room(this, 490, -300, 1160, 600, this.rooms, 'fondo_puerta');  //room6 upper
-    new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_sotano');  //room7 basement   
+    new Room(this, 500, 300, 1140, 600, this.rooms, 'fondo_central', this.walls, this.birdWalls);  //room3 middle
+    new Room(this,1620, 300, 1100, 600, this.rooms, 'fondo_ventana', this.walls, this.birdWalls);  //room4 east  
+    new Room(this, -570, 400, 1000, 400, this.rooms, 'fondo_chimenea', this.walls, this.birdWalls);//room5 west   
+    new Room(this, 490, -300, 1160, 600, this.rooms, 'fondo_puerta', this.walls, this.birdWalls);  //room6 upper
+    new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_sotano', this.walls, this.birdWalls);  //room7 basement   
   }
 
   /**
@@ -262,8 +264,8 @@ export default class Level extends Phaser.Scene {
     let birdSpawnZone = this.spawnzones[index];
     if(!birdSpawnZone.spawnFull())   //Si no está lleno el spawn añadimos un pájaro
     {
-      let topLeft = birdSpawnZone.getTopLeft();
-      let botRight = birdSpawnZone.getBottomRight();
+      let topLeft = birdSpawnZone.birdZone.getTopLeft();
+      let botRight = birdSpawnZone.birdZone.getBottomRight();
   
       let newX = Phaser.Math.Between(topLeft.x, botRight.x);
       let newY = Phaser.Math.Between(topLeft.y, botRight.y);

@@ -35,8 +35,8 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
 
     this.body.enable = false;
     this.blockable = blockable;
-    //Zona a la que se mueven los pajaros al pasar de habitacion
-    this.birdZone = new BirdZone(scene, x, y, scaleX * 0.7 , scaleY * 0.7);
+    //Zona a la que se mueven los pajaros al pasar de habitacion o al spawnear
+    this.birdZone = new BirdZone(scene, x, y, scaleX * 0.7 , scaleY * 0.6);
     
     //this.visible = false;
   }
