@@ -18,7 +18,6 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    * @param {array of Room} rooms array que guarda las habitaciones visitables por el pájaro
    */
   constructor(scene, x, y, birdsGroup, level, route, rooms, sprite) {
-    console.log(sprite);
     super(scene, x, y, sprite);
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);

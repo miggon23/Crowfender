@@ -48,7 +48,7 @@ export default class Level extends Phaser.Scene {
     //Creación de habitaciones y elementos del juego
     this.spawnRooms();
     this.spawnWalls();
-    this.player = new Player(this, 500, 400);
+    this.player = new Player(this,500,400, 'player');
     this.spawnBlockables();
     this.spawnZones();
     this.spawnElectricitySwitches();
@@ -78,8 +78,8 @@ export default class Level extends Phaser.Scene {
 
     this.newRand;
     this.birds = this.add.group(); 
-    let broom = new Broom(this);
-    this.player.add(broom);
+    //let broom = new Broom(this);
+    //this.player.add(broom);
     this.chest = new Chest(this, this.player, 740, 1000, 250, 200, this.walls);
     var camera = this.cameras.main;
     this.basement = new Basement(this, this.player, 230, 435, 160, 100, true, camera);
@@ -140,9 +140,9 @@ export default class Level extends Phaser.Scene {
     camera.setDeadzone(925, 600); 
     camera.scrollY = 0;
     //Colision de la escoba con los pájaros
-    this.physics.add.overlap(broom, this.birds, (o1, o2) => {
-      o2.hitBird();  
-    });
+    // this.physics.add.overlap(broom, this.birds, (o1, o2) => {
+    //   o2.hitBird();  
+    // });
     
 
     //Colision de los spawns con los pájaros (para la electricidad)
