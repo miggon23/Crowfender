@@ -122,7 +122,7 @@ export default class Level extends Phaser.Scene {
     camera.y = 0;
     
 
-    camera.setZoom(0.30);
+    //camera.setZoom(0.30);
     //camera.setZoom(1.50);
    
     new Door(this,this.player, camera, 0, 1, this.rooms);
