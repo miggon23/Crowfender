@@ -30,39 +30,37 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene.anims.create({
       key: 'player_idle',
       frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1 }),
-      frameRate: 10, // Velocidad de la animación
+      frameRate: 4, // Velocidad de la animación
       repeat: -1   // Animación en bucle
     });
     this.scene.anims.create({
       key: 'player_idle_wood',
       frames: this.anims.generateFrameNumbers('player', { start: 2, end: 3 }),
-      frameRate: 10, // Velocidad de la animación
+      frameRate: 4, // Velocidad de la animación
       repeat: -1   // Animación en bucle
     });
     this.scene.anims.create({
       key: 'player_hit',
       frames: this.anims.generateFrameNumbers('player', { start: 6, end: 7 }),
-      frameRate: 10, // Velocidad de la animación
+      frameRate: 3, // Velocidad de la animación
       repeat: 0   // Animación en bucle
     });
      this.scene.anims.create({
       key: 'player_hit_wood',
       frames: this.anims.generateFrameNumbers('player', { start: 8, end: 9 }),
-      frameRate: 10, // Velocidad de la animación
+      frameRate: 3, // Velocidad de la animación
       repeat: 0   // Animación en bucle
     });
     this.scene.anims.create({
       key: 'player_walk',
-      frames: this.anims.generateFrameNumbers('player', { start: 13, end: 18 }),
-      frameRate: 10, // Velocidad de la animación
-      yoyo: true,
+      frames: this.anims.generateFrameNumbers('player', { start: 13, end: 17 }),
+      frameRate: 8, // Velocidad de la animación
       repeat: -1   // Animación en bucle
     });
     this.scene.anims.create({
       key: 'player_walk_wood',
       frames: this.anims.generateFrameNumbers('player', { start: 19, end: 24 }),
-      frameRate: 10, // Velocidad de la animación
-      yoyo: true,
+      frameRate: 8, // Velocidad de la animación
       repeat: -1   // Animación en bucle
     });
     //sprite.on('animationcomplete', this.switchPlayerHit, 'player_hit');
