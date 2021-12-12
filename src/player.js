@@ -42,14 +42,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene.anims.create({
       key: 'player_hit',
       frames: this.anims.generateFrameNumbers('player', { start: 6, end: 7 }),
-      frameRate: 100, // Velocidad de la animación
-      repeat: -1   // Animación en bucle
+      frameRate: 10, // Velocidad de la animación
+      repeat: 0   // Animación en bucle
     });
      this.scene.anims.create({
       key: 'player_hit_wood',
       frames: this.anims.generateFrameNumbers('player', { start: 8, end: 9 }),
       frameRate: 10, // Velocidad de la animación
-      repeat: -1   // Animación en bucle
+      repeat: 0   // Animación en bucle
     });
     this.scene.anims.create({
       key: 'player_walk',
@@ -65,10 +65,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
       yoyo: true,
       repeat: -1   // Animación en bucle
     });
-     
-    this.on('animationcomplete-player_hit', () => {
-      console.log("aqui estoy");
-          });
+    //sprite.on('animationcomplete', this.switchPlayerHit, 'player_hit');
+    
     this.play('player_idle');
     }
     
@@ -108,8 +106,17 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   switchPlayerHit(){
-    console.log(this.hittingState);
     this.hittingState = !this.hittingState;
+  }
+
+  switchPlayerHitAndReStart(){
+    this.hittingState = false;
+    if(this.wood){
+      this.play('player_idle_wood');
+    }
+    else{
+      this.play('player_idle');
+    }
   }
 
   isScrolling(){
@@ -133,18 +140,23 @@ export default class Player extends Phaser.GameObjects.Sprite {
    */
     preUpdate(t,dt) {
     super.preUpdate(t,dt);
-    console.log(this.hittingState);
-      if (this.j.isDown) {
-        if(!this.hittingState){
-          this.switchPlayerHit();
-          if(this.wood){
-            this.play('player_hit_wood', false);
-          }
-          else{
-            this.play('player_hit', false);
-          }
+    this.on('animationcomplete', this.switchPlayerHitAndReStart);
+    //Al golpear el jugador, se cambia de estado a que está golpeando y se realiza la animación;
+    if (this.j.isDown) {
+      if(!this.hittingState){
+        this.switchPlayerHit();
+        this.stop();
+        if(this.wood){
+          this.play('player_hit_wood', false);
         }
+        else{
+          this.play('player_hit', false);
+        }        
       }
+    }
+    //Solo permitimos que se mueva el jugador si no esta pegando
+    if(!this.hittingState){
+      //Movimiento vertical del jugador con animaciones
       if (this.w.isDown) {
         if(!this.playerMoving){
           if(this.wood){
@@ -172,6 +184,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       else {
         this.body.setVelocityY(0);
       }
+      //Movimiento horizontal del jugador con animaciones
       if (this.d.isDown) {
         if(!this.playerMoving){
           if(this.wood){
@@ -181,8 +194,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
             this.play('player_walk');
           }
         }
-        this.playerMoving = true;
-        this.body.setVelocityX(this.horizontalSpeed);
+          this.playerMoving = true;
+          this.body.setVelocityX(this.horizontalSpeed);
           this.sentido = true;
           this.flipX = true;
         }
@@ -203,7 +216,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       else{
         this.body.setVelocityX(0);
       }
-  
+      //Ajuste de velocidades para normalizar la velocidad en diagonal
       if(this.body.velocity.x != 0 && this.body.velocity.y != 0){
         if(this.body.velocity.x < 0){
           this.body.setVelocityX(-this.diagonalSpeed);
@@ -217,9 +230,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
         else{
           this.body.setVelocityY(this.diagonalSpeed);
         }     
-      }   
-
-      if(!this.hittingState && this.playerMoving && this.body.velocity.x === 0 && this.body.velocity.y === 0){
+    }   
+    //Animación cuando el player está quieto
+      if(this.playerMoving && this.body.velocity.x === 0 && this.body.velocity.y === 0){
         this.playerMoving = false;
         if(this.wood){
           this.play('player_idle_wood');
@@ -228,11 +241,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
           this.play('player_idle');
         }   
       }
-
-  
-      if(this.hittingState){
-        this.body.setVelocityY(0);
-        this.body.setVelocityX(0);
-      }
+    }
+     //Si está pegando se pone la velocidad a cero para impedir su movimiento
+    else{
+      this.body.setVelocityY(0);
+      this.body.setVelocityX(0);
+    }
   }  
 }
