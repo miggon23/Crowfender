@@ -119,17 +119,17 @@ export default class Level extends Phaser.Scene {
     camera.y = 0;
     
 
-    //camera.setZoom(0.30);
+    //camera.setZoom(0.60);
     //camera.setZoom(1.50);
    
-    new Door(this,this.player, camera, 0, 1, this.rooms);
-    new Door(this,this.player, camera, 0, 2, this.rooms);
-    new Door(this,this.player, camera, 0, 3, this.rooms);
-    new Door(this,this.player, camera, 1, 0, this.rooms);
-    new Door(this,this.player, camera, 2, 0, this.rooms);
-    new Door(this,this.player, camera, 3, 0, this.rooms);
-    new Door(this,this.player, camera, 1, 1, this.rooms);
-    new Door(this,this.player, camera, 3, 3, this.rooms);
+    new Door(this,this.player, camera, 0, 1, "right", this.rooms);
+    new Door(this,this.player, camera, 0, 2, "left", this.rooms);
+    new Door(this,this.player, camera, 0, 3,"up", this.rooms);
+    new Door(this,this.player, camera, 1, 0, "left", this.rooms);
+    new Door(this,this.player, camera, 2, 0, "right", this.rooms);
+    new Door(this,this.player, camera, 3, 0, "down", this.rooms);
+    // new Door(this,this.player, camera, 1, 1, this.rooms);
+    // new Door(this,this.player, camera, 3, 3, this.rooms);
 
 
     this.broom = this.player.returnBroom();

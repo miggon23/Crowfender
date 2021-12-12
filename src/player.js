@@ -83,18 +83,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
     //sprite.on('animationcomplete', this.switchPlayerHit, 'player_hit');
     
     this.play('player_idle');
-    }
-    //Devuelve broom para comprobar las colisiones desde el player
-    returnBroom(){
-      return this.broom;
-    }
+  }
   
-
-  /**
-   * Al interactuar con el cofre, el jugador recoge madera, mientras que al interactuar
-   * con la chimenea, la ventana o la puerta, el jugador gasta la madera. En ambos casos
-   * se actualiza en pantalla si lleva madera encima o no
-   */
+  //Devuelve broom para comprobar las colisiones desde el player
+  returnBroom(){
+    return this.broom;
+  }
+  
   whatRoomIs(){
     return this.room;
   }
