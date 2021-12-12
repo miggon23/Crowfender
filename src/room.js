@@ -22,10 +22,9 @@ export default class Room extends Phaser.GameObjects.Sprite {
     super(scene, x, y, sprite);
     this.x = x;
     this.y = y;
-    this.halfWidth = scaleX / 2;
-    this.halfHeight = scaleY / 2;
     this.displayWidth = scaleX;
     this.displayHeight = scaleY;
+    this.spriteName = sprite;
     this.scene.add.existing(this);
     roomArray.push(this);
     this.birdZone = new BirdZone(scene, x, y + (scaleY / 3), scaleX * 0.6, scaleY * 0.15);
@@ -43,7 +42,7 @@ export default class Room extends Phaser.GameObjects.Sprite {
     this.leftOffsetB = 20;  
 
     this.setRoomWalls(scene, wallsGroup, scaleX, scaleY);
-    //this.setBirdsWalls(scene, birdWalls, scaleX, scaleY);
+    this.setBirdsWalls(scene, birdWalls, scaleX, scaleY);
   }
 
 
@@ -55,15 +54,27 @@ export default class Room extends Phaser.GameObjects.Sprite {
    * @param {number} scaleY Alto de la habitación
    */
   setRoomWalls(scene, wallsGroup, scaleX, scaleY){
-    //Muro norte (Fondo)
-    this.nortWall = new Wall(scene, this.getTopCenter().x, this.getTopCenter().y + (scaleY / 3), scaleX, scaleY * this.backgroundWallHeight, wallsGroup);
+    //Muro norte (Fondo) Distinguimos si es una sala central, la cual tiene puerta arriba
+    this.nortWall;
+    if(this.spriteName === 'fondo_central'){
+      this.nortWall = new Wall(scene, this.getTopCenter().x, this.getTopCenter().y + (scaleY / 3), scaleX, scaleY * (this.backgroundWallHeigh * 0.5), wallsGroup);
+      new Wall(scene, this.getTopCenter().x - (scaleX * 0.15), this.getTopCenter().y + (scaleY / 3), scaleX * 0.55, scaleY * this.backgroundWallHeight, wallsGroup);
+      new Wall(scene, this.getTopCenter().x + (scaleX * 0.38), this.getTopCenter().y + (scaleY / 3), scaleX * 0.2, scaleY * this.backgroundWallHeight, wallsGroup);
+    }
+    else{
+      this.nortWall = new Wall(scene, this.getTopCenter().x, this.getTopCenter().y + (scaleY / 3), scaleX, scaleY * this.backgroundWallHeight, wallsGroup);
+    }
     //Muro Sur (Suelo)
     this.southWall = new Wall(scene, this.getBottomCenter().x, this.getBottomCenter().y, scaleX, this.floorHeight, wallsGroup)
+
     //Muro Este
     this.eastWall = new Wall(scene, this.getRightCenter().x, this.getRightCenter().y, this.sideWallsWidth, scaleY, wallsGroup);
-    new Wall(scene, this.getRightCenter().x, this.getRightCenter().y, this.sideWallsWidth * 18, scaleY * 0.38, wallsGroup); //Support wall
+    //Support wall
+    new Wall(scene, this.getRightCenter().x, this.getRightCenter().y, this.sideWallsWidth * 18, scaleY * 0.38, wallsGroup); 
+
     //Muro Oeste
     this.westWall = new Wall(scene, this.getLeftCenter().x, this.getLeftCenter().y, this.sideWallsWidth, scaleY, wallsGroup);
+    //Support wall
     new Wall(scene, this.getLeftCenter().x, this.getLeftCenter().y, this.sideWallsWidth * 18, scaleY * 0.36, wallsGroup); //Support wall
   }
 

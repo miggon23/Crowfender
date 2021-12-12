@@ -24,7 +24,7 @@ export default class Door extends Phaser.GameObjects.Sprite {
     this.displacementXForSideRooms = 60;
     this.displacementXForUpDownRooms = 140;
     this.displacementYForSideRooms = 225;
-    this.displacementYForUpRooms = 300;
+    this.displacementYForUpRooms = 200;
     this.displacementYForDownRooms = -20;
     //Variables para el movimiento del jugador
     this.horizontalMovementForSideRooms = 120;
