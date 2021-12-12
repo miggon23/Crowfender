@@ -15,9 +15,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.displayHeight= 256;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
+    this.body.setOffset(70, 210);
+    this.body.setSize(120, 170, false);
+    //this.body.center = (100,100);
     this.horizontalSpeed = 300;
     this.verticalSpeed = 300;
     this.diagonalSpeed = 212.13;
+    this.room = 0;
     this.w = this.scene.input.keyboard.addKey('W');
     this.a = this.scene.input.keyboard.addKey('A');
     this.s = this.scene.input.keyboard.addKey('S');
@@ -30,7 +34,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene.anims.create({
       key: 'player_idle',
       frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1 }),
-      frameRate: 4, // Velocidad de la animación
+      frameRate:4, // Velocidad de la animación
       repeat: -1   // Animación en bucle
     });
     this.scene.anims.create({
@@ -53,7 +57,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     });
     this.scene.anims.create({
       key: 'player_walk',
-      frames: this.anims.generateFrameNumbers('player', { start: 13, end: 17 }),
+      frames: this.anims.generateFrameNumbers('player', { start: 13, end: 18 }),
       frameRate: 8, // Velocidad de la animación
       repeat: -1   // Animación en bucle
     });
@@ -109,6 +113,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   switchPlayerHitAndReStart(){
     this.hittingState = false;
+    this.playerMoving = false;
     if(this.wood){
       this.play('player_idle_wood');
     }
