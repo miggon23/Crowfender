@@ -77,10 +77,10 @@ export default class Level extends Phaser.Scene {
     this.newRand;
     this.birds = this.add.group(); 
    
-    this.chest = new Chest(this, this.player, 740, 1000, 250, 200, this.walls);
+    this.chest = new Chest(this, this.player, 740, 1000, 500, 400, this.walls);
     var camera = this.cameras.main;
-    this.basement = new Basement(this, this.player, 230, 435, 160, 100, true, camera);
-    this.basement = new Basement(this, this.player, 270, 1000, 100, 100, false, camera);
+    this.basement = new Basement(this, this.player, 230, 405, 220, 180, true, camera, 'sotano_trampilla');
+    this.basement2 = new Basement(this, this.player, 270, 850, 300, 500, false, camera, 'sotano_escalera', this.basement);
     this.electricityAvailable = true;
 
     this.zone7; this.zone8; this.zone9; this.zone10;
@@ -203,9 +203,9 @@ export default class Level extends Phaser.Scene {
 
   //Método que crea las zonas bloqueables por el jugador
   spawnBlockables(){
-    this.window = new Blockable(this, this.player, 2030, 295, 'tabla_ventana');
-    this.door = new Blockable(this, this.player, 98, -280, 'tabla_puerta');
-    this.fireplace = new Blockable(this, this.player, -780, 400, 'tabla_chimenea');
+    this.window = new Blockable(this, this.player, 2080, 295, 'ventana_block', 'ventana_block_tabla');
+    this.door = new Blockable(this, this.player, -20, -270, 'puerta_block', 'puerta_block_tabla');
+    this.fireplace = new Blockable(this, this.player, -780, 400, 'chimenea', 'tabla_chimenea');
   }
 
   //Método que crea las zonas de spawn de los pájaros
@@ -219,8 +219,7 @@ export default class Level extends Phaser.Scene {
   spawnElectricitySwitches(){
     this.electricity_fireplace = new Electricity(this, this.player, -352, 380, this.spawn_fireplace);
     this.electricity_door = new Electricity(this, this.player, 276, -300, this.spawn_door);
-    this.
-    electricity_window = new Electricity(this, this.player, 1800, 304, this.spawn_window);
+    this.electricity_window = new Electricity(this, this.player, 1800, 304, this.spawn_window);
   }
 
   isElectricityAvailable(){

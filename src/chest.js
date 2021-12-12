@@ -19,10 +19,9 @@ export default class Chest extends Phaser.GameObjects.Sprite {
     this.displayWidth = scaleX;
     this.displayHeight= scaleY;
     this.scene.physics.add.existing(this, true);
-    this.visible = false;
     this.woodSound = this.scene.sound.add("woodTake");
     this.k = this.scene.input.keyboard.addKey('K');
-    this.solid = new Wall (scene, x, y, scaleX * 0.7, scaleY * 0.3, wallGroup)
+    this.solid = new Wall (scene, x, y, scaleX * 0.5, scaleY * 0.3, wallGroup)
     this.scene.physics.add.overlap(this, player, (o1, o2) => {
         if(Phaser.Input.Keyboard.JustDown(this.k)){
           this.woodSound.play();

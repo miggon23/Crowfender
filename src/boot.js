@@ -29,12 +29,16 @@ export default class Boot extends Phaser.Scene {
     this.load.image('spawn_chimenea', 'spawn_chimenea.png');
     this.load.image('spawn_puerta', 'spawn_puerta.png');
     this.load.image('spawn_ventana', 'spawn_ventana.png');
-    this.load.image('sotano', 'sotano.png');
+    this.load.image('sotano_trampilla', 'sotano_trampilla.png');
+    this.load.image('sotano_escalera', 'sotano_escalera.png');
 
     //Cargamos los bloqueables
-    this.load.image('tabla_puerta', 'tabla_puerta.png');
-    this.load.image('tabla_ventana', 'tabla_ventana.png');
-    this.load.image('tabla_chimenea', 'tabla_chimenea.png');
+    this.load.image('chimenea', 'chimenea.png');
+    this.load.image('tabla_chimenea', 'chimenea_tabla.png');
+    this.load.image('puerta_block', 'puerta_block.png');
+    this.load.image('puerta_block_tabla', 'puerta_block_tabla.png');
+    this.load.image('ventana_block', 'ventana_block.png');
+    this.load.image('ventana_block_tabla', 'ventana_block_tabla.png');
   
     //Cargamos los pájaros
     this.load.spritesheet('bird1', 'bird1_sprite_sheet.png', { frameWidth: 64, frameHeight: 64 })
@@ -42,7 +46,6 @@ export default class Boot extends Phaser.Scene {
     this.load.spritesheet('bird3', 'bird3_sprite_sheet.png', { frameWidth: 64, frameHeight: 64 })
     //Cargamos al player
     this.load.spritesheet('player', 'player_sprite_sheet.png', { frameWidth: 256, frameHeight: 384 })
-    this.load.image('broom', 'escoba.png');
     
     
     this.load.image('empty', 'empty.png');

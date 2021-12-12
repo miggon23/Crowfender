@@ -11,12 +11,13 @@
      * @param {number} x Coordenada x
      * @param {number} y Coordenada y
      */
-    constructor(scene, player, x, y, sprite) {
+    constructor(scene, player, x, y, sprite, blockedSprite) {
       super(scene, x, y, sprite);
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this, true);
       this.blocked = false;
       this.spriteName = sprite;
+      this.blockedSpriteName = blockedSprite;
       this.fireplaceSoundBlock = this.scene.sound.add("fireplaceBlocked");
       this.fireplaceSoundUnblock = this.scene.sound.add("fireplaceUnblocked");
       this.otherSoundBlock = this.scene.sound.add("otherBlockableBlocked");
@@ -30,7 +31,6 @@
               
           }
       });
-      this.visible = false;
     }
 
     /**
@@ -40,7 +40,7 @@
       if(this.spriteName == 'tabla_chimenea') this.fireplaceSoundBlock.play();
       else this.otherSoundBlock.play();
       this.blocked = true;
-      this.visible = true;
+      this.setTexture(this.blockedSpriteName);
       this.scene.time.addEvent( {
         delay: 10000, 
         callback: this.unblock,
@@ -55,7 +55,7 @@
       if(this.spriteName == 'tabla_chimenea') this.fireplaceSoundUnblock.play();
       else this.otherSoundUnblock.play();
       this.blocked = false;
-      this.visible = false;
+      this.setTexture(this.spriteName);
     }
 
     isBlocked(){

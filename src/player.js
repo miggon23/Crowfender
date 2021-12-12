@@ -44,6 +44,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.hittingState = false;
     this.scrolling = false;
     this.playerMoving = false;
+
     this.scene.anims.create({
       key: 'player_idle',
       frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1 }),
@@ -109,6 +110,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
   pickWood(){
     this.wood = true;
+    this.play('player_idle_wood');
   }
 
   getWood(){
@@ -121,6 +123,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   switchPlayerHit(){
     this.hittingState = !this.hittingState;
+  }
+
+  // Teletransporta al jugador a las coordenadas indicadas;
+  tp(x, y){
+    this.x = x;
+    this.y = y;
   }
 
   switchPlayerHitAndReStart(){
