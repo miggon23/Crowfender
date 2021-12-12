@@ -83,18 +83,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
     //sprite.on('animationcomplete', this.switchPlayerHit, 'player_hit');
     
     this.play('player_idle');
-
-
-    this.scene.physics.add.overlap(this.body, birdsGroup, (o1, o2) => {
-      console.log("Estoy pegando");
-      o2.hitBird();  
-    });
     }
-    
-      /**
-     * El jugador ha pulsado k en la zona de teletransporte hacia el sótano,
-     * por lo que se le desplazará en y abajo.
-     * */
+    //Devuelve broom para comprobar las colisiones desde el player
+    returnBroom(){
+      return this.broom;
+    }
+  
 
   /**
    * Al interactuar con el cofre, el jugador recoge madera, mientras que al interactuar

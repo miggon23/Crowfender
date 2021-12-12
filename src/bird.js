@@ -310,6 +310,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   // sea su último golpe para acabar con su vida. Se llama cuando el jugador golpea a un pájaro con la escoba
   hitBird(){
     this.health--;
+    this.changeRoomTimer = 0;
     if(this.actualOrderRoom === this.route.length - 1)
     {
       this.level.substractBirdFromMiddle();
