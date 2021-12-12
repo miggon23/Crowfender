@@ -9,15 +9,28 @@ export default class Player extends Phaser.GameObjects.Sprite {
    * @param {number} y Coordenada Y
    * @param {group} sprite Sprite del player
    */
-  constructor(scene, x, y,  sprite) {
+  constructor(scene, x, y,  sprite, birdsGroup) {
     super(scene, x, y, sprite);
     this.displayWidth = 170;
     this.displayHeight= 256;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
-    this.body.setOffset(70, 210);
-    this.body.setSize(120, 170, false);
-    //this.body.center = (100,100);
+    //Añadimos la escoba
+    this.broom = this.scene.add.sprite(this.x, this.y,'empty');
+    this.broom.visible = false;
+    this.broomDisplacementX = 40;
+    this.broomDisplacementY = 100;
+    this.broom.displayHeight = 50;
+    this.broom.displayWidth = 100;
+    this.scene.add.existing(this.broom);
+    this.scene.physics.add.existing(this.broom);
+
+    this.posXCollider = 70;
+    this.posYCollider = 210;
+    this.sizeXCollider = 120;
+    this.sizeYCollider = 170;
+    this.body.setOffset(this.posXCollider, this.posYCollider);
+    this.body.setSize(this.sizeXCollider, this.sizeYCollider, false);
     this.horizontalSpeed = 300;
     this.verticalSpeed = 300;
     this.diagonalSpeed = 212.13;
@@ -70,6 +83,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
     //sprite.on('animationcomplete', this.switchPlayerHit, 'player_hit');
     
     this.play('player_idle');
+
+
+    this.scene.physics.add.overlap(this.body, birdsGroup, (o1, o2) => {
+      console.log("Estoy pegando");
+      o2.hitBird();  
+    });
     }
     
       /**
@@ -95,6 +114,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.y = y;
   }
 
+  changeBroomPosition(x, y){
+    this.broom.x = x;
+    this.broom.y = y;
+  }
   pickWood(){
     this.wood = true;
   }
@@ -143,6 +166,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
    */
     preUpdate(t,dt) {
     super.preUpdate(t,dt);
+    if(!this.flipX){
+      this.changeBroomPosition(this.x - this.broomDisplacementX, this.y + this.broomDisplacementY);
+    }
+    else{
+      this.changeBroomPosition(this.x + this.broomDisplacementX, this.y + this.broomDisplacementY);
+    }
+   
     this.on('animationcomplete', this.switchPlayerHitAndReStart);
     //Al golpear el jugador, se cambia de estado a que está golpeando y se realiza la animación;
     if (this.j.isDown) {

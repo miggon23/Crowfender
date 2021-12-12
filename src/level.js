@@ -1,9 +1,7 @@
-
 import Player from './player.js';
 import Bird from './bird.js';
 import Chest from './chest.js';
 import Electricity from './electricity.js';
-import Broom from './broom.js';
 import Blockable from './blockable.js';
 import Room from './room.js';
 import Door from './door.js';
@@ -78,8 +76,7 @@ export default class Level extends Phaser.Scene {
 
     this.newRand;
     this.birds = this.add.group(); 
-    //let broom = new Broom(this);
-    //this.player.add(broom);
+   
     this.chest = new Chest(this, this.player, 740, 1000, 250, 200, this.walls);
     var camera = this.cameras.main;
     this.basement = new Basement(this, this.player, 230, 435, 160, 100, true, camera);
