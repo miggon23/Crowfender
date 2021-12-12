@@ -57,6 +57,7 @@ export default class Door extends Phaser.GameObjects.Sprite {
     scene.physics.world.enable(this.zone);
 
     scene.physics.add.overlap(player, this.zone, (o1, o2) => {
+      player.changeRoomNumber(nextRoom);
       if(position === "right"){
         player.changePlayerPosition(roomArray[nextRoom].getBottomLeft().x + this.horizontalMovementForSideRooms,roomArray[nextRoom].getBottomLeft().y - this.verticalMovementForSideRooms );
         //Si es la habitacion siguiente la central el scroll será cero porque es donde se crea la cámara, en cambio en el resto hay que ajustarla un poco

@@ -5,6 +5,7 @@ import Electricity from './electricity.js';
 import Blockable from './blockable.js';
 import Room from './room.js';
 import Door from './door.js';
+import scrollDoor from './scrollDoor.js';
 import SpawnZone from './spawnzone.js';
 import Basement from './basement.js';
 
@@ -130,8 +131,10 @@ export default class Level extends Phaser.Scene {
     new Door(this,this.player, camera, 1, 0, "left", this.rooms);
     new Door(this,this.player, camera, 2, 0, "right", this.rooms);
     new Door(this,this.player, camera, 3, 0, "down", this.rooms);
-    // new Door(this,this.player, camera, 1, 1, this.rooms);
-    // new Door(this,this.player, camera, 3, 3, this.rooms);
+    new scrollDoor(this, this.player, camera, 1, "right", this.rooms);
+    new scrollDoor(this, this.player, camera, 1, "center", this.rooms);
+    new scrollDoor(this, this.player, camera, 3, "left", this.rooms);
+    new scrollDoor(this, this.player, camera, 3, "center", this.rooms);
 
 
     this.broom = this.player.returnBroom();
@@ -204,7 +207,7 @@ export default class Level extends Phaser.Scene {
     this.electricityAvailable = true;
   }
 
-  /**
+   /**
    * Método que crea las habitaciones del juego mainRoom corresponde a la habitación central
    */
   spawnRooms(){
