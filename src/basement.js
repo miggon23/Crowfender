@@ -42,16 +42,15 @@ export default class Basement extends Phaser.GameObjects.Sprite {
             if (Phaser.Input.Keyboard.JustDown(this.k)) {
                 this.ladderSound.play();
                 let newPosition = this.otherBasement.getBottomCenter();
+                this.cameraXScroll = 0;
+                this.cameraYScrollForGoingDown = 260;
+                this.cameraYScrollForGoingUp = 270;
                 player.tp(newPosition.x, newPosition.y + this.offsetToTeleportY);
                 if (i){
-                    camera.setDeadzone(925, 600);
-                    camera.scrollY = +500;
-                    camera.scrollX = +0;                  
+                    camera.setScroll(this.cameraXScroll,this.cameraYScrollForGoingDown);
                 } 
                 else{
-                    camera.setDeadzone(925, 600);
-                    camera.scrollY = +500;
-                    camera.scrollX = +0;                    
+                    camera.setScroll(this.cameraXScroll, this.cameraYScrollForGoingUp);                   
                 } 
             }
         });
