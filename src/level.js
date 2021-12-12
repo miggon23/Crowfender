@@ -45,8 +45,10 @@ export default class Level extends Phaser.Scene {
 
     //Creación de habitaciones y elementos del juego
     this.spawnRooms();
-    this.spawnWalls();
-    this.player = new Player(this,500,400, 'player', this.birds);
+    //Añadimos la imagen de las puertas manualmente
+    this.doorSprite1 = this.add.sprite(this.mainRoom.x + 230, this.mainRoom.y - 40, 'puerta_central');
+    this.player = new Player(this ,500 ,400 ,'player' , this.birds);
+    this.doorSprite2 = this.add.sprite(this.doorSprite1.x , this.doorSprite1.y - 410, 'puerta_puerta');
     this.spawnBlockables();
     this.spawnZones();
     this.spawnElectricitySwitches();
@@ -77,8 +79,8 @@ export default class Level extends Phaser.Scene {
     this.newRand;
     this.birds = this.add.group(); 
    
-    this.chest = new Chest(this, this.player, 740, 1000, 500, 400, this.walls);
     var camera = this.cameras.main;
+    this.chest = new Chest(this, this.player, 740, 1000, 500, 400, this.walls);
     this.basement = new Basement(this, this.player, 230, 405, 220, 180, true, camera, 'sotano_trampilla');
     this.basement2 = new Basement(this, this.player, 270, 850, 300, 500, false, camera, 'sotano_escalera', this.basement);
     this.electricityAvailable = true;
@@ -160,47 +162,6 @@ export default class Level extends Phaser.Scene {
     this.nBirds--;
   }
 
-  //Método que crea los muros que delimitan las habitaciones
-  spawnWalls(){
-    
-    // //Paredes fondo
-    // new Wall(this, 1000, 120, 2100, 270, this.walls);
-    // new Wall(this, 500, 770, 3100, 340, this.walls);
-    // new Wall(this, 500, 1370, 1000, 340, this.walls);
-    // new Wall(this, 500, -430, 1000, 340, this.walls);
-    // //Sala chimenea
-    // new Wall(this, -550, 320, 1000, 140, this.walls);
-    // // Paredes laterales
-    // new Wall(this, -1090, 450, 120, 1200, this.walls);
-    // new Wall(this, -40, 1200, 90, 1000, this.walls);
-    // new Wall(this, -40, -40, 90, 1000, this.walls);
-    // new Wall(this, 1040, 1200, 90, 1000, this.walls);
-    // new Wall(this, 1040, -40, 90, 1000, this.walls);
-
-    // new Wall(this, 205, 275, 900, 90, this.walls);
-    // new Wall(this, 1515, 275, 1400, 90, this.walls);
-
-
-    // new Wall(this, 2090, 450, 90, 1200, this.walls);
-    // // Cofre
-    // new Wall(this, 740, 1000, 175, 100, this.walls);
-    // // Chimenea 
-    // new Wall(this, -780, 360, 170, 128, this.walls);
-
-
-    // 
-    // new Wall(this, 500, -410, 1000, 430, this.birdWalls);
-    // new Wall(this, 1000, 190, 2100, 430, this.birdWalls);
-    // new Wall(this, 500, 810, 3200, 430, this.birdWalls);
-    // new Wall(this, 500, 1390, 1000, 430, this.birdWalls);
-    // new Wall(this, -600, 420, 1000, 100, this.birdWalls);
-    
-    // new Wall(this, -1090, 450, 120, 1200, this.birdWalls);
-    // new Wall(this, -40, 200, 90, 2000, this.birdWalls);
-    // new Wall(this, 1040, 200, 90, 2000, this.birdWalls);
-    // new Wall(this, 2060, 450, 120, 1200, this.birdWalls);
-  }
-
   //Método que crea las zonas bloqueables por el jugador
   spawnBlockables(){
     this.window = new Blockable(this, this.player, 2080, 295, 'ventana_block', 'ventana_block_tabla');
@@ -243,12 +204,14 @@ export default class Level extends Phaser.Scene {
     this.electricityAvailable = true;
   }
 
-  //Método que crea las habitaciones del juego
+  /**
+   * Método que crea las habitaciones del juego mainRoom corresponde a la habitación central
+   */
   spawnRooms(){
-    new Room(this, 500, 300, 1140, 600, this.rooms, 'fondo_central', this.walls, this.birdWalls);  //room3 middle
+    this.mainRoom = new Room(this, 500, 300, 1140, 600, this.rooms, 'fondo_central', this.walls, this.birdWalls);  //room3 middle
     new Room(this,1620, 300, 1100, 600, this.rooms, 'fondo_ventana', this.walls, this.birdWalls);  //room4 east  
     new Room(this, -570, 400, 1000, 400, this.rooms, 'fondo_chimenea', this.walls, this.birdWalls);//room5 west   
-    new Room(this, 490, -300, 1160, 600, this.rooms, 'fondo_puerta', this.walls, this.birdWalls);  //room6 upper
+    this.upperRoom = new Room(this, 490, -300, 1160, 600, this.rooms, 'fondo_puerta', this.walls, this.birdWalls);  //room6 upper
     new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_sotano', this.walls, this.birdWalls);  //room7 basement   
   }
 

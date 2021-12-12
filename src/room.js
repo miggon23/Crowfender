@@ -1,12 +1,12 @@
 import BirdZone from './birdzone.js';
 import Wall from './wall.js';
 /**
- * Clase que representa las salas laterales que aparecen en el escenario de juego.
+ * Clase que representa las habitaciones de la casa que aparecen en el escenario de juego.
  */
 export default class Room extends Phaser.GameObjects.Sprite {
   
   /**
-   * Constructor de las zonas de spawn para los pájaros
+   * Constructor de las habitaciones, crea a su vez los muros que delimitan la misma
    * @param {Phaser.Scene} scene Escena a la que pertenece la habitación
    * @param {number} x Coordenada X
    * @param {number} y Coordenada Y
@@ -31,19 +31,19 @@ export default class Room extends Phaser.GameObjects.Sprite {
     this.birdZone = new BirdZone(scene, x, y + (scaleY / 3), scaleX * 0.6, scaleY * 0.15);
 
     //Parámetros para la creación de muros del jugador
-    this.backgroundWallHeight = 0.4; //Altura del muro del fondo respecto del alto de la habitación
+    this.backgroundWallHeight = 0.37; //Altura del muro del fondo respecto del alto de la habitación
     this.floorHeight = 2; //Alto del suelo
     this.sideWallsWidth = 10; //Ancho de los muros laterales
 
     //Parámateros para la creación de los muros para los pájaros
     this.backgroundWallHeightB = 0.6; //Altura del muro del fondo respecto del alto de la habitación
     this.floorHeightB = 8; //Alto del suelo
-    this.sideWallsWidthB = 80; //Ancho de los muros laterales
+    this.sideWallsWidthB = 140; //Ancho de los muros laterales
     this.rightOffsetB = 20;
     this.leftOffsetB = 20;  
 
     this.setRoomWalls(scene, wallsGroup, scaleX, scaleY);
-    this.setBirdsWalls(scene, birdWalls, scaleX, scaleY);
+    //this.setBirdsWalls(scene, birdWalls, scaleX, scaleY);
   }
 
 
@@ -61,8 +61,10 @@ export default class Room extends Phaser.GameObjects.Sprite {
     this.southWall = new Wall(scene, this.getBottomCenter().x, this.getBottomCenter().y, scaleX, this.floorHeight, wallsGroup)
     //Muro Este
     this.eastWall = new Wall(scene, this.getRightCenter().x, this.getRightCenter().y, this.sideWallsWidth, scaleY, wallsGroup);
+    new Wall(scene, this.getRightCenter().x, this.getRightCenter().y, this.sideWallsWidth * 18, scaleY * 0.38, wallsGroup); //Support wall
     //Muro Oeste
     this.westWall = new Wall(scene, this.getLeftCenter().x, this.getLeftCenter().y, this.sideWallsWidth, scaleY, wallsGroup);
+    new Wall(scene, this.getLeftCenter().x, this.getLeftCenter().y, this.sideWallsWidth * 18, scaleY * 0.36, wallsGroup); //Support wall
   }
 
   /**

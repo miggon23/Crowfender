@@ -32,6 +32,10 @@ export default class Boot extends Phaser.Scene {
     this.load.image('sotano_trampilla', 'sotano_trampilla.png');
     this.load.image('sotano_escalera', 'sotano_escalera.png');
 
+    // Cargamos las imágenes de las puertas
+    this.load.image('puerta_central', 'central_puerta.png');
+    this.load.image('puerta_puerta', 'puerta_puerta.png');
+
     //Cargamos los bloqueables
     this.load.image('chimenea', 'chimenea.png');
     this.load.image('tabla_chimenea', 'chimenea_tabla.png');

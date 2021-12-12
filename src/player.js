@@ -26,9 +26,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this.broom);
 
     this.posXCollider = 70;
-    this.posYCollider = 210;
+    this.posYCollider = 225;
     this.sizeXCollider = 120;
-    this.sizeYCollider = 170;
+    this.sizeYCollider = 150;
     this.body.setOffset(this.posXCollider, this.posYCollider);
     this.body.setSize(this.sizeXCollider, this.sizeYCollider, false);
     this.horizontalSpeed = 300;
