@@ -70,7 +70,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     });
     this.scene.anims.create({
       key: 'player_walk',
-      frames: this.anims.generateFrameNumbers('player', { start: 13, end: 18 }),
+      frames: this.anims.generateFrameNumbers('player', { start: 13, end: 17 }),
       frameRate: 8, // Velocidad de la animación
       repeat: -1   // Animación en bucle
     });
