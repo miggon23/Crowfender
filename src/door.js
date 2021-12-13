@@ -21,25 +21,25 @@ export default class Door extends Phaser.GameObjects.Sprite {
     this.witdhForUpDownRooms = 175;
     this.heightForUpDownRooms = 40;
     //Variables desplazamiento de la sala
-    this.displacementXForSideRooms = 60;
+    this.displacementXForSideRooms = 87;
     this.displacementXForUpDownRooms = 140;
     this.displacementYForSideRooms = 225;
     this.displacementYForUpRooms = 200;
     this.displacementYForDownRooms = -20;
     //Variables para el movimiento del jugador
-    this.horizontalMovementForSideRooms = 120;
+    this.horizontalMovementForSideRooms = 170;
     this.horizontalMovementForUpDownRooms = 200;
-    this.verticalMovementForSideRooms = 130;   
-    this.verticalMovementForUpRooms = 150;
-    this.verticalMovementForDownRooms = 400;
+    this.verticalMovementForSideRooms = 185;   
+    this.verticalMovementForUpRooms = 200;
+    this.verticalMovementForDownRooms = 200;
     //Variables para el movimiento de la camara
-    this.cameraScrollXForCentralRoomFromRightRoom = 0;
+    this.cameraScrollXForCentralRoomFromRightRoom = -220;
     this.cameraScrollXForCentralRoomFromLeftRoom = 220;
-    this.cameraScrollXForSideRooms = 840;
+    this.cameraScrollXForSideRooms = 790;
     this.cameraScrollYForSideRooms = 0;
     this.cameraScrollXForUpDownRooms = 0;
-    this.cameraScrollYForUpRooms = -442;
-    this.cameraScrollYForDownRooms = -400;
+    this.cameraScrollYForUpRooms = -390;
+    this.cameraScrollYForDownRooms = -200;
     //Dependiendo de la donde se ubique la sala, derecha, izquierda, arriba o abajo utiliza la posicion de la sala para crearse
     if(position === "right"){
       this.zone = this.scene.add.zone(roomArray[currentRoom].getTopRight().x - this.displacementXForSideRooms, roomArray[currentRoom].getTopRight().y + this.displacementYForSideRooms, this.witdhForSideRooms, this.heightForSideRooms).setOrigin(0);
