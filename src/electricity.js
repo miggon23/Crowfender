@@ -1,7 +1,8 @@
 
 
 /**
- * Clase para la electricidad para espantar a los pájaros de los spawns
+ * Clase para la electricidad para espantar a los pájaros de los spawns.
+ * Genera un panel de electricidad asociado a un Spawn.
  */
  export default class Electricity extends Phaser.GameObjects.Sprite {
   
@@ -11,6 +12,7 @@
      * @param {Player} player Jugador del juego
      * @param {number} x Coordenada x
      * @param {number} y Coordenada y
+     * @param {Spawn} spawn Spawn al que afecta esta electricidad
      */
     
     constructor(scene, player, x, y, spawn) {
@@ -21,6 +23,7 @@
       this.switchNotReady = this.scene.sound.add("electricitySwitchNotCharged");
       this.electricityZap = this.scene.sound.add("electricityZap");
       this.k = this.scene.input.keyboard.addKey('K');
+      
       this.scene.physics.add.overlap(this, player, (o1, o2) => {
         if(Phaser.Input.Keyboard.JustDown(this.k)){
           if(this.scene.isElectricityAvailable()){

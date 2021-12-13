@@ -9,83 +9,106 @@ export default class Player extends Phaser.GameObjects.Sprite {
    * @param {number} y Coordenada Y
    * @param {group} sprite Sprite del player
    */
-  constructor(scene, x, y,  sprite, birdsGroup) {
+  constructor(scene, x, y, sprite) {
     super(scene, x, y, sprite);
+
+    this.setBroom();
+    this.setInput();
+    this.setAnimations();
+
     this.displayWidth = 170;
     this.displayHeight= 256;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     //Añadimos la escoba
-    this.broom = this.scene.add.sprite(this.x, this.y,'empty');
-    this.broom.visible = false;
-    this.broomDisplacementX = 40;
-    this.broomDisplacementY = 100;
-    this.broom.displayHeight = 50;
-    this.broom.displayWidth = 100;
     this.scene.add.existing(this.broom);
     this.scene.physics.add.existing(this.broom);
+    
+    this.setCollider();
+    this.setSpeed();
 
+    this.room = 0;
+    this.wood = false;
+    this.hittingState = false;
+    this.scrolling = false;
+    this.playerMoving = false;
+    
+    
+  }
+  
+  setSpeed() {
+    this.horizontalSpeed = 300;
+    this.verticalSpeed = 300;
+    this.diagonalSpeed = 212.13;
+  }
+
+  setCollider() {
     this.posXCollider = 70;
     this.posYCollider = 225;
     this.sizeXCollider = 120;
     this.sizeYCollider = 150;
     this.body.setOffset(this.posXCollider, this.posYCollider);
     this.body.setSize(this.sizeXCollider, this.sizeYCollider, false);
-    this.horizontalSpeed = 300;
-    this.verticalSpeed = 300;
-    this.diagonalSpeed = 212.13;
-    this.room = 0;
+  }
+
+  setAnimations() {
+    this.scene.anims.create({
+      key: 'player_idle',
+      frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1 }),
+      frameRate: 4,
+      repeat: -1 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'player_idle_wood',
+      frames: this.anims.generateFrameNumbers('player', { start: 2, end: 3 }),
+      frameRate: 4,
+      repeat: -1 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'player_hit',
+      frames: this.anims.generateFrameNumbers('player', { start: 6, end: 7 }),
+      frameRate: 3,
+      repeat: 0 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'player_hit_wood',
+      frames: this.anims.generateFrameNumbers('player', { start: 8, end: 9 }),
+      frameRate: 3,
+      repeat: 0 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'player_walk',
+      frames: this.anims.generateFrameNumbers('player', { start: 13, end: 17 }),
+      frameRate: 8,
+      repeat: -1 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'player_walk_wood',
+      frames: this.anims.generateFrameNumbers('player', { start: 19, end: 24 }),
+      frameRate: 8,
+      repeat: -1 // Animación en bucle
+    });
+    //sprite.on('animationcomplete', this.switchPlayerHit, 'player_hit');
+    this.play('player_idle');
+  }
+
+  setInput() {
     this.w = this.scene.input.keyboard.addKey('W');
     this.a = this.scene.input.keyboard.addKey('A');
     this.s = this.scene.input.keyboard.addKey('S');
     this.d = this.scene.input.keyboard.addKey('D');
     this.j = this.scene.input.keyboard.addKey('J');
-    this.wood = false;
-    this.hittingState = false;
-    this.scrolling = false;
-    this.playerMoving = false;
-
-    this.scene.anims.create({
-      key: 'player_idle',
-      frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1 }),
-      frameRate:4, // Velocidad de la animación
-      repeat: -1   // Animación en bucle
-    });
-    this.scene.anims.create({
-      key: 'player_idle_wood',
-      frames: this.anims.generateFrameNumbers('player', { start: 2, end: 3 }),
-      frameRate: 4, // Velocidad de la animación
-      repeat: -1   // Animación en bucle
-    });
-    this.scene.anims.create({
-      key: 'player_hit',
-      frames: this.anims.generateFrameNumbers('player', { start: 6, end: 7 }),
-      frameRate: 3, // Velocidad de la animación
-      repeat: 0   // Animación en bucle
-    });
-     this.scene.anims.create({
-      key: 'player_hit_wood',
-      frames: this.anims.generateFrameNumbers('player', { start: 8, end: 9 }),
-      frameRate: 3, // Velocidad de la animación
-      repeat: 0   // Animación en bucle
-    });
-    this.scene.anims.create({
-      key: 'player_walk',
-      frames: this.anims.generateFrameNumbers('player', { start: 13, end: 17 }),
-      frameRate: 8, // Velocidad de la animación
-      repeat: -1   // Animación en bucle
-    });
-    this.scene.anims.create({
-      key: 'player_walk_wood',
-      frames: this.anims.generateFrameNumbers('player', { start: 19, end: 24 }),
-      frameRate: 8, // Velocidad de la animación
-      repeat: -1   // Animación en bucle
-    });
-    //sprite.on('animationcomplete', this.switchPlayerHit, 'player_hit');
-    
-    this.play('player_idle');
   }
-  
+
+  setBroom() {
+    this.broom = this.scene.add.sprite(this.x, this.y, 'empty');
+    this.broom.visible = false;
+    this.broomDisplacementX = 40;
+    this.broomDisplacementY = 100;
+    this.broom.displayHeight = 50;
+    this.broom.displayWidth = 100;
+  }
+
   //Devuelve broom para comprobar las colisiones desde el player
   returnBroom(){
     return this.broom;
