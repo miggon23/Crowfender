@@ -16,8 +16,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.setInput();
     this.setAnimations();
 
-    this.displayWidth = 170;
-    this.displayHeight= 256;
+    this.displayWidth = 256;
+    this.displayHeight= 384;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     //Añadimos la escoba
