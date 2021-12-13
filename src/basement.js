@@ -43,8 +43,8 @@ export default class Basement extends Phaser.GameObjects.Sprite {
                 this.ladderSound.play();
                 let newPosition = this.otherBasement.getBottomCenter();
                 this.cameraXScroll = 0;
-                this.cameraYScrollForGoingDown = 260;
-                this.cameraYScrollForGoingUp = 270;
+                this.cameraYScrollForGoingDown = 250;
+                this.cameraYScrollForGoingUp = 250;
                 player.tp(newPosition.x, newPosition.y + this.offsetToTeleportY);
                 if (i){
                     camera.setScroll(this.cameraXScroll,this.cameraYScrollForGoingDown);
