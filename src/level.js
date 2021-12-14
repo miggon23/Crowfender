@@ -167,16 +167,16 @@ export default class Level extends Phaser.Scene {
 
   //Método que crea las zonas bloqueables por el jugador
   spawnBlockables(){
-    this.window = new Blockable(this, this.player, 2080, 295, 'ventana_block', 'ventana_block_tabla');
-    this.door = new Blockable(this, this.player, -20, -270, 'puerta_block', 'puerta_block_tabla');
-    this.fireplace = new Blockable(this, this.player, -780, 400, 'chimenea', 'tabla_chimenea');
+    this.window = new Blockable(this, this.player, 1920, 295, 'ventana_block', 'ventana_block_tabla');
+    this.door = new Blockable(this, this.player, 60, -270, 'puerta_block', 'puerta_block_tabla');
+    this.fireplace = new Blockable(this, this.player, -780, 440, 'chimenea', 'tabla_chimenea');
   }
 
   //Método que crea las zonas de spawn de los pájaros
   spawnZones(){
-    this.spawn_fireplace = new SpawnZone(this, -570, 100, 1000, 200, this.spawnzones, this.spawns, 'spawn_chimenea', this.fireplace);
-    this.spawn_window = new SpawnZone(this, 2360, 300, 400, 600, this.spawnzones, this.spawns, 'spawn_ventana', this.window);
-    this.spawn_door =new SpawnZone(this, -290, -300, 400, 600, this.spawnzones, this.spawns, 'spawn_puerta', this.door);
+    this.spawn_fireplace = new SpawnZone(this, -500, 100, 1000, 200, this.spawnzones, this.spawns, 'spawn_chimenea', this.fireplace);
+    this.spawn_window = new SpawnZone(this, 2200, 300, 400, 600, this.spawnzones, this.spawns, 'spawn_ventana', this.window);
+    this.spawn_door =new SpawnZone(this, -200, -300, 400, 600, this.spawnzones, this.spawns, 'spawn_puerta', this.door);
   }
 
   //Método que crea los interruptores de electricidad
@@ -211,11 +211,11 @@ export default class Level extends Phaser.Scene {
    * Método que crea las habitaciones del juego mainRoom corresponde a la habitación central
    */
   spawnRooms(){
-    this.mainRoom = new Room(this, 500, 300, 1140, 600, this.rooms, 'fondo_central', this.walls, this.birdWalls);  //room3 middle
-    new Room(this,1620, 300, 1100, 600, this.rooms, 'fondo_ventana', this.walls, this.birdWalls);  //room4 east  
-    new Room(this, -570, 400, 1000, 400, this.rooms, 'fondo_chimenea', this.walls, this.birdWalls);//room5 west   
-    this.upperRoom = new Room(this, 490, -300, 1160, 600, this.rooms, 'fondo_puerta', this.walls, this.birdWalls);  //room6 upper
-    new Room(this, 500, 900, 1140, 600, this.rooms, 'fondo_sotano', this.walls, this.birdWalls);  //room7 basement   
+    this.mainRoom = new Room(this, 500, 300, 1000, 600, this.rooms, 'fondo_central', this.walls, this.birdWalls);  //room3 middle
+    new Room(this, 1500, 300, 1000, 600, this.rooms, 'fondo_ventana', this.walls, this.birdWalls);  //room4 east  
+    new Room(this, -500, 400, 1000, 400, this.rooms, 'fondo_chimenea', this.walls, this.birdWalls);//room5 west   
+    this.upperRoom = new Room(this, 490, -300, 1000, 600, this.rooms, 'fondo_puerta', this.walls, this.birdWalls);  //room6 upper
+    new Room(this, 500, 900, 1000, 600, this.rooms, 'fondo_sotano', this.walls, this.birdWalls);  //room7 basement   
   }
 
   /**
