@@ -30,21 +30,29 @@ export default class Room extends Phaser.GameObjects.Sprite {
     this.birdZone = new BirdZone(scene, x, y + (scaleY / 3), scaleX * 0.6, scaleY * 0.15);
 
     //Parámetros para la creación de muros del jugador
-    this.backgroundWallHeight = 0.37; //Altura del muro del fondo respecto del alto de la habitación
-    this.floorHeight = 2; //Alto del suelo
-    this.sideWallsWidth = 10; //Ancho de los muros laterales
+    this.setRoomWallsVariables(); //Ancho de los muros laterales
 
     //Parámateros para la creación de los muros para los pájaros
-    this.backgroundWallHeightB = 0.6; //Altura del muro del fondo respecto del alto de la habitación
-    this.floorHeightB = 8; //Alto del suelo
-    this.sideWallsWidthB = 140; //Ancho de los muros laterales
-    this.rightOffsetB = 20;
-    this.leftOffsetB = 20;  
+    this.setBirdWallsVariables();  
 
     this.setRoomWalls(scene, wallsGroup, scaleX, scaleY);
     this.setBirdsWalls(scene, birdWalls, scaleX, scaleY);
   }
 
+
+  setRoomWallsVariables() {
+    this.backgroundWallHeight = 0.37; //Altura del muro del fondo respecto del alto de la habitación
+    this.floorHeight = 2; //Alto del suelo
+    this.sideWallsWidth = 10;
+  }
+
+  setBirdWallsVariables() {
+    this.backgroundWallHeightB = 0.6; //Altura del muro del fondo respecto del alto de la habitación
+    this.floorHeightB = 8; //Alto del suelo
+    this.sideWallsWidthB = 140; //Ancho de los muros laterales
+    this.rightOffsetB = 20;
+    this.leftOffsetB = 20;
+  }
 
   /**
    * Crea los muros que delimitan la habitación tomando como referencia los propios límites de la habitación

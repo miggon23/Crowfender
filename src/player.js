@@ -1,10 +1,10 @@
-import Level from "./level.js";
+
 
 export default class Player extends Phaser.GameObjects.Sprite {
   
   /**
    * Constructor del jugador
-   * @param {Phaser.Scene} scene Escena a la que pertenece el pájaro
+   * @param {Phaser.Scene} scene Escena a la que pertenece el player
    * @param {number} x Coordenada X
    * @param {number} y Coordenada Y
    * @param {group} sprite Sprite del player

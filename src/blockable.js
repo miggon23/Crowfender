@@ -5,11 +5,13 @@
  export default class Blockable extends Phaser.GameObjects.Sprite {
   
     /**
-     * Constructor del cofre
+     * Constructor del blockable
      * @param {Phaser.Scene} scene Escena a la que pertenece la ventana
      * @param {Player} player Jugador del juego
      * @param {number} x Coordenada x
      * @param {number} y Coordenada y
+     * @param {string} sprite Sprite base del blockable
+     * @param {string} blockedSprite Sprite del blockable cuando está activo
      */
     constructor(scene, player, x, y, sprite, blockedSprite) {
       super(scene, x, y, sprite);
