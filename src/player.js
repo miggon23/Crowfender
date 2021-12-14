@@ -26,16 +26,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
     this.setCollider();
     this.setSpeed();
-
+    this.setVariable();
+    
+  }
+  
+  setVariable() {
     this.room = 0;
     this.wood = false;
     this.hittingState = false;
     this.scrolling = false;
     this.playerMoving = false;
-    
-    
   }
-  
+
   setSpeed() {
     this.horizontalSpeed = 300;
     this.verticalSpeed = 300;

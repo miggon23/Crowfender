@@ -49,6 +49,7 @@ export default class Level extends Phaser.Scene {
     //Añadimos la imagen de las puertas manualmente
     this.doorSprite1 = this.add.sprite(this.mainRoom.x + 230, this.mainRoom.y - 40, 'puerta_central');
     this.player = new Player(this ,500 ,400 ,'player' , this.birds);
+    this.player.setDepth(10);
     this.doorSprite2 = this.add.sprite(this.doorSprite1.x , this.doorSprite1.y - 410, 'puerta_puerta');
     this.spawnBlockables();
     this.spawnZones();
@@ -320,7 +321,7 @@ export default class Level extends Phaser.Scene {
     if(this.victoryTimer >= this.winTime)
     {
       this.stopSpawning = true; //Tras ese tiempo, dejan de spawnearse pájaros
-      if(this.nBirds == 0) //Y además no quedan pájaros en la escena
+      if(this.nBirds === 0) //Y además no quedan pájaros en la escena
       {
         this.winSound.play();
         this.gameMusic.stop();

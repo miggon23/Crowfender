@@ -15,31 +15,16 @@ export default class Door extends Phaser.GameObjects.Sprite {
   constructor(scene, player, camera, currentRoom, nextRoom, position, roomArray){
     super(scene);
     this.zone;
+
     //Variables tamaño de las salas
-    this.witdhForSideRooms = 25;
-    this.heightForSideRooms = 400;
-    this.witdhForUpDownRooms = 175;
-    this.heightForUpDownRooms = 40;
+    this.setSizeVariables();
     //Variables desplazamiento de la sala
-    this.displacementXForSideRooms = 87;
-    this.displacementXForUpDownRooms = 140;
-    this.displacementYForSideRooms = 225;
-    this.displacementYForUpRooms = 200;
-    this.displacementYForDownRooms = -20;
+    this.setDisplacementVariables();
     //Variables para el movimiento del jugador
-    this.horizontalMovementForSideRooms = 170;
-    this.horizontalMovementForUpDownRooms = 200;
-    this.verticalMovementForSideRooms = 185;   
-    this.verticalMovementForUpRooms = 200;
-    this.verticalMovementForDownRooms = 200;
+    this.setMovementVariables();
     //Variables para el movimiento de la camara
-    this.cameraScrollXForCentralRoomFromRightRoom = -220;
-    this.cameraScrollXForCentralRoomFromLeftRoom = 220;
-    this.cameraScrollXForSideRooms = 790;
-    this.cameraScrollYForSideRooms = 0;
-    this.cameraScrollXForUpDownRooms = 0;
-    this.cameraScrollYForUpRooms = -390;
-    this.cameraScrollYForDownRooms = -200;
+    this.setCameraVariables();
+
     //Dependiendo de la donde se ubique la sala, derecha, izquierda, arriba o abajo utiliza la posicion de la sala para crearse
     if(position === "right"){
       this.zone = this.scene.add.zone(roomArray[currentRoom].getTopRight().x - this.displacementXForSideRooms, roomArray[currentRoom].getTopRight().y + this.displacementYForSideRooms, this.witdhForSideRooms, this.heightForSideRooms).setOrigin(0);
@@ -87,5 +72,39 @@ export default class Door extends Phaser.GameObjects.Sprite {
         camera.setScroll(this.cameraScrollXForUpDownRooms, this.cameraScrollYForDownRooms);
       }
     }); 
+  }
+
+
+  setCameraVariables() {
+    this.cameraScrollXForCentralRoomFromRightRoom = -220;
+    this.cameraScrollXForCentralRoomFromLeftRoom = 220;
+    this.cameraScrollXForSideRooms = 790;
+    this.cameraScrollYForSideRooms = 0;
+    this.cameraScrollXForUpDownRooms = 0;
+    this.cameraScrollYForUpRooms = -390;
+    this.cameraScrollYForDownRooms = -200;
+  }
+
+  setMovementVariables() {
+    this.horizontalMovementForSideRooms = 170;
+    this.horizontalMovementForUpDownRooms = 200;
+    this.verticalMovementForSideRooms = 185;
+    this.verticalMovementForUpRooms = 200;
+    this.verticalMovementForDownRooms = 200;
+  }
+
+  setDisplacementVariables() {
+    this.displacementXForSideRooms = 87;
+    this.displacementXForUpDownRooms = 140;
+    this.displacementYForSideRooms = 225;
+    this.displacementYForUpRooms = 200;
+    this.displacementYForDownRooms = -20;
+  }
+
+  setSizeVariables() {
+    this.witdhForSideRooms = 25;
+    this.heightForSideRooms = 400;
+    this.witdhForUpDownRooms = 175;
+    this.heightForUpDownRooms = 40;
   }
 }
