@@ -82,7 +82,7 @@ export default class Door extends Phaser.GameObjects.Sprite {
     this.cameraScrollYForSideRooms = 0;
     this.cameraScrollXForUpDownRooms = 0;
     this.cameraScrollYForUpRooms = -390;
-    this.cameraScrollYForDownRooms = -200;
+    this.cameraScrollYForDownRooms = -220;
   }
 
   setMovementVariables() {

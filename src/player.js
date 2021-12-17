@@ -27,7 +27,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.setCollider();
     this.setSpeed();
     this.setVariable();
-    
+    this.playerAttack = scene.sound.add("playerAttack");
   }
   
   setVariable() {
@@ -201,6 +201,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       if(!this.hittingState){
         this.switchPlayerHit();
         this.stop();
+        this.playerAttack.play();
         if(this.wood){
           this.play('player_hit_wood', false);
         }
