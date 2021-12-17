@@ -8,6 +8,7 @@ import Door from './door.js';
 import scrollDoor from './scrollDoor.js';
 import SpawnZone from './spawnzone.js';
 import Basement from './basement.js';
+import Data from './data.js';
 
 /**
  * Escena principal del juego.
