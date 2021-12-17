@@ -127,16 +127,7 @@ export default class Level extends Phaser.Scene {
     //camera.setZoom(0.60);
     //camera.setZoom(1.50);
    
-    new Door(this,this.player, camera, 0, 1, "right", this.rooms);
-    new Door(this,this.player, camera, 0, 2, "left", this.rooms);
-    new Door(this,this.player, camera, 0, 3,"up", this.rooms);
-    new Door(this,this.player, camera, 1, 0, "left", this.rooms);
-    new Door(this,this.player, camera, 2, 0, "right", this.rooms);
-    new Door(this,this.player, camera, 3, 0, "down", this.rooms);
-    new scrollDoor(this, this.player, camera, 1, "right", this.rooms);
-    new scrollDoor(this, this.player, camera, 1, "center", this.rooms);
-    new scrollDoor(this, this.player, camera, 3, "left", this.rooms);
-    new scrollDoor(this, this.player, camera, 3, "center", this.rooms);
+    this.spawnDoors(camera);
 
     this.clockSounds();
     this.broom = this.player.returnBroom();
@@ -160,6 +151,19 @@ export default class Level extends Phaser.Scene {
     this.physics.add.collider(this.player, this.walls)
     this.physics.add.collider(this.birds, this.birdWalls)
     
+  }
+
+  spawnDoors(camera) {
+    new Door(this, this.player, camera, 0, 1, "right", this.rooms);
+    new Door(this, this.player, camera, 0, 2, "left", this.rooms);
+    new Door(this, this.player, camera, 0, 3, "up", this.rooms);
+    new Door(this, this.player, camera, 1, 0, "left", this.rooms);
+    new Door(this, this.player, camera, 2, 0, "right", this.rooms);
+    new Door(this, this.player, camera, 3, 0, "down", this.rooms);
+    new scrollDoor(this, this.player, camera, 1, "right", this.rooms);
+    new scrollDoor(this, this.player, camera, 1, "center", this.rooms);
+    new scrollDoor(this, this.player, camera, 3, "left", this.rooms);
+    new scrollDoor(this, this.player, camera, 3, "center", this.rooms);
   }
 
   clockSounds(){
