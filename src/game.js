@@ -13,14 +13,10 @@ let config = {
     width:  1000,
     height: 600,
     scale: {
-        //mode: Phaser.Scale.FIT,  
-        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
-    },
-    pixelArt: true,
-    scale: {
         mode: Phaser.Scale.FIT,  
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
+    pixelArt: true,
     scene: [Boot, MenuScene, Level, End, Victory],
     physics: { 
         default: 'arcade', 
