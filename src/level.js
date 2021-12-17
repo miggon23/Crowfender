@@ -84,8 +84,8 @@ export default class Level extends Phaser.Scene {
    
     var camera = this.cameras.main;
     this.chest = new Chest(this, this.player, 740, 1000, 500, 400, this.walls);
-    this.basement = new Basement(this, this.player, 230, 405, 220, 180, true, camera, 'sotano_trampilla');
-    this.basement2 = new Basement(this, this.player, 270, 850, 300, 500, false, camera, 'sotano_escalera', this.basement);
+    this.basement1 = new Basement(this, this.player, camera, Data.basementZones.middle);
+    this.basement2 = new Basement(this, this.player, camera, Data.basementZones.down, this.basement1);
     this.electricityAvailable = true;
 
     this.zone7; this.zone8; this.zone9; this.zone10;
@@ -251,7 +251,7 @@ export default class Level extends Phaser.Scene {
    * Método que escoge un spawn de entre los existentes y crea un pájaro en su interior
    */
   spawnBird() { 
-    let routes = [[0, 5, 3], [1, 4, 3], [2, 6, 3]];
+    let routes = Data.routes;
     let index = Phaser.Math.Between(0, this.spawnzones.length - 1);
     //Guardamos la spawnzone de una variable para acceder más facilmente a sus métodos
     let birdSpawnZone = this.spawnzones[index];
