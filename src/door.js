@@ -33,10 +33,10 @@ export default class Door extends Phaser.GameObjects.Sprite {
       this.zone = this.scene.add.zone(roomArray[currentRoom].getTopLeft().x + this.displacementXForSideRooms, roomArray[currentRoom].getTopLeft().y + this.displacementYForSideRooms, this.witdhForSideRooms, this.heightForSideRooms).setOrigin(0);
     }
     else if(position ==="up"){
-      this.zone = this.scene.add.zone(roomArray[currentRoom].getTopCenter().x + this.displacementXForUpDownRooms, roomArray[currentRoom].getTopCenter().y + this.displacementYForUpRooms, this.witdhForUpDownRooms, this.heightForUpDownRooms).setOrigin(0);
+      this.zone = this.scene.add.zone(roomArray[currentRoom].getTopCenter().x + this.displacementXForUpRooms, roomArray[currentRoom].getTopCenter().y + this.displacementYForUpRooms, this.witdhForUpDownRooms, this.heightForUpDownRooms).setOrigin(0);
     }
     else{
-      this.zone = this.scene.add.zone(roomArray[currentRoom].getBottomCenter().x + this.displacementXForUpDownRooms, roomArray[currentRoom].getBottomCenter().y + this.displacementYForDownRooms, this.witdhForUpDownRooms, this.heightForUpDownRooms).setOrigin(0);
+      this.zone = this.scene.add.zone(roomArray[currentRoom].getBottomCenter().x + this.displacementXForDownRooms, roomArray[currentRoom].getBottomCenter().y + this.displacementYForDownRooms, this.witdhForUpDownRooms, this.heightForUpDownRooms).setOrigin(0);
     }
    
     scene.physics.world.enable(this.zone);
@@ -90,12 +90,13 @@ export default class Door extends Phaser.GameObjects.Sprite {
     this.horizontalMovementForUpDownRooms = 200;
     this.verticalMovementForSideRooms = 185;
     this.verticalMovementForUpRooms = 200;
-    this.verticalMovementForDownRooms = 200;
+    this.verticalMovementForDownRooms = 220;
   }
 
   setDisplacementVariables() {
     this.displacementXForSideRooms = 87;
-    this.displacementXForUpDownRooms = 140;
+    this.displacementXForUpRooms = 140;
+    this.displacementXForDownRooms = 180;
     this.displacementYForSideRooms = 225;
     this.displacementYForUpRooms = 200;
     this.displacementYForDownRooms = -20;

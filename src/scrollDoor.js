@@ -59,7 +59,7 @@
 
     //Variables tamaño de las salas
     sizeDoorVariables() {
-      this.witdhZones = 50;
+      this.witdhZones = 20;
       this.heightZones = 600;
     }
 
