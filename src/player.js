@@ -34,6 +34,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.room = 0;
     this.wood = false;
     this.hittingState = false;
+    this.hittingStateBirds = false;
     this.scrolling = false;
     this.playerMoving = false;
   }
@@ -68,13 +69,25 @@ export default class Player extends Phaser.GameObjects.Sprite {
     });
     this.scene.anims.create({
       key: 'player_hit',
-      frames: this.anims.generateFrameNumbers('player', { start: 6, end: 7 }),
+      frames: this.anims.generateFrameNumbers('player', { start: 6, end: 6 }),
+      frameRate: 3,
+      repeat: 0 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'player_hit2',
+      frames: this.anims.generateFrameNumbers('player', { start: 7, end: 7 }),
       frameRate: 3,
       repeat: 0 // Animación en bucle
     });
     this.scene.anims.create({
       key: 'player_hit_wood',
-      frames: this.anims.generateFrameNumbers('player', { start: 8, end: 9 }),
+      frames: this.anims.generateFrameNumbers('player', { start: 8, end: 8 }),
+      frameRate: 3,
+      repeat: 0 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'player_hit_wood2',
+      frames: this.anims.generateFrameNumbers('player', { start: 9, end: 9 }),
       frameRate: 3,
       repeat: 0 // Animación en bucle
     });
@@ -90,7 +103,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
       frameRate: 8,
       repeat: -1 // Animación en bucle
     });
-    //sprite.on('animationcomplete', this.switchPlayerHit, 'player_hit');
     this.play('player_idle');
   }
 
@@ -158,6 +170,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   switchPlayerHitAndReStart(){
     this.hittingState = false;
+    this.hittingStateBirds = false;
     this.playerMoving = false;
     if(this.wood){
       this.play('player_idle_wood');
@@ -180,7 +193,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
     
 
-    
+   hittingMoment(){
+     if(this.wood){
+      this.play('player_hit_wood2', false);
+     }
+     else{
+      this.play('player_hit2', false);
+     }
+    this.hittingStateBirds = true;
+   } 
 
   /**
    * Métodos preUpdate de Phaser. En este caso se encarga del movimiento del pajaro y de su eliminación por electricidad.
@@ -195,7 +216,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.changeBroomPosition(this.x + this.broomDisplacementX, this.y + this.broomDisplacementY);
     }
    
-    this.on('animationcomplete', this.switchPlayerHitAndReStart);
+    this.on('animationcomplete-player_hit', this.hittingMoment);
+    this.on('animationcomplete-player_hit2', this.switchPlayerHitAndReStart);
+    this.on('animationcomplete-player_hit_wood', this.hittingMoment);
+    this.on('animationcomplete-player_hit_wood2', this.switchPlayerHitAndReStart);
     //Al golpear el jugador, se cambia de estado a que está golpeando y se realiza la animación;
     if (this.j.isDown) {
       if(!this.hittingState){

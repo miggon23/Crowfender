@@ -136,7 +136,7 @@ export default class Level extends Phaser.Scene {
     camera.scrollY = 0;
     //Colision de la escoba con los pájaros
     this.physics.add.overlap(this.broom, this.birds, (o1, o2) => {
-      if(this.player.hittingState){
+      if(this.player.hittingStateBirds){
         o2.hitBird();  
       }
     });
