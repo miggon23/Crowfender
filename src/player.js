@@ -105,8 +105,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
   setBroom() {
     this.broom = this.scene.add.sprite(this.x, this.y, 'empty');
     this.broom.visible = false;
-    this.broomDisplacementX = 40;
-    this.broomDisplacementY = 100;
+    this.broomDisplacementX = 80;
+    this.broomDisplacementY = 157;
     this.broom.displayHeight = 50;
     this.broom.displayWidth = 100;
   }
