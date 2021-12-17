@@ -15,24 +15,10 @@
     constructor(scene, player, camera, currentRoom, position, roomArray){
       super(scene);
       this.zone;
-      //Variables tamaño de las salas
-      this.witdhZones = 50;
-      this.heightZones = 600;
-      //Variables desplazamiento de la sala
-      this.displacementX = 200;
-      //Variables deadzone
-      this.deadzoneXRightLeft = 100;
-      this.deadzoneXCenter = 925;
-      this.deadzoneY = 600; 
-      //Variables ajuste de la cámara
-      this.rightX = 200;
-      this.rightY = 0;
-      this.leftX = -200;
-      this.leftY = -600;
-      this.center1X = 1100;
-      this.center3X = 0;
-      this.center1Y = 0;
-      this.center3Y = -600;
+      this.sizeDoorVariables();
+      this.displacementDoorVariables();
+      this.deadzoneDoorVariables(); 
+      this.cameraDoorVariables();
 
       //Dependiendo de la donde se ubique la sala, derecha, izquierda, arriba o abajo utiliza la posicion de la sala para crearse
       if(position === "right"){
@@ -69,6 +55,36 @@
           player.switchPlayerScrollToFalse();
         }
       }); 
+    }
+
+    //Variables tamaño de las salas
+    sizeDoorVariables() {
+      this.witdhZones = 50;
+      this.heightZones = 600;
+    }
+
+     //Variables desplazamiento de la sala
+     displacementDoorVariables() {
+      this.displacementX = 200;
+    }
+
+    //Variables deadzone
+    deadzoneDoorVariables() {
+      this.deadzoneXRightLeft = 100;
+      this.deadzoneXCenter = 925;
+      this.deadzoneY = 600;
+    }
+
+    //Variables ajuste de la cámara
+    cameraDoorVariables() {
+      this.rightX = 200;
+      this.rightY = 0;
+      this.leftX = -200;
+      this.leftY = -600;
+      this.center1X = 1100;
+      this.center3X = 0;
+      this.center1Y = 0;
+      this.center3Y = -600;
     }
   }
   
