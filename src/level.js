@@ -123,7 +123,7 @@ export default class Level extends Phaser.Scene {
     camera.x = 0;
     camera.y = 0;
     
-
+    
     //camera.setZoom(0.60);
     //camera.setZoom(1.50);
    
@@ -138,7 +138,7 @@ export default class Level extends Phaser.Scene {
     new scrollDoor(this, this.player, camera, 3, "left", this.rooms);
     new scrollDoor(this, this.player, camera, 3, "center", this.rooms);
 
-
+    this.clockSounds();
     this.broom = this.player.returnBroom();
     camera.startFollow(this.player);
     camera.setDeadzone(925, 600); 
@@ -162,6 +162,29 @@ export default class Level extends Phaser.Scene {
     
   }
 
+  clockSounds(){
+    this.makeclockSound(this.winTime / 6, this.clockSound1);
+    this.makeclockSound(this.winTime / 3, this.clockSound2);
+    this.makeclockSound(this.winTime / 2, this.clockSound3);
+    this.makeclockSound(this.winTime / 1.5, this.clockSound4);
+    this.makeclockSound(this.winTime / 1.2, this.clockSound5);
+    this.makeclockSound(this.winTime, this.clockSound6);
+  }
+
+  makeclockSound(tiempo, sound){
+    this.time.addEvent( {
+      delay: tiempo, 
+      callback: this.playSpecificClockSound,
+      callbackScope: this,
+      loop: false,
+      args:[sound]
+    });
+  }
+
+  playSpecificClockSound(sound){ 
+    console.log("Estoy sonando"); 
+    sound.play();
+  }
   //Resta un pájaro del contador
   subBird(){
     this.nBirds--;
@@ -294,13 +317,6 @@ export default class Level extends Phaser.Scene {
     } 
  
 
-    //Sonidos del reloj, tic por hora para cualquier timer que pongamos
-    if(this.victoryTimer > this.winTime / 6 && this.victoryTimer < (this.winTime / 6) + 20)   this.clockSound1.play();
-    else if(this.victoryTimer > this.winTime / 3 && this.victoryTimer < (this.winTime / 3) + 20) this.clockSound2.play();
-    else if(this.victoryTimer > this.winTime / 2 && this.victoryTimer < (this.winTime / 2) + 20) this.clockSound3.play();
-    else if(this.victoryTimer > this.winTime / 1.5 && this.victoryTimer < (this.winTime / 1.5) + 20) this.clockSound4.play();
-    else if(this.victoryTimer > this.winTime / 1.2 && this.victoryTimer < (this.winTime / 1.2) + 20) this.clockSound5.play();
-    else if(this.victoryTimer > this.winTime && this.victoryTimer < this.winTime  + 20) this.clockSound6.play();
     
 
     //Spawn de pájaros
