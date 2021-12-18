@@ -263,8 +263,17 @@ export default class Level extends Phaser.Scene {
       let newX = Phaser.Math.Between(topLeft.x, botRight.x);
       let newY = Phaser.Math.Between(topLeft.y, botRight.y);
   
-     
-      this.birdSpawned = Phaser.Math.Between(0, 2);
+      //Dependiendo de la dificultad apareceran distinto tipos de pájaros
+      if(this.multiplier === 1){
+        this.birdSpawned = 0;
+      }
+      else if(this.multiplier === 2){
+        this.birdSpawned = Phaser.Math.Between(0, 1);
+      }
+      else{
+        this.birdSpawned = Phaser.Math.Between(0, 2);
+      }
+      
       if(this.birdSpawned === 0){
         new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones, 'bird1'); 
       }
