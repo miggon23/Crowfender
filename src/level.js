@@ -140,7 +140,7 @@ export default class Level extends Phaser.Scene {
     camera.y = 0;
     
     
-    //camera.setZoom(0.60);
+    //camera.setZoom(0.50);
     //camera.setZoom(1.50);
    
     this.spawnDoors(camera);
@@ -212,16 +212,16 @@ export default class Level extends Phaser.Scene {
 
   //Método que crea las zonas bloqueables por el jugador
   spawnBlockables(){
-    this.window = new Blockable(this, this.player, 1920, 295, 'ventana_block', 'ventana_block_tabla');
-    this.door = new Blockable(this, this.player, 60, -270, 'puerta_block', 'puerta_block_tabla');
-    this.fireplace = new Blockable(this, this.player, -780, 440, 'chimenea', 'tabla_chimenea');
+    this.window = new Blockable(this, this.player, Data.blockable.window);
+    this.door = new Blockable(this, this.player, Data.blockable.door);
+    this.fireplace = new Blockable(this, this.player, Data.blockable.fireplace);
   }
 
   //Método que crea las zonas de spawn de los pájaros
   spawnZones(){
-    this.spawn_fireplace = new SpawnZone(this, -500, 100, 1000, 200, this.spawnzones, this.spawns, 'spawn_chimenea', this.fireplace);
-    this.spawn_window = new SpawnZone(this, 2200, 300, 400, 600, this.spawnzones, this.spawns, 'spawn_ventana', this.window);
-    this.spawn_door =new SpawnZone(this, -200, -300, 400, 600, this.spawnzones, this.spawns, 'spawn_puerta', this.door);
+    this.spawn_fireplace = new SpawnZone(this, Data.spawnZone.west, this.spawnzones, this.spawns, this.fireplace);
+    this.spawn_window = new SpawnZone(this, Data.spawnZone.east, this.spawnzones, this.spawns, this.window);
+    this.spawn_door =new SpawnZone(this, Data.spawnZone.upper, this.spawnzones, this.spawns, this.door);
   }
 
   //Método que crea los interruptores de electricidad

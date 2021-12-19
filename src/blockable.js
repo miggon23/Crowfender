@@ -8,19 +8,17 @@
      * Constructor del blockable
      * @param {Phaser.Scene} scene Escena a la que pertenece la ventana
      * @param {Player} player Jugador del juego
-     * @param {number} x Coordenada x
-     * @param {number} y Coordenada y
-     * @param {string} sprite Sprite base del blockable
-     * @param {string} blockedSprite Sprite del blockable cuando está activo
+     * @param {Struct} blockableInfo Info necesaria para construir el blockable
      */
-    constructor(scene, player, x, y, sprite, blockedSprite) {
-      super(scene, x, y, sprite);
+    constructor(scene, player, blockableInfo) {
+      super(scene, blockableInfo.x, blockableInfo.y, blockableInfo.sprite);
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this, true);
       this.blocked = false;
-      this.spriteName = sprite;
-      this.blockedSpriteName = blockedSprite;
-      this.addSprites();
+      this.spriteName = blockableInfo.sprite;
+      this.blockedSpriteName = blockableInfo.blockedSprite;
+
+      this.addSounds();
       this.k = this.scene.input.keyboard.addKey('K');
       this.scene.physics.add.overlap(this, player, (o1, o2) => {
           if(Phaser.Input.Keyboard.JustDown(this.k) && !this.blocked){
@@ -32,7 +30,7 @@
       });
     }
 
-   addSprites() {
+   addSounds() {
      this.fireplaceSoundBlock = this.scene.sound.add("fireplaceBlocked");
      this.fireplaceSoundUnblock = this.scene.sound.add("fireplaceUnblocked");
      this.otherSoundBlock = this.scene.sound.add("otherBlockableBlocked");

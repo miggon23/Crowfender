@@ -78,6 +78,52 @@ const Data = {
        scaleX: 500, 
        scaleY: 400,  
     },
+    blockable:{
+        window:{
+            x: 1920,
+            y: 295,
+            sprite: 'ventana_block',
+            blockedSprite: 'ventana_block_tabla'
+        },
+        door:{
+            x: 60,
+            y: -270,
+            sprite: 'puerta_block',
+            blockedSprite: 'puerta_block_tabla'
+        },
+        fireplace:{
+            x: -780,
+            y: 440,
+            sprite: 'chimenea',
+            blockedSprite: 'tabla_chimenea'
+        }
+    },
+    spawnZone:{
+        upper: {
+            x: -200,
+            y: -300,
+            scaleX: 400,
+            scaleY: 600,
+            limitOfBirds: 6,
+            sprite: 'spawn_puerta'
+        },
+        east: {
+            x: 2200,
+            y: 300,
+            scaleX: 400,
+            scaleY: 600,
+            limitOfBirds: 6,
+            sprite: 'spawn_ventana' 
+        },
+        west: {
+            x: -500,
+            y: 100,
+            scaleX: 1000,
+            scaleY: 200,
+            limitOfBirds: 6,
+            sprite: 'spawn_chimenea'
+        }
+    }
 
     
 };
