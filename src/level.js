@@ -71,8 +71,10 @@ export default class Level extends Phaser.Scene {
 
     //temporizador para spawnear pájaros
     this.timer = 0;
-    this.spawnTime = Phaser.Math.Between(4000, 7000);
-
+    if(this.multiplier === 0) this.spawnTime = Phaser.Math.Between(6000, 10000);
+    else if(this.multiplier === 1) this.spawnTime = Phaser.Math.Between(4000, 7000);
+    else this.spawnTime = Phaser.Math.Between(3000, 5000);
+    
     //Temporizador para ganar
     this.victoryTimer = 0;
 
@@ -328,15 +330,12 @@ export default class Level extends Phaser.Scene {
       this.tension3.play();
       this.timerForTensionSounds = 0;
     } 
- 
-
-    
 
     //Spawn de pájaros
     if(this.timer > this.spawnTime)
     {
       if(this.nBirds < this.maxBirds && !this.stopSpawning){
-        this.nBirds += this.multiplier;
+        this.nBirds++;
         this.spawnBird(this.spawnTime);
         this.timer -= this.spawnTime;
         this.spawnTime = Phaser.Math.Between(4000, 7000);
