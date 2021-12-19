@@ -82,7 +82,7 @@ export default class Level extends Phaser.Scene {
     //Número de pájaros en la sala del medio
     this.nBirdsInMiddle = 0;
     //Máximo de pájaros del juego
-    this.maxBirdsInMiddle = 5;
+    this.maxBirdsInMiddle = 3;
 
     //temporizador para spawnear pájaros
     this.timer = 0;
@@ -240,7 +240,7 @@ export default class Level extends Phaser.Scene {
   putElectricityOnCooldown(){
     this.electricityAvailable = false;
     this.time.addEvent( {
-      delay: 30000, 
+      delay: 20000, 
       callback: this.electricityNowAvailable,
       callbackScope: this,
       loop: false

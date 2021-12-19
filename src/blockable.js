@@ -48,7 +48,7 @@
       this.blocked = true;
       this.setTexture(this.blockedSpriteName);
       this.scene.time.addEvent( {
-        delay: 10000, 
+        delay: 20000, 
         callback: this.unblock,
         callbackScope: this,
         loop: false
