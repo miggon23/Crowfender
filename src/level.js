@@ -294,13 +294,13 @@ export default class Level extends Phaser.Scene {
 
 
       if(this.birdSpawned === 0){
-        new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones, 'bird1'); 
+        new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones, 'bird1', this.difficulty); 
       }
       else if(this.birdSpawned === 1){       
-        new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones, 'bird2'); 
+        new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones, 'bird2', this.difficulty); 
       }
       else{
-        new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones, 'bird3'); 
+        new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones, 'bird3', this.difficulty); 
       }
      
      
