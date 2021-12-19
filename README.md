@@ -28,7 +28,8 @@ Crowfender trata de transmitir al jugador la angustia de una invasión voladora,
 * A través de la ventana entran los pájaros y se les expulsa dándoles un golpe con la escoba.
 
 ## Diagrama UML
-![Crowfender drawio](https://user-images.githubusercontent.com/82326243/146688843-3db70688-301f-4f7d-aae7-aaa73c4f58b9.png)
+![diagrama](https://user-images.githubusercontent.com/82326243/146690051-46b7b35d-8232-4270-b3be-6920af568b2d.png)
+
 
 
 
