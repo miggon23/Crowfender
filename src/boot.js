@@ -12,11 +12,13 @@ export default class Boot extends Phaser.Scene {
   constructor() {
     super({ key: 'boot' });
   }
-
   /**
    * Carga de los assets del juego
    */
   preload() {
+    let width = this.cameras.main.width;
+    let height = this.cameras.main.height;
+    this.createProgressBar(width, height);
     // Cargamos las imagenes
     this.load.setPath('assets/sprites/');
 
@@ -127,4 +129,63 @@ export default class Boot extends Phaser.Scene {
   create() {
     this.scene.start('menu');
   }
+
+   /**
+    * Método seguido según el tutorial de la api de phaser 3
+    * Método que crea la barra de carga y que va actualizando según vayan cargando los archivos
+   * @param {integer} width Anchura de la pantalla
+   * @param {integer} height Altura de la pantalla
+   */
+  createProgressBar(width, height) {
+    //Barra que sirve de fondo a "loadRect"
+    let progressBar = this.add.graphics();
+    //Barra que va avanzando según el progreso
+    let loadRect = this.add.graphics();
+    loadRect.fillStyle(0x0B0B4A, 0.8);
+    loadRect.fillRect(width / 2 - 160, height / 2, 320, 50);
+
+    //Texto del loading sitaudo encima del rectángulo de carga
+    let loadingText = this.addInterfaceText(width / 2, height / 2 - 30, 'Loading...', 24, '#ffffff');
+
+    //Número de porcentaje de carga situado dentro del rectángulo de carga
+    let percentText = this.addInterfaceText(width / 2, height / 2 + 25, '0%', 18, '#ffffff');
+
+    //Información sobre los assets que están siendo cargados situado debajo del rectángulo de carga
+    let assetText = this.addInterfaceText(width / 2,height / 2 + 80,'',18,'#ffffff');
+
+    //Nos suscribimos a eventos sobre la carga de archivos
+    this.load.on('progress', function (value) {
+      progressBar.clear();
+      progressBar.fillStyle(0x1A1AA4, 1);
+      progressBar.fillRect(width / 2 - 150, height / 2 + 10, 300 * value, 30);
+      percentText.setText(parseInt(value * 100) + '%');
+    });
+
+    //Escribe el archivo que se esté cargando
+    this.load.on('fileprogress', function (file) {
+      assetText.setText('Loading asset: ' + file.key);
+    });
+
+    //Al completar todo destruye todo para dar paso al menú
+    this.load.on('complete', function () {
+      progressBar.destroy();
+      loadRect.destroy();
+      loadingText.destroy();
+      percentText.destroy();
+      assetText.destroy();
+    });
+  }
+  //Crea un texto (s) con un tamaño (size), una posición (x)(y), un color (color) y una alineación
+  addInterfaceText(x, y, s, size, color) {
+    let text = this.add.text(x, y, s, {
+      fontFamily: 'Caveat',
+      fontSize: size,
+      color: color,
+      align: 'center'
+    });
+    text.setOrigin(.5);
+
+    return text;
+  }
+
 }
