@@ -64,12 +64,21 @@ const Data = {
             sprite: 'fondo_sotano'
         }
     },
+    player:{
+        x: 500,
+        y: 400,
+        scaleX: 256,
+        scaleY: 384,
+        sprite: 'player',
+        depth: 10
+    },
     chest:{
        x: 740, 
        y: 1000, 
        scaleX: 500, 
        scaleY: 400,  
-    }
+    },
+
     
 };
 export default Data;

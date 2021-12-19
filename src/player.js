@@ -5,20 +5,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
   /**
    * Constructor del jugador
    * @param {Phaser.Scene} scene Escena a la que pertenece el player
-   * @param {number} x Coordenada X
-   * @param {number} y Coordenada Y
-   * @param {group} sprite Sprite del player
+   * @param {struct} playerInfo
    */
-  constructor(scene, x, y, sprite) {
-    super(scene, x, y, sprite);
+  constructor(scene, playerInfo) {
+    super(scene, playerInfo.x, playerInfo.y, playerInfo.sprite);
 
     this.setBroom();
     this.setInput();
     this.setAnimations();
 
-    this.setDepth(10);
-    this.displayWidth = 256;
-    this.displayHeight= 384;
+    this.setDepth(playerInfo.depth);
+    this.displayWidth = playerInfo.scaleX;
+    this.displayHeight = playerInfo.scaleY;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     //Añadimos la escoba

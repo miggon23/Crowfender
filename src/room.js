@@ -63,7 +63,7 @@ export default class Room extends Phaser.GameObjects.Sprite {
     if(this.spriteName === 'fondo_central'){
       this.nortWall = new Wall(scene, this.getTopCenter().x, this.getTopCenter().y + (scaleY / 3), scaleX, scaleY * (this.backgroundWallHeigh * 0.5), wallsGroup);
       new Wall(scene, this.getTopCenter().x - (scaleX * 0.15), this.getTopCenter().y + (scaleY / 3), scaleX * 0.55, scaleY * this.backgroundWallHeight, wallsGroup);
-      new Wall(scene, this.getTopCenter().x + (scaleX * 0.38), this.getTopCenter().y + (scaleY / 3), scaleX * 0.2, scaleY * this.backgroundWallHeight, wallsGroup);
+      new Wall(scene, this.getTopCenter().x + (scaleX * 0.42), this.getTopCenter().y + (scaleY / 3), scaleX * 0.2, scaleY * this.backgroundWallHeight, wallsGroup);
     }
     else{
       this.nortWall = new Wall(scene, this.getTopCenter().x, this.getTopCenter().y + (scaleY / 3), scaleX, scaleY * this.backgroundWallHeight, wallsGroup);

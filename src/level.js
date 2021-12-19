@@ -64,7 +64,7 @@ export default class Level extends Phaser.Scene {
     this.spawnRooms();
     //Añadimos la imagen de las puertas manualmente
     this.doorSprite1 = this.add.sprite(this.mainRoom.x + 230, this.mainRoom.y - 40, 'puerta_central');
-    this.player = new Player(this ,500 ,400 ,'player' , this.birds);
+    this.player = new Player(this , Data.player , this.birds);
     this.doorSprite2 = this.add.sprite(this.doorSprite1.x , this.doorSprite1.y - 410, 'puerta_puerta');
     this.spawnBlockables();
     this.spawnZones();
@@ -140,7 +140,7 @@ export default class Level extends Phaser.Scene {
     camera.y = 0;
     
     
-    camera.setZoom(0.60);
+    //camera.setZoom(0.60);
     //camera.setZoom(1.50);
    
     this.spawnDoors(camera);
