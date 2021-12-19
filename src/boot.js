@@ -178,7 +178,7 @@ export default class Boot extends Phaser.Scene {
   //Crea un texto (s) con un tamaño (size), una posición (x)(y), un color (color) y una alineación
   addInterfaceText(x, y, s, size, color) {
     let text = this.add.text(x, y, s, {
-      fontFamily: 'Caveat',
+      setFont: 'Georgia',
       fontSize: size,
       color: color,
       align: 'center'
