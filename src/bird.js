@@ -17,7 +17,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    * @param {array of numbers} route salas que sigue el pájaro en orden, desde el spawn a la sala central
    * @param {array of Room} rooms array que guarda las habitaciones visitables por el pájaro
    */
-  constructor(scene, x, y, birdsGroup, level, route, rooms, sprite) {
+  constructor(scene, x, y, birdsGroup, level, route, rooms, sprite, multiplier) {
     super(scene, x, y, sprite);
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
@@ -27,22 +27,26 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     
     this.setAnims();
 
-    if(this.birdSprite === 'bird1'){
-      this.play('bird_fly1')
-    }
-    else if(this.birdSprite === 'bird2'){
-      this.play('bird_fly2')
-    }
-    else{
-      this.play('bird_fly3')
-    }
- 
+    if(this.birdSprite === 'bird1') this.play('bird_fly1')
+    else if(this.birdSprite === 'bird2') this.play('bird_fly2')
+    else this.play('bird_fly3')
     
+    if(multiplier === 1){
+      console.log("hey");
+      this.delayToMove = Phaser.Math.Between(2000, 5000);
+    }
+    else if(multiplier === 2){
+      console.log("hey2");
+      this.delayToMove = Phaser.Math.Between(1000, 3000);
+    } 
+    else{
+      console.log("bye");
+      this.delayToMove = Phaser.Math.Between(200, 800);
+    } 
 
     this.level = level;
     //Velocidad de movimiento
-    this.speed = 300;
-    this.delayToMove = Phaser.Math.Between(2000, 5000);
+    this.speed = 300;  
     this.timer = 0;
     
     this.stopMovementTimer = 0;
