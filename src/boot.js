@@ -62,6 +62,8 @@ export default class Boot extends Phaser.Scene {
 
     //Imagen para el menú
     this.load.image('fondo_menu', 'fondo_menu.png');
+    this.load.image('menu_ganar', 'menu_ganar.png');
+    this.load.image('menu_perder', 'menu_perder.png');
 
     //Carga de audios
     this.load.setPath('assets/audio/');

@@ -15,9 +15,12 @@
    * @override
    */
   create() {
-    this.add.text(500, 250, 'Pero que bien hecho, pprevaleciste sobre los pájaros y ganaste. Eres todo un conchetumadre.')
+    this.winImage = this.add.image(0, 0, 'menu_ganar');
+    this.winImage.setOrigin(0, 0)
+    this.add.text(500, 250, 'Pero que bien hecho, prevaleciste sobre los pájaros y ganaste')
         .setOrigin(0.5, 0.5)  // Colocamos el pivote en el centro de cuadro de texto 
         .setAlign('center');  // Centramos el texto dentro del cuadro de texto
+        
 
     // Añadimos el listener para cuando se haya pulsado una tecla. Es probable que no
     // lleguemos a ver el mensaje porque veníamos con una tecla pulsada del juego (al 
