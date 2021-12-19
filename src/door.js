@@ -7,11 +7,11 @@ export default class Door extends Phaser.GameObjects.Sprite {
   /**
    * Constructor de las puertas
    * @param {Phaser.Scene} scene Escena a la que pertenece la puerta
-   * @param {Player} player Escena a la que pertenece la puerta
-   * @param {camera} camera Escena a la que pertenece la puerta
+   * @param {Player} player Jugador del juego
+   * @param {camera} camera Cámara que persigue al jugador
    * @param {number} currentRoom Donde está ubicado el jugador
    * @param {number} nextRoom Donde quiere ir el jugador
-   * @param {array} zoneArray Array de spawns
+   * @param {number} position Norte, sur, este u oeste
    * @param {array} roomArray Array de rooms
    */
   constructor(scene, player, camera, currentRoom, nextRoom, position, roomArray){
