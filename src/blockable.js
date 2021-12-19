@@ -20,10 +20,7 @@
       this.blocked = false;
       this.spriteName = sprite;
       this.blockedSpriteName = blockedSprite;
-      this.fireplaceSoundBlock = this.scene.sound.add("fireplaceBlocked");
-      this.fireplaceSoundUnblock = this.scene.sound.add("fireplaceUnblocked");
-      this.otherSoundBlock = this.scene.sound.add("otherBlockableBlocked");
-      this.otherSoundUnblock = this.scene.sound.add("otherBlockableUnblocked");
+      this.addSprites();
       this.k = this.scene.input.keyboard.addKey('K');
       this.scene.physics.add.overlap(this, player, (o1, o2) => {
           if(Phaser.Input.Keyboard.JustDown(this.k) && !this.blocked){
@@ -34,6 +31,13 @@
           }
       });
     }
+
+   addSprites() {
+     this.fireplaceSoundBlock = this.scene.sound.add("fireplaceBlocked");
+     this.fireplaceSoundUnblock = this.scene.sound.add("fireplaceUnblocked");
+     this.otherSoundBlock = this.scene.sound.add("otherBlockableBlocked");
+     this.otherSoundUnblock = this.scene.sound.add("otherBlockableUnblocked");
+   }
 
     /**
     *Bloquea la entrada a los pájaros por un tiempo, en este caso 10 segundos
@@ -59,7 +63,7 @@
       this.blocked = false;
       this.setTexture(this.spriteName);
     }
-
+    //Devuelve si está bloqueado o no la ventana, puerta u hoguera
     isBlocked(){
       return this.blocked;
     }

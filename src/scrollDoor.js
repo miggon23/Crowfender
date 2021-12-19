@@ -81,7 +81,7 @@
       this.rightY = 0;
       this.leftX = -200;
       this.leftY = -600;
-      this.center1X = 1100;
+      this.center1X = 1000;
       this.center3X = 0;
       this.center1Y = 0;
       this.center3Y = -600;
