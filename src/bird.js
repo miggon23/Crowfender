@@ -23,68 +23,9 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this);
     birdsGroup.add(this);
     this.birdSprite = sprite;
-    this.scene.anims.create({
-      key: 'bird_idle1',
-      frames: this.anims.generateFrameNumbers('bird1', { start: 0, end: 1 }),
-      frameRate: 10, // Velocidad de la animación
-      repeat: -1   // Animación en bucle
-    });
-    this.scene.anims.create({
-      key: 'bird_idle2',
-      frames: this.anims.generateFrameNumbers('bird2', { start: 0, end: 1 }),
-      frameRate: 10, // Velocidad de la animación
-      repeat: -1   // Animación en bucle
-    });
-    this.scene.anims.create({
-      key: 'bird_idle3',
-      frames: this.anims.generateFrameNumbers('bird3', { start: 0, end: 1 }),
-      frameRate: 10, // Velocidad de la animación
-      repeat: -1   // Animación en bucle
-    });
-
-    this.scene.anims.create({
-      key: 'bird_jump1',
-      frames: this.anims.generateFrameNumbers('bird1', { start: 2, end: 3 }),
-      frameRate: 10, // Velocidad de la animación
-      yoyo: true,
-      repeat: -1   // Animación en bucle
-    });
-    this.scene.anims.create({
-      key: 'bird_jump2',
-      frames: this.anims.generateFrameNumbers('bird2', { start: 2, end: 3 }),
-      frameRate: 10, // Velocidad de la animación
-      yoyo: true,
-      repeat: -1   // Animación en bucle
-    });
-    this.scene.anims.create({
-      key: 'bird_jump3',
-      frames: this.anims.generateFrameNumbers('bird3', { start: 2, end: 3 }),
-      frameRate: 10, // Velocidad de la animación
-      yoyo: true,
-      repeat: -1   // Animación en bucle
-    });
-
-    this.scene.anims.create({
-      key: 'bird_fly1',
-      frames: this.anims.generateFrameNumbers('bird1', { start: 4, end: 7 }),
-      frameRate: 10, // Velocidad de la animación
-      yoyo: true,
-      repeat: -1   // Animación en bucle
-    });
-    this.scene.anims.create({
-      key: 'bird_fly2',
-      frames: this.anims.generateFrameNumbers('bird2', { start: 4, end: 7 }),
-      frameRate: 10, // Velocidad de la animación
-      yoyo: true,
-      repeat: -1   // Animación en bucle
-    });
-    this.scene.anims.create({
-      key: 'bird_fly3',
-      frames: this.anims.generateFrameNumbers('bird3', { start: 4, end: 7 }),
-      frameRate: 10, // Velocidad de la animación
-      yoyo: true,
-      repeat: -1   // Animación en bucle
-    });
+    this.setDepth(2);
+    
+    this.setAnims();
 
     if(this.birdSprite === 'bird1'){
       this.play('bird_fly1')
@@ -145,6 +86,71 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.rooms[route[0]].addBirdInSpawn();
     
   }
+  setAnims() {
+    this.scene.anims.create({
+      key: 'bird_idle1',
+      frames: this.anims.generateFrameNumbers('bird1', { start: 0, end: 1 }),
+      frameRate: 10,
+      repeat: -1 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'bird_idle2',
+      frames: this.anims.generateFrameNumbers('bird2', { start: 0, end: 1 }),
+      frameRate: 10,
+      repeat: -1 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'bird_idle3',
+      frames: this.anims.generateFrameNumbers('bird3', { start: 0, end: 1 }),
+      frameRate: 10,
+      repeat: -1 // Animación en bucle
+    });
+
+    this.scene.anims.create({
+      key: 'bird_jump1',
+      frames: this.anims.generateFrameNumbers('bird1', { start: 2, end: 3 }),
+      frameRate: 10,
+      yoyo: true,
+      repeat: -1 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'bird_jump2',
+      frames: this.anims.generateFrameNumbers('bird2', { start: 2, end: 3 }),
+      frameRate: 10,
+      yoyo: true,
+      repeat: -1 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'bird_jump3',
+      frames: this.anims.generateFrameNumbers('bird3', { start: 2, end: 3 }),
+      frameRate: 10,
+      yoyo: true,
+      repeat: -1 // Animación en bucle
+    });
+
+    this.scene.anims.create({
+      key: 'bird_fly1',
+      frames: this.anims.generateFrameNumbers('bird1', { start: 4, end: 7 }),
+      frameRate: 10,
+      yoyo: true,
+      repeat: -1 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'bird_fly2',
+      frames: this.anims.generateFrameNumbers('bird2', { start: 4, end: 7 }),
+      frameRate: 10,
+      yoyo: true,
+      repeat: -1 // Animación en bucle
+    });
+    this.scene.anims.create({
+      key: 'bird_fly3',
+      frames: this.anims.generateFrameNumbers('bird3', { start: 4, end: 7 }),
+      frameRate: 10,
+      yoyo: true,
+      repeat: -1
+    });
+  }
+
   /**
    * Selecciona una de las 4 direcciones posibles de movimiento (no se mueve diagonalmente) 
    * y le añade un valor fijo de desplazamiento definido en la clase
@@ -328,7 +334,9 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     }
   }
 
-  //Detiene al pájaro de su movimiento actual
+  /**
+   * Frena alpájaro si se está moviendo (No lo detiene del cambio de sala)
+   */
   cancelMovement(){
     this.body.setVelocity(0, 0);
     if(this.actualOrderRoom !== 0){

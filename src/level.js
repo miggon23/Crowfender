@@ -27,14 +27,30 @@ export default class Level extends Phaser.Scene {
    * @param {data} data Contiene multiplier y timeToWin, el tiempo en minutos para ganar que se guarda en init
    */
   init(data) {
-    this.multiplier = data.multiplier;
+    this.difficulty = data.multiplier;
     this.winTime = data.timeToWin * 1000 * 60;
   }
 
   /* Creación de los elementos de la escena principal de juego
   */
   create() { 
-    
+
+    this.f = this.input.keyboard.addKey('F');
+
+      this.f.on('down', function () {
+
+        if (this.scale.isFullscreen)
+        {
+      
+          this.scale.stopFullscreen();
+        }
+        else
+        {
+          
+          this.scale.startFullscreen();
+        }
+
+      }, this);
     //Array de zonas de spawn
     this.spawnzones = [];
     //Array de habitaciones
@@ -50,7 +66,6 @@ export default class Level extends Phaser.Scene {
     //Añadimos la imagen de las puertas manualmente
     this.doorSprite1 = this.add.sprite(this.mainRoom.x + 230, this.mainRoom.y - 40, 'puerta_central');
     this.player = new Player(this ,500 ,400 ,'player' , this.birds);
-    this.player.setDepth(10);
     this.doorSprite2 = this.add.sprite(this.doorSprite1.x , this.doorSprite1.y - 410, 'puerta_puerta');
     this.spawnBlockables();
     this.spawnZones();
@@ -71,8 +86,8 @@ export default class Level extends Phaser.Scene {
 
     //temporizador para spawnear pájaros
     this.timer = 0;
-    if(this.multiplier === 0) this.spawnTime = Phaser.Math.Between(6000, 10000);
-    else if(this.multiplier === 1) this.spawnTime = Phaser.Math.Between(4000, 7000);
+    if(this.difficulty === 0) this.spawnTime = Phaser.Math.Between(6000, 10000);
+    else if(this.difficulty === 1) this.spawnTime = Phaser.Math.Between(4000, 7000);
     else this.spawnTime = Phaser.Math.Between(3000, 5000);
     
     //Temporizador para ganar
@@ -265,17 +280,19 @@ export default class Level extends Phaser.Scene {
       let newX = Phaser.Math.Between(topLeft.x, botRight.x);
       let newY = Phaser.Math.Between(topLeft.y, botRight.y);
   
+     
       //Dependiendo de la dificultad apareceran distinto tipos de pájaros
-      if(this.multiplier === 1){
+      if(this.difficulty === 1){
         this.birdSpawned = 0;
       }
-      else if(this.multiplier === 2){
+      else if(this.difficulty === 2){
         this.birdSpawned = Phaser.Math.Between(0, 1);
       }
       else{
         this.birdSpawned = Phaser.Math.Between(0, 2);
       }
-      
+
+
       if(this.birdSpawned === 0){
         new Bird(this, newX, newY, this.birds, this, routes[index], this.birdZones, 'bird1'); 
       }

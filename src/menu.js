@@ -17,6 +17,24 @@ import Button from "./button.js";
 
     create()
     {
+
+        this.f = this.input.keyboard.addKey('F');
+
+      this.f.on('down', function () {
+
+        if (this.scale.isFullscreen)
+        {
+      
+          this.scale.stopFullscreen();
+        }
+        else
+        {
+          
+          this.scale.startFullscreen();
+        }
+
+      }, this);
+
         this.buttonSound = this.sound.add("button");
         this.menuMusic = this.sound.add("menuMusic");
         this.menuMusic.play();

@@ -16,6 +16,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.setInput();
     this.setAnimations();
 
+    this.setDepth(10);
     this.displayWidth = 256;
     this.displayHeight= 384;
     this.scene.add.existing(this);
