@@ -1,3 +1,4 @@
+
 /**
  * Escena de fin de juego, cuando el jugador perde
  * Si se pulsa cualquier tecla, se vuelve a iniciar el juego.

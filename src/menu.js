@@ -1,4 +1,4 @@
-import Level from "./level.js";
+
 import Button from "./button.js";
 
 /**
@@ -20,20 +20,20 @@ import Button from "./button.js";
 
         this.f = this.input.keyboard.addKey('F');
 
-      this.f.on('down', function () {
+        this.f.on('down', function () {
 
-        if (this.scale.isFullscreen)
-        {
-      
-          this.scale.stopFullscreen();
-        }
-        else
-        {
-          
-          this.scale.startFullscreen();
-        }
+            if (this.scale.isFullscreen)
+            {
+        
+            this.scale.stopFullscreen();
+            }
+            else
+            {
+            
+            this.scale.startFullscreen();
+            }
 
-      }, this);
+        }, this);
 
         this.buttonSound = this.sound.add("button");
         this.menuMusic = this.sound.add("menuMusic");
