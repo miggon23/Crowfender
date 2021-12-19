@@ -43,7 +43,7 @@
     *Bloquea la entrada a los pájaros por un tiempo, en este caso 10 segundos
     */
     block(){
-      if(this.spriteName == 'tabla_chimenea') this.fireplaceSoundBlock.play();
+      if(this.spriteName == 'chimenea') this.fireplaceSoundBlock.play();
       else this.otherSoundBlock.play();
       this.blocked = true;
       this.setTexture(this.blockedSpriteName);
@@ -58,7 +58,7 @@
     *Desbloquea la entrada
     */
     unblock(){
-      if(this.spriteName == 'tabla_chimenea') this.fireplaceSoundUnblock.play();
+      if(this.spriteName == 'chimenea') this.fireplaceSoundUnblock.play();
       else this.otherSoundUnblock.play();
       this.blocked = false;
       this.setTexture(this.spriteName);
