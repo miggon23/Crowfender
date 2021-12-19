@@ -3,6 +3,7 @@ import End from './end.js';
 import Level from './level.js';
 import MenuScene from './menu.js';
 import Victory from './victory.js';
+import PreScene from './prescene.js';
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -13,16 +14,16 @@ let config = {
     width:  1000,
     height: 600,
     scale: {
-        // mode: Phaser.Scale.FIT,  
+        mode: Phaser.Scale.FIT,  
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, MenuScene, Level, End, Victory],
+    scene: [PreScene, Boot, MenuScene, Level, End, Victory],
     physics: { 
         default: 'arcade', 
         arcade: { 
             gravity: { y: 0 }, 
-            debug: false
+            debug: true
         } 
     }
 };

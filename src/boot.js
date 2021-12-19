@@ -1,9 +1,5 @@
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
- * Esta escena se puede mejorar añadiendo una imagen del juego y una 
- * barra de progreso de carga de los assets
- * @see {@link https://gamedevacademy.org/creating-a-preloading-screen-in-phaser-3/} como ejemplo
- * sobre cómo hacer una barra de progreso.
  */
 export default class Boot extends Phaser.Scene {
   /**
@@ -12,17 +8,15 @@ export default class Boot extends Phaser.Scene {
   constructor() {
     super({ key: 'boot' });
   }
-
   /**
    * Carga de los assets del juego
    */
   preload() {
+    let width = this.cameras.main.width;
+    let height = this.cameras.main.height;
+    this.createProgressBar(width, height);
     // Cargamos las imagenes
     this.load.setPath('assets/sprites/');
-
-    // Cargamos los botones
-    this.load.image('playbutton', 'playbutton.png')
-	  this.load.image('optionsbutton', 'optionsbutton.png')
 
     //Cargamos los fondos
     this.load.image('fondo_central', 'fondo_central.png');
@@ -33,19 +27,27 @@ export default class Boot extends Phaser.Scene {
     this.load.image('spawn_chimenea', 'spawn_chimenea.png');
     this.load.image('spawn_puerta', 'spawn_puerta.png');
     this.load.image('spawn_ventana', 'spawn_ventana.png');
-    this.load.image('sotano', 'sotano.png');
+    this.load.image('sotano_trampilla', 'sotano_trampilla.png');
+    this.load.image('sotano_escalera', 'sotano_escalera.png');
+
+    // Cargamos las imágenes de las puertas
+    this.load.image('puerta_central', 'central_puerta.png');
+    this.load.image('puerta_puerta', 'puerta_puerta.png');
 
     //Cargamos los bloqueables
-    this.load.image('tabla_puerta', 'tabla_puerta.png');
-    this.load.image('tabla_ventana', 'tabla_ventana.png');
-    this.load.image('tabla_chimenea', 'tabla_chimenea.png');
+    this.load.image('chimenea', 'chimenea.png');
+    this.load.image('tabla_chimenea', 'chimenea_tabla.png');
+    this.load.image('puerta_block', 'puerta_block.png');
+    this.load.image('puerta_block_tabla', 'puerta_block_tabla.png');
+    this.load.image('ventana_block', 'ventana_block.png');
+    this.load.image('ventana_block_tabla', 'ventana_block_tabla.png');
   
     //Cargamos los pájaros
-    this.load.image('bird', 'bird.png');
-
+    this.load.spritesheet('bird1', 'bird1_sprite_sheet.png', { frameWidth: 64, frameHeight: 64 })
+    this.load.spritesheet('bird2', 'bird2_sprite_sheet.png', { frameWidth: 64, frameHeight: 64 })
+    this.load.spritesheet('bird3', 'bird3_sprite_sheet.png', { frameWidth: 64, frameHeight: 64 })
     //Cargamos al player
-    this.load.image('player', 'player.png');
-    this.load.image('broom', 'escoba.png');
+    this.load.spritesheet('player', 'player_sprite_sheet.png', { frameWidth: 256, frameHeight: 384 })
     
     
     this.load.image('empty', 'empty.png');
@@ -55,12 +57,13 @@ export default class Boot extends Phaser.Scene {
     this.load.image('chest', 'cofre.png');
 
     //Se cargan imágenes relacionadas con la electricidad
-    this.load.image('electricity', 'electricity.png');
     this.load.image('electricidad_rojo', 'electricidad_rojo.png');
     this.load.image('electricidad_verde', 'electricidad_verde.png');
 
     //Imagen para el menú
     this.load.image('fondo_menu', 'fondo_menu.png');
+    this.load.image('menu_ganar', 'menu_ganar.png');
+    this.load.image('menu_perder', 'menu_perder.png');
 
     //Carga de audios
     this.load.setPath('assets/audio/');
@@ -124,4 +127,63 @@ export default class Boot extends Phaser.Scene {
   create() {
     this.scene.start('menu');
   }
+
+   /**
+    * Método seguido según el tutorial de la api de phaser 3
+    * Método que crea la barra de carga y que va actualizando según vayan cargando los archivos
+   * @param {integer} width Anchura de la pantalla
+   * @param {integer} height Altura de la pantalla
+   */
+  createProgressBar(width, height) {
+    //Barra que sirve de fondo a "loadRect"
+    let progressBar = this.add.graphics();
+    //Barra que va avanzando según el progreso
+    let loadRect = this.add.graphics();
+    loadRect.fillStyle(0x0B0B4A, 0.8);
+    loadRect.fillRect(width / 2 - 160, height / 2, 320, 50);
+
+    //Texto del loading sitaudo encima del rectángulo de carga
+    let loadingText = this.addInterfaceText(width / 2, height / 2 - 30, 'Loading...', 24, '#ffffff');
+
+    //Número de porcentaje de carga situado dentro del rectángulo de carga
+    let percentText = this.addInterfaceText(width / 2, height / 2 + 25, '0%', 18, '#ffffff');
+
+    //Información sobre los assets que están siendo cargados situado debajo del rectángulo de carga
+    let assetText = this.addInterfaceText(width / 2,height / 2 + 80,'',18,'#ffffff');
+
+    //Nos suscribimos a eventos sobre la carga de archivos
+    this.load.on('progress', function (value) {
+      progressBar.clear();
+      progressBar.fillStyle(0x1A1AA4, 1);
+      progressBar.fillRect(width / 2 - 150, height / 2 + 10, 300 * value, 30);
+      percentText.setText(parseInt(value * 100) + '%');
+    });
+
+    //Escribe el archivo que se esté cargando
+    this.load.on('fileprogress', function (file) {
+      assetText.setText('Loading asset: ' + file.key);
+    });
+
+    //Al completar todo destruye todo para dar paso al menú
+    this.load.on('complete', function () {
+      progressBar.destroy();
+      loadRect.destroy();
+      loadingText.destroy();
+      percentText.destroy();
+      assetText.destroy();
+    });
+  }
+  //Crea un texto (s) con un tamaño (size), una posición (x)(y), un color (color) y una alineación
+  addInterfaceText(x, y, s, size, color) {
+    let text = this.add.text(x, y, s, {
+      setFont: 'Georgia',
+      fontSize: size,
+      color: color,
+      align: 'center'
+    });
+    text.setOrigin(.5);
+
+    return text;
+  }
+
 }

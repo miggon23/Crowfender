@@ -20,7 +20,7 @@ export default class BirdZone extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this, true);
 
-    // Comentar para mostrar los muros
+    // Comentar para mostrar el spawn
     this.visible = false;
   }
 

@@ -15,9 +15,12 @@ export default class End extends Phaser.Scene {
    * @override
    */
   create() {
+    this.loseImage = this.add.image(0, 0, 'menu_perder');
+    this.loseImage.setOrigin(0, 0)
     this.add.text(500, 250, '¡Se acabó, demasiados pájaros invadieron la escena!\nPulsa cualquier tecla para volver a jugar')
         .setOrigin(0.5, 0.5)  // Colocamos el pivote en el centro de cuadro de texto 
         .setAlign('center');  // Centramos el texto dentro del cuadro de texto
+
 
     // Añadimos el listener para cuando se haya pulsado una tecla. Es probable que no
     // lleguemos a ver el mensaje porque veníamos con una tecla pulsada del juego (al 

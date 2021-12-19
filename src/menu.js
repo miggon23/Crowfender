@@ -1,4 +1,4 @@
-import Level from "./level.js";
+
 import Button from "./button.js";
 
 /**
@@ -17,6 +17,24 @@ import Button from "./button.js";
 
     create()
     {
+
+        this.f = this.input.keyboard.addKey('F');
+
+        this.f.on('down', function () {
+
+            if (this.scale.isFullscreen)
+            {
+        
+            this.scale.stopFullscreen();
+            }
+            else
+            {
+            
+            this.scale.startFullscreen();
+            }
+
+        }, this);
+
         this.buttonSound = this.sound.add("button");
         this.menuMusic = this.sound.add("menuMusic");
         this.menuMusic.play();
@@ -27,28 +45,28 @@ import Button from "./button.js";
         camera.x = 0;
         camera.y = 0;
 
-        this.optionsButton = new Button(this, 460, 300, 'OPCIONES', { fill: '#0f0' });
-        this.add.existing(this.optionsButton);
+        // this.optionsButton = new Button(this, 460, 300, 'OPCIONES', { fill: '#fff' });
+        // this.add.existing(this.optionsButton);
 
-        this.playButton = new Button(this, 470, 250, 'JUGAR', { fill: '#0f0' });
+        this.playButton = new Button(this, 470, 470, 40, 60,  'Play', { fill: '#fff' });
         this.add.existing(this.playButton);
         this.playButton.on('pointerup', () => {
             this.buttonSound.play();
-            this.easyButton = new Button(this, 410, 270, 'Facil', { fill: '#0f0' });
+            this.easyButton = new Button(this, 400, 510, 40, 60,  'Easy', { fill: '#fff' });
             this.add.existing(this.easyButton);
             this.easyButton.on('pointerup', () => {
-                this.buttonSound.play();
+                this.buttonSound.play()
                 this.menuMusic.stop();
                 this.scene.start('level', { multiplier: 1, timeToWin: 2 });
             });
-            this.normalButton = new Button(this, 470, 270, 'Normal', { fill: '#0f0' });
+            this.normalButton = new Button(this, 475, 510, 40, 60,  'Medium', { fill: '#fff' });
             this.add.existing(this.normalButton);
             this.normalButton.on('pointerup', () => {
                 this.buttonSound.play();
                 this.menuMusic.stop();
                 this.scene.start('level', { multiplier: 2, timeToWin: 3 });
             });
-            this.difficultButton = new Button(this, 540, 270, 'Dificil', { fill: '#0f0' });
+            this.difficultButton = new Button(this, 550, 510, 40, 60,  'Hard', { fill: '#fff' });
             this.add.existing(this.difficultButton);
             this.difficultButton.on('pointerup', () => {
                 this.buttonSound.play();
