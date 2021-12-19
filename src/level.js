@@ -45,8 +45,7 @@ export default class Level extends Phaser.Scene {
           this.scale.stopFullscreen();
         }
         else
-        {
-          
+        {          
           this.scale.startFullscreen();
         }
 
@@ -100,7 +99,7 @@ export default class Level extends Phaser.Scene {
     this.birds = this.add.group(); 
    
     var camera = this.cameras.main;
-    this.chest = new Chest(this, this.player, 740, 1000, 500, 400, this.walls);
+    this.chest = new Chest(this, this.player, Data.chest, this.walls);
     this.basement1 = new Basement(this, this.player, camera, Data.basementZones.middle);
     this.basement2 = new Basement(this, this.player, camera, Data.basementZones.down, this.basement1);
     this.electricityAvailable = true;
@@ -141,7 +140,7 @@ export default class Level extends Phaser.Scene {
     camera.y = 0;
     
     
-    //camera.setZoom(0.60);
+    camera.setZoom(0.60);
     //camera.setZoom(1.50);
    
     this.spawnDoors(camera);
@@ -257,11 +256,11 @@ export default class Level extends Phaser.Scene {
    * Método que crea las habitaciones del juego mainRoom corresponde a la habitación central
    */
   spawnRooms(){
-    this.mainRoom = new Room(this, 500, 300, 1000, 600, this.rooms, 'fondo_central', this.walls, this.birdWalls);  //room3 middle
-    new Room(this, 1500, 300, 1000, 600, this.rooms, 'fondo_ventana', this.walls, this.birdWalls);  //room4 east  
-    new Room(this, -500, 400, 1000, 400, this.rooms, 'fondo_chimenea', this.walls, this.birdWalls);//room5 west   
-    this.upperRoom = new Room(this, 490, -300, 1000, 600, this.rooms, 'fondo_puerta', this.walls, this.birdWalls);  //room6 upper
-    new Room(this, 500, 900, 1000, 600, this.rooms, 'fondo_sotano', this.walls, this.birdWalls);  //room7 basement   
+    this.mainRoom = new Room(this, Data.rooms.main, this.rooms, this.walls, this.birdWalls);  //room3 middle
+    new Room(this, Data.rooms.east, this.rooms, this.walls, this.birdWalls);  //room4 east  
+    new Room(this, Data.rooms.west, this.rooms, this.walls, this.birdWalls);//room5 west   
+    this.upperRoom = new Room(this, Data.rooms.upper, this.rooms, this.walls, this.birdWalls);  //room6 upper
+    new Room(this, Data.rooms.basement, this.rooms, this.walls, this.birdWalls);  //room7 basement   
   }
 
   /**

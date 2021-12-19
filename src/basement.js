@@ -8,13 +8,7 @@ export default class Basement extends Phaser.GameObjects.Sprite {
      * Constructor del las puertas especiales que llevan al sótano
      * @param {Phaser.Scene} scene Escena a la que pertenece el sótano
      * @param {Player} player Jugador del juego
-     * @param {struct} basementInfo Información necesaria para definir la zona que contiene
-     * @param {number} x Coordenada x
-     * @param {number} y Coordenada y
-     * @param {number} scaleX display en el eje x
-     * @param {number} scaleY display en el eje y
-     * @param {boolean} scrollCamera Arriba / abajo
-     * @param {string} sprite Sprite de la puerta del sótano
+     * @param {struct} basementInfo Información necesaria para definir la zona basement
      * @param {Basement} otherBasement Puerta a la que está conetada esta puerta
      */
     constructor(scene, player, camera, basementInfo, otherBasement) {

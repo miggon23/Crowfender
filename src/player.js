@@ -49,7 +49,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   setCollider() {
     this.posXCollider = 70;
     this.posYCollider = 225;
-    this.sizeXCollider = 120;
+    this.sizeXCollider = 100;
     this.sizeYCollider = 150;
     this.body.setOffset(this.posXCollider, this.posYCollider);
     this.body.setSize(this.sizeXCollider, this.sizeYCollider, false);

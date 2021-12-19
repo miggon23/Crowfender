@@ -8,26 +8,22 @@ export default class Room extends Phaser.GameObjects.Sprite {
   /**
    * Constructor de las habitaciones, crea a su vez los muros que delimitan la misma
    * @param {Phaser.Scene} scene Escena a la que pertenece la habitación
-   * @param {number} x Coordenada X
-   * @param {number} y Coordenada Y
-   * @param {number} scaleX display en el eje x
-   * @param {number} scaleY display en el eje y
+   * @param {struct} roomInfo Información necesaria para la configuración de de la room
    * @param {array} roomArray array de spawns
-   * @param {string} sprite string con el nombre del sprite de la spawnzone
    * @param {group} wallsGroup array con el grupo de muros que colisionan con el jugador
    * @param {group} birdWalls array con el grupo de muros que colisionan con los pájaros
    */
-   constructor(scene, x, y, scaleX, scaleY, roomArray, sprite, wallsGroup, birdWalls) {
+   constructor(scene, roomInfo, roomArray, wallsGroup, birdWalls) {
 
-    super(scene, x, y, sprite);
-    this.x = x;
-    this.y = y;
-    this.displayWidth = scaleX;
-    this.displayHeight = scaleY;
-    this.spriteName = sprite;
+    super(scene, roomInfo.x, roomInfo.y, roomInfo.sprite);
+    this.x = roomInfo.x;
+    this.y = roomInfo.y;
+    this.displayWidth = roomInfo.scaleX;
+    this.displayHeight = roomInfo.scaleY;
+    this.spriteName = roomInfo.sprite;
     this.scene.add.existing(this);
     roomArray.push(this);
-    this.birdZone = new BirdZone(scene, x, y + (scaleY / 3), scaleX * 0.6, scaleY * 0.15);
+    this.birdZone = new BirdZone(scene, this.x, this.y + (roomInfo.scaleY / 3), roomInfo.scaleX * 0.6, roomInfo.scaleY * 0.15);
 
     //Parámetros para la creación de muros del jugador
     this.setRoomWallsVariables(); //Ancho de los muros laterales
@@ -35,8 +31,8 @@ export default class Room extends Phaser.GameObjects.Sprite {
     //Parámateros para la creación de los muros para los pájaros
     this.setBirdWallsVariables();  
 
-    this.setRoomWalls(scene, wallsGroup, scaleX, scaleY);
-    this.setBirdsWalls(scene, birdWalls, scaleX, scaleY);
+    this.setRoomWalls(scene, wallsGroup, roomInfo.scaleX, roomInfo.scaleY);
+    this.setBirdsWalls(scene, birdWalls, roomInfo.scaleX, roomInfo.scaleY);
   }
 
 
