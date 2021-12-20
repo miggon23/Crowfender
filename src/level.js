@@ -383,7 +383,7 @@ export default class Level extends Phaser.Scene {
       {
         this.winSound.play();
         this.gameMusic.stop();
-        this.scene.start('win');
+        this.scene.start('victory');
       }
     }
     //Si el número de pájaros en el centro alcanza el máximo, pierdes y se muestra tu puntuación
