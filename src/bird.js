@@ -26,6 +26,8 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.setDepth(2);
     this.multiplier = multiplier;
     this.setAnims();
+    this.gameLost = false;
+    this.scene = scene;
 
     if(this.birdSprite === 'bird1') this.play('bird_fly1')
     else if(this.birdSprite === 'bird2') this.play('bird_fly2')
@@ -368,6 +370,19 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.timer += dt;
     this.stopMovementTimer += dt;
     this.changeRoomTimer += dt;
+
+    if(!this.gameLost && this.scene.nBirdsInMiddle >= this.scene.maxBirdsInMiddle && this.scene.player.whatRoomIs() === 0){
+      this.gameLost = true;
+      this.tween = this.scene.tweens.add({
+        targets:  this ,
+         x: this.scene.player.x,
+         y: this.scene.player.y,
+        duration: 500,
+        ease: 'Sine.easeInOutExpo',
+        repeat: 0,
+      })
+    }
+
     if (this.timer >= this.delayToMove)
     {
       this.moveBird();

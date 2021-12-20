@@ -25,11 +25,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
     this.setCollider();
     this.setSpeed();
-    this.setVariable();
+    this.setVariable(scene);
     this.playerAttack = scene.sound.add("playerAttack");
   }
   
-  setVariable() {
+  setVariable(scene) {
+    this.scene = scene;
     this.room = 0;
     this.wood = false;
     this.hittingState = false;
@@ -234,7 +235,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       }
     }
     //Solo permitimos que se mueva el jugador si no esta pegando
-    if(!this.hittingState){
+    if(!this.hittingState || !this.scene.gameLost){
       //Movimiento vertical del jugador con animaciones
       if (this.w.isDown) {
         if(!this.playerMoving){

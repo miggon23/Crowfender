@@ -95,6 +95,7 @@ export default class Level extends Phaser.Scene {
 
     //Booleano que marca cuando un pájaro se puede spawnear
     this.stopSpawning = false;
+    this.gameLost = false;
 
     this.newRand;
     this.birds = this.add.group(); 
@@ -291,6 +292,7 @@ export default class Level extends Phaser.Scene {
     new Room(this, Data.rooms.basement, this.rooms, this.walls, this.birdWalls);  //room7 basement   
   }
 
+
   /**
    * Método que escoge un spawn de entre los existentes y crea un pájaro en su interior
    */
@@ -335,6 +337,10 @@ export default class Level extends Phaser.Scene {
     else
       console.log("Spawn lleno");
 
+  }
+
+  changeScene(){
+    this.scene.start('end');
   }
 
   addBirdInMiddle(){
@@ -387,11 +393,17 @@ export default class Level extends Phaser.Scene {
       }
     }
     //Si el número de pájaros en el centro alcanza el máximo, pierdes y se muestra tu puntuación
-    if (this.nBirdsInMiddle >= this.maxBirdsInMiddle && this.player.whatRoomIs() === 0){
+    if (!this.gameLost && this.nBirdsInMiddle >= this.maxBirdsInMiddle && this.player.whatRoomIs() === 0){
       this.gameMusic.stop();
       this.loseSound.play();
+      this.gameLost = true;
       
-      this.scene.start('end');
+      this.time.addEvent( {
+        delay: 200, 
+        callback: this.changeScene,
+        callbackScope: this,
+        loop: false,
+      });
     }
 
   }
