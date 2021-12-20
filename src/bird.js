@@ -24,25 +24,17 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     birdsGroup.add(this);
     this.birdSprite = sprite;
     this.setDepth(2);
-    
+    this.multiplier = multiplier;
     this.setAnims();
 
     if(this.birdSprite === 'bird1') this.play('bird_fly1')
     else if(this.birdSprite === 'bird2') this.play('bird_fly2')
     else this.play('bird_fly3')
     
-    if(multiplier === 1){
-      console.log("hey");
-      this.delayToMove = Phaser.Math.Between(2000, 5000);
-    }
-    else if(multiplier === 2){
-      console.log("hey2");
-      this.delayToMove = Phaser.Math.Between(1000, 3000);
-    } 
-    else{
-      console.log("bye");
-      this.delayToMove = Phaser.Math.Between(200, 800);
-    } 
+    if(this.multiplier === 1) this.delayToMove = Phaser.Math.Between(2000, 5000);
+    else if(this.multiplier === 2) this.delayToMove = Phaser.Math.Between(1000, 3000);
+    else this.delayToMove = 800;
+    
 
     this.level = level;
     //Velocidad de movimiento
@@ -381,7 +373,9 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       this.moveBird();
       this.timer -= this.delayToMove;
       //Generamos otro aleatorio para el siguiente movimiento
-      this.delayToMove = Phaser.Math.Between(3000, 5500);
+      if(this.multiplier === 1) this.delayToMove = Phaser.Math.Between(2000, 5000);
+      else if(this.multiplier === 2) this.delayToMove = Phaser.Math.Between(1000, 3000);
+      else this.delayToMove = 800;
       this.stopMovementTimer = 0;
     }
     else if (this.stopMovementTimer >= this.delayToStopMovement){
