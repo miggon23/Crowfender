@@ -52,7 +52,7 @@ export default class Door extends Phaser.GameObjects.Sprite {
           camera.setScroll(this.cameraScrollXForCentralRoomFromRightRoom, this.cameraScrollYForSideRooms);
         }
         else{
-          camera.setScroll(this.cameraScrollXForSideRooms, this.cameraScrollYForSideRooms);
+          camera.setScroll(this.cameraScrollXForRightRooms, this.cameraScrollYForSideRooms);
         }
       }
       else if(position === "left"){
@@ -62,7 +62,7 @@ export default class Door extends Phaser.GameObjects.Sprite {
           camera.setScroll(this.cameraScrollXForCentralRoomFromLeftRoom, this.cameraScrollYForSideRooms);
         }
         else{
-          camera.setScroll(-this.cameraScrollXForSideRooms, this.cameraScrollYForSideRooms);
+          camera.setScroll(-this.cameraScrollXForLeftRooms, this.cameraScrollYForSideRooms);
         }
       }
       else if(position ==="up"){
@@ -78,9 +78,10 @@ export default class Door extends Phaser.GameObjects.Sprite {
 
 
   setCameraVariables() {
-    this.cameraScrollXForCentralRoomFromRightRoom = -220;
+    this.cameraScrollXForCentralRoomFromRightRoom = -208;
     this.cameraScrollXForCentralRoomFromLeftRoom = 220;
-    this.cameraScrollXForSideRooms = 790;
+    this.cameraScrollXForRightRooms = 790;
+    this.cameraScrollXForLeftRooms = 788;
     this.cameraScrollYForSideRooms = 0;
     this.cameraScrollXForUpDownRooms = 0;
     this.cameraScrollYForUpRooms = -390;
