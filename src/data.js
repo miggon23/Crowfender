@@ -100,26 +100,26 @@ const Data = {
     },
     spawnZone:{
         upper: {
-            x: -200,
+            x: -185,
             y: -300,
-            scaleX: 400,
+            scaleX: 350,
             scaleY: 600,
             limitOfBirds: 6,
             sprite: 'spawn_puerta'
         },
         east: {
-            x: 2200,
+            x: 2190,
             y: 300,
-            scaleX: 400,
+            scaleX: 380,
             scaleY: 600,
             limitOfBirds: 6,
             sprite: 'spawn_ventana' 
         },
         west: {
             x: -500,
-            y: 100,
+            y: 110,
             scaleX: 1000,
-            scaleY: 200,
+            scaleY: 180,
             limitOfBirds: 6,
             sprite: 'spawn_chimenea'
         }
