@@ -19,12 +19,32 @@ export default class Chest extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this, true);
     this.woodSound = this.scene.sound.add("woodTake");
     this.k = this.scene.input.keyboard.addKey('K');
+    this.highlight = false;
+    this.player = player;
+    this.spriteName = 'chest'
+
     this.solid = new Wall (scene, chestInfo.x, chestInfo.y, chestInfo.scaleX * 0.5, chestInfo.scaleY * 0.3, wallGroup)
     this.scene.physics.add.overlap(this, player, (o1, o2) => {
+      this.highlight = true;
       if(Phaser.Input.Keyboard.JustDown(this.k)){
         this.woodSound.play();
         player.pickWood();
       }
     });
+  }
+
+  /**
+   * Métodos preUpdate de Phaser. Se encarga de mostrar cuando un elemento es interactuable
+   * @override
+   */
+   preUpdate(t,dt) {
+    super.preUpdate(t,dt);
+    if(!this.player.hasWood() && this.highlight){
+      this.setTexture(this.spriteName+"_k");
+    }
+    else{
+      this.setTexture(this.spriteName);
+    }
+    this.highlight = false;
   }
 }

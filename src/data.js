@@ -95,7 +95,7 @@ const Data = {
             x: -780,
             y: 440,
             sprite: 'chimenea',
-            blockedSprite: 'tabla_chimenea'
+            blockedSprite: 'chimenea_tabla'
         }
     },
     spawnZone:{

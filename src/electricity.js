@@ -23,8 +23,10 @@
       this.switchNotReady = this.scene.sound.add("electricitySwitchNotCharged");
       this.electricityZap = this.scene.sound.add("electricityZap");
       this.k = this.scene.input.keyboard.addKey('K');
+      this.highlight = false;
       
       this.scene.physics.add.overlap(this, player, (o1, o2) => {
+        this.highlight = true;
         if(Phaser.Input.Keyboard.JustDown(this.k)){
           if(this.scene.isElectricityAvailable()){
             this.electricityZap.play();
@@ -41,15 +43,23 @@
       });
       
     } 
-      preUpdate(t,dt) {
-        super.preUpdate(t, dt);
+  /**
+   * Métodos preUpdate de Phaser. Se encarga de mostrar cuando un elemento es interactuable
+   * @override
+   */
+    preUpdate(t,dt) {
+      super.preUpdate(t, dt);
 
-        if(this.scene.isElectricityAvailable()){
-          this.setTexture('electricidad_verde');
-        }
-        else{
-          this.setTexture('electricidad_rojo');
-        }
+      if(this.highlight && this.scene.isElectricityAvailable()){
+        this.setTexture('electricidad_verde_k');
+      }
+      else if(this.scene.isElectricityAvailable()){
+        this.setTexture('electricidad_verde');
+      }
+      else{
+        this.setTexture('electricidad_rojo');
+      }
+      this.highlight = false;
     }
 }
 
