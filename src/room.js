@@ -37,7 +37,7 @@ export default class Room extends Phaser.GameObjects.Sprite {
 
 
   setRoomWallsVariables() {
-    this.backgroundWallHeight = 0.37; //Altura del muro del fondo respecto del alto de la habitación
+    this.backgroundWallHeight = 0.3; //Altura del muro del fondo respecto del alto de la habitación
     this.floorHeight = 2; //Alto del suelo
     this.sideWallsWidth = 10;
   }
