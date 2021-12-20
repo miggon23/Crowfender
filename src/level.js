@@ -213,9 +213,11 @@ export default class Level extends Phaser.Scene {
 
   //Método que crea las zonas bloqueables por el jugador
   spawnBlockables(){
-    this.window = new Blockable(this, this.player, Data.blockable.window);
-    this.door = new Blockable(this, this.player, Data.blockable.door);
-    this.fireplace = new Blockable(this, this.player, Data.blockable.fireplace);
+    let blocked = (this.difficulty === 0);
+
+    this.window = new Blockable(this, this.player, Data.blockable.window, blocked);
+    this.door = new Blockable(this, this.player, Data.blockable.door, blocked);
+    this.fireplace = new Blockable(this, this.player, Data.blockable.fireplace, blocked);
   }
 
   //Método que crea las zonas de spawn de los pájaros

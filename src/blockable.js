@@ -9,14 +9,15 @@
      * @param {Phaser.Scene} scene Escena a la que pertenece la ventana
      * @param {Player} player Jugador del juego
      * @param {Struct} blockableInfo Info necesaria para construir el blockable
+     * @param {Struct} blockableInfo Info necesaria para construir el blockable
      */
-    constructor(scene, player, blockableInfo) {
+    constructor(scene, player, blockableInfo, blocked) {
       super(scene, blockableInfo.x, blockableInfo.y, blockableInfo.sprite);
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this, true);
-      this.blocked = false;
+      this.blocked = blocked;
       this.spriteName = blockableInfo.sprite;
-      this.blockedSpriteName = blockableInfo.blockedSprite;
+    
       this.highlight = false;
       this.player = player;
 
