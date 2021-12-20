@@ -1,3 +1,5 @@
+import Data from './data.js';
+
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
  */
@@ -19,28 +21,35 @@ export default class Boot extends Phaser.Scene {
     this.load.setPath('assets/sprites/');
 
     //Cargamos los fondos
-    this.load.image('fondo_central', 'fondo_central.png');
-    this.load.image('fondo_chimenea', 'fondo_chimenea.png');
-    this.load.image('fondo_ventana', 'fondo_ventana.png');
-    this.load.image('fondo_puerta', 'fondo_puerta.png');
-    this.load.image('fondo_sotano', 'fondo_sotano.png');
+    this.load.image(Data.rooms.main.sprite, 'fondo_central.png');
+    this.load.image(Data.rooms.west.sprite, 'fondo_chimenea.png');
+    this.load.image(Data.rooms.east.sprite, 'fondo_ventana.png');
+    this.load.image(Data.rooms.upper.sprite, 'fondo_puerta.png');
+    this.load.image(Data.rooms.basement.sprite, 'fondo_sotano.png');
     this.load.image('spawn_chimenea', 'spawn_chimenea.png');
     this.load.image('spawn_puerta', 'spawn_puerta.png');
     this.load.image('spawn_ventana', 'spawn_ventana.png');
-    this.load.image('sotano_trampilla', 'sotano_trampilla.png');
-    this.load.image('sotano_escalera', 'sotano_escalera.png');
+
+   // Cargamos las imágenes del sótano
+    this.load.image(Data.basementZones.middle.sprite, 'sotano_trampilla.png');
+    this.load.image('sotano_trampilla_k', 'sotano_trampilla_k.png');
+    this.load.image(Data.basementZones.down.sprite, 'sotano_escalera.png');
+    this.load.image('sotano_escalera_k', 'sotano_escalera_k.png');
 
     // Cargamos las imágenes de las puertas
     this.load.image('puerta_central', 'central_puerta.png');
     this.load.image('puerta_puerta', 'puerta_puerta.png');
 
     //Cargamos los bloqueables
-    this.load.image('chimenea', 'chimenea.png');
-    this.load.image('tabla_chimenea', 'chimenea_tabla.png');
-    this.load.image('puerta_block', 'puerta_block.png');
-    this.load.image('puerta_block_tabla', 'puerta_block_tabla.png');
-    this.load.image('ventana_block', 'ventana_block.png');
-    this.load.image('ventana_block_tabla', 'ventana_block_tabla.png');
+    this.load.image(Data.blockable.fireplace.sprite, 'chimenea.png');
+    this.load.image(Data.blockable.fireplace.blockedSprite, 'chimenea_tabla.png');
+    this.load.image('chimenea_k', 'chimenea_k.png');
+    this.load.image(Data.blockable.door.sprite, 'puerta_block.png');
+    this.load.image(Data.blockable.door.blockedSprite, 'puerta_block_tabla.png');
+    this.load.image('puerta_block_k', 'puerta_block_k.png');
+    this.load.image(Data.blockable.window.sprite, 'ventana_block.png');
+    this.load.image(Data.blockable.window.blockedSprite, 'ventana_block_tabla.png');
+    this.load.image('ventana_block_k', 'ventana_block_k.png');
   
     //Cargamos los pájaros
     this.load.spritesheet('bird1', 'bird1_sprite_sheet.png', { frameWidth: 64, frameHeight: 64 })
@@ -55,15 +64,20 @@ export default class Boot extends Phaser.Scene {
 
     //Cargamos el cofre
     this.load.image('chest', 'cofre.png');
+    this.load.image('chest_k', 'cofre_k.png');
 
     //Se cargan imágenes relacionadas con la electricidad
     this.load.image('electricidad_rojo', 'electricidad_rojo.png');
     this.load.image('electricidad_verde', 'electricidad_verde.png');
+    this.load.image('electricidad_verde_k', 'electricidad_verde_k.png');
 
-    //Imagen para el menú
+    //Imégenes para el menú
     this.load.image('fondo_menu', 'fondo_menu.png');
     this.load.image('menu_ganar', 'menu_ganar.png');
     this.load.image('menu_perder', 'menu_perder.png');
+    this.load.image('controls_image', 'controls_image.png');
+    this.load.image('return_image', 'return_image.png');
+    this.load.image('birds_wiki', 'birds_wiki.png');
 
     //Carga de audios
     this.load.setPath('assets/audio/');

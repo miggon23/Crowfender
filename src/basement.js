@@ -14,6 +14,7 @@ export default class Basement extends Phaser.GameObjects.Sprite {
     constructor(scene, player, camera, basementInfo, otherBasement) {
         super(scene, basementInfo.x, basementInfo.y, basementInfo.sprite, basementInfo.scrollCamera);
         this.scene.add.existing(this);
+        this.spriteName = basementInfo.sprite;
         //Escala la imagen
         this.displayWidth = basementInfo.scaleX;
         this.displayHeight= basementInfo.scaleY;
@@ -30,10 +31,13 @@ export default class Basement extends Phaser.GameObjects.Sprite {
         }
 
         this.offsetToTeleportY = -150;
-        
         this.ladderSound = this.scene.sound.add("ladderSound");
+
+        this.highlight = false;
+
         //Al pulsar la k pasa de arriba abajo o viceversa, encaja la cámara y hace un ruido
         this.scene.physics.add.overlap(this, player, (o1, o2) => {
+            this.highlight = true;
             if (Phaser.Input.Keyboard.JustDown(this.k)) {
                 this.ladderSound.play();
                 let newPosition = this.otherBasement.getBottomCenter();
@@ -50,4 +54,20 @@ export default class Basement extends Phaser.GameObjects.Sprite {
             }
         });
     }
+
+      /**
+   * Métodos preUpdate de Phaser. Se encarga de mostrar cuando un elemento es interactuable
+   * @override
+   */
+       preUpdate(t,dt) {
+        super.preUpdate(t, dt);
+  
+        if(this.highlight){
+          this.setTexture(this.spriteName+"_k");
+        }
+        else{
+          this.setTexture(this.spriteName);
+        }
+        this.highlight = false;
+      }
 }

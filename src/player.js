@@ -25,11 +25,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
     this.setCollider();
     this.setSpeed();
-    this.setVariable();
+    this.setVariable(scene);
     this.playerAttack = scene.sound.add("playerAttack");
   }
   
-  setVariable() {
+  setVariable(scene) {
+    this.scene = scene;
     this.room = 0;
     this.wood = false;
     this.hittingState = false;
@@ -46,9 +47,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   setCollider() {
     this.posXCollider = 70;
-    this.posYCollider = 225;
+    this.posYCollider = 240;
     this.sizeXCollider = 100;
-    this.sizeYCollider = 150;
+    this.sizeYCollider = 130;
     this.body.setOffset(this.posXCollider, this.posYCollider);
     this.body.setSize(this.sizeXCollider, this.sizeYCollider, false);
   }
@@ -146,15 +147,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
   pickWood(){
     this.wood = true;
-    this.play('player_idle_wood');
+    if(this.body.velocity.x != 0 || this.body.velocity.y != 0) this.play('player_walk_wood');
+    else this.play('player_idle_wood');
+  }
+
+  hasWood(){
+    return this.wood;
   }
 
   getWood(){
-    if(this.wood){
-      this.wood = false;
-      return true;
-    }
-    else return false;
+    if(this.hasWood()) this.wood = false;
+    if(this.body.velocity.x != 0 || this.body.velocity.y != 0) this.play('player_walk');
+    else this.play('player_idle');
   }
 
   switchPlayerHit(){
@@ -236,79 +240,82 @@ export default class Player extends Phaser.GameObjects.Sprite {
     //Solo permitimos que se mueva el jugador si no esta pegando
     if(!this.hittingState){
       //Movimiento vertical del jugador con animaciones
-      if (this.w.isDown) {
-        if(!this.playerMoving){
-          if(this.wood){
-            this.play('player_walk_wood');
+      if(!this.scene.gameLost){
+        if (this.w.isDown) {
+          if(!this.playerMoving){
+            if(this.wood){
+              this.play('player_walk_wood');
+            }
+            else{
+              this.play('player_walk');
+            }
           }
-          else{
-            this.play('player_walk');
-          }
-        }
-        this.playerMoving = true;
-        this.body.setVelocityY(-this.verticalSpeed);
-      }
-      else if(this.s.isDown){
-        if(!this.playerMoving){
-          if(this.wood){
-            this.play('player_walk_wood');
-          }
-          else{
-            this.play('player_walk');
-          }
-        }
-        this.playerMoving = true;
-        this.body.setVelocityY(this.verticalSpeed);
-      }
-      else {
-        this.body.setVelocityY(0);
-      }
-      //Movimiento horizontal del jugador con animaciones
-      if (this.d.isDown) {
-        if(!this.playerMoving){
-          if(this.wood){
-            this.play('player_walk_wood');
-          }
-          else{
-            this.play('player_walk');
-          }
-        }
           this.playerMoving = true;
-          this.body.setVelocityX(this.horizontalSpeed);
-          this.sentido = true;
-          this.flipX = true;
+          this.body.setVelocityY(-this.verticalSpeed);
         }
-      else if (this.a.isDown) {
-        if(!this.playerMoving){
-          if(this.wood){
-            this.play('player_walk_wood');
+        else if(this.s.isDown){
+          if(!this.playerMoving){
+            if(this.wood){
+              this.play('player_walk_wood');
+            }
+            else{
+              this.play('player_walk');
+            }
+          }
+          this.playerMoving = true;
+          this.body.setVelocityY(this.verticalSpeed);
+        }
+        else {
+          this.body.setVelocityY(0);
+        }
+        //Movimiento horizontal del jugador con animaciones
+        if (this.d.isDown) {
+          if(!this.playerMoving){
+            if(this.wood){
+              this.play('player_walk_wood');
+            }
+            else{
+              this.play('player_walk');
+            }
+          }
+            this.playerMoving = true;
+            this.body.setVelocityX(this.horizontalSpeed);
+            this.sentido = true;
+            this.flipX = true;
+          }
+        else if (this.a.isDown) {
+          if(!this.playerMoving){
+            if(this.wood){
+              this.play('player_walk_wood');
+            }
+            else{
+              this.play('player_walk');
+            }
+          }
+          this.playerMoving = true;
+          this.body.setVelocityX(-this.horizontalSpeed);
+            this.sentido = false;
+            this.flipX = false;
+        }
+        else{
+          this.body.setVelocityX(0);
+        }
+        //Ajuste de velocidades para normalizar la velocidad en diagonal
+        if(this.body.velocity.x != 0 && this.body.velocity.y != 0){
+          if(this.body.velocity.x < 0){
+            this.body.setVelocityX(-this.diagonalSpeed);
           }
           else{
-            this.play('player_walk');
+            this.body.setVelocityX(this.diagonalSpeed);
           }
-        }
-        this.playerMoving = true;
-        this.body.setVelocityX(-this.horizontalSpeed);
-          this.sentido = false;
-          this.flipX = false;
+          if(this.body.velocity.y < 0){
+            this.body.setVelocityY(-this.diagonalSpeed);
+          }
+          else{
+            this.body.setVelocityY(this.diagonalSpeed);
+          }     
       }
-      else{
-        this.body.setVelocityX(0);
-      }
-      //Ajuste de velocidades para normalizar la velocidad en diagonal
-      if(this.body.velocity.x != 0 && this.body.velocity.y != 0){
-        if(this.body.velocity.x < 0){
-          this.body.setVelocityX(-this.diagonalSpeed);
-        }
-        else{
-          this.body.setVelocityX(this.diagonalSpeed);
-        }
-        if(this.body.velocity.y < 0){
-          this.body.setVelocityY(-this.diagonalSpeed);
-        }
-        else{
-          this.body.setVelocityY(this.diagonalSpeed);
-        }     
+      
     }   
     //Animación cuando el player está quieto
       if(this.playerMoving && this.body.velocity.x === 0 && this.body.velocity.y === 0){

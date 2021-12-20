@@ -24,7 +24,7 @@ export default class Level extends Phaser.Scene {
 
   /**
    * Inicialización de variables que dependen del nivel de dificultad elegida por el jugador en el menú
-   * @param {data} data Contiene multiplier y timeToWin, el tiempo en minutos para ganar que se guarda en init
+   * @param {data} data Contiene multiplier(dificultad) y timeToWin, el tiempo en minutos para ganar que se guarda en init
    */
   init(data) {
     this.difficulty = data.multiplier;
@@ -63,9 +63,9 @@ export default class Level extends Phaser.Scene {
     //Creación de habitaciones y elementos del juego
     this.spawnRooms();
     //Añadimos la imagen de las puertas manualmente
-    this.doorSprite1 = this.add.sprite(this.mainRoom.x + 230, this.mainRoom.y - 40, 'puerta_central');
+    this.doorSprite1 = this.add.sprite(this.mainRoom.x + 230, this.mainRoom.y - 30, 'puerta_central');
     this.player = new Player(this , Data.player , this.birds);
-    this.doorSprite2 = this.add.sprite(this.doorSprite1.x , this.doorSprite1.y - 410, 'puerta_puerta');
+    this.doorSprite2 = this.add.sprite(this.doorSprite1.x , this.doorSprite1.y - 420, 'puerta_puerta').setDepth(12);
     this.spawnBlockables();
     this.spawnZones();
     this.spawnElectricitySwitches();
@@ -81,12 +81,13 @@ export default class Level extends Phaser.Scene {
     //Número de pájaros en la sala del medio
     this.nBirdsInMiddle = 0;
     //Máximo de pájaros del juego
-    this.maxBirdsInMiddle = 3;
+    if(this.difficulty === "easy") this.maxBirdsInMiddle = 5;
+    else this.maxBirdsInMiddle = 4;
 
     //temporizador para spawnear pájaros
     this.timer = 0;
-    if(this.difficulty === 0) this.spawnTime = Phaser.Math.Between(6000, 10000);
-    else if(this.difficulty === 1) this.spawnTime = Phaser.Math.Between(4000, 7000);
+    if(this.difficulty === "easy") this.spawnTime = Phaser.Math.Between(6000, 10000);
+    else if(this.difficulty === "medium") this.spawnTime = Phaser.Math.Between(4000, 7000);
     else this.spawnTime = Phaser.Math.Between(3000, 5000);
     
     //Temporizador para ganar
@@ -94,6 +95,7 @@ export default class Level extends Phaser.Scene {
 
     //Booleano que marca cuando un pájaro se puede spawnear
     this.stopSpawning = false;
+    this.gameLost = false;
 
     this.newRand;
     this.birds = this.add.group(); 
@@ -140,12 +142,14 @@ export default class Level extends Phaser.Scene {
     camera.y = 0;
     
     
-    //camera.setZoom(0.60);
+    //camera.setZoom(0.50);
     //camera.setZoom(1.50);
    
     this.spawnDoors(camera);
 
     this.clockSounds();
+    this.makeTensionSound(100, this.tension1);
+
     this.broom = this.player.returnBroom();
     camera.startFollow(this.player);
     camera.setDeadzone(925, 600); 
@@ -182,6 +186,7 @@ export default class Level extends Phaser.Scene {
     new scrollDoor(this, this.player, camera, 3, "center", this.rooms);
   }
 
+  //LLamada a los callbacks para los sonidos del reloj
   clockSounds(){
     this.makeclockSound(this.winTime / 6, this.clockSound1);
     this.makeclockSound(this.winTime / 3, this.clockSound2);
@@ -191,6 +196,28 @@ export default class Level extends Phaser.Scene {
     this.makeclockSound(this.winTime, this.clockSound6);
   }
 
+  //Callbacks sonidos de tensión
+  makeTensionSound(tiempo, sound){
+    this.time.addEvent( {
+      delay: tiempo, 
+      callback: this.playSpecificTensionSound,
+      callbackScope: this,
+      loop: false,
+      args:[sound]
+    });
+  } 
+
+  //Suena sonido de tensión y se elige el siguiente
+  playSpecificTensionSound(sound){ 
+    this.randomForTensionSound = Phaser.Math.Between(0, 2);
+    if(this.randomForTensionSound === 0) sound = this.tension1;
+    else if(this.randomForTensionSound === 1) sound = this.tension2;
+    else sound = this.tension3;
+    this.makeTensionSound(10000, sound);
+    sound.play();
+  }
+
+  //Callback sonido de reloj
   makeclockSound(tiempo, sound){
     this.time.addEvent( {
       delay: tiempo, 
@@ -201,8 +228,8 @@ export default class Level extends Phaser.Scene {
     });
   }
 
+  //Hace sonar al sonido de reloj
   playSpecificClockSound(sound){ 
-    console.log("Estoy sonando"); 
     sound.play();
   }
   //Resta un pájaro del contador
@@ -212,23 +239,25 @@ export default class Level extends Phaser.Scene {
 
   //Método que crea las zonas bloqueables por el jugador
   spawnBlockables(){
-    this.window = new Blockable(this, this.player, 1920, 295, 'ventana_block', 'ventana_block_tabla');
-    this.door = new Blockable(this, this.player, 60, -270, 'puerta_block', 'puerta_block_tabla');
-    this.fireplace = new Blockable(this, this.player, -780, 440, 'chimenea', 'tabla_chimenea');
+    let blocked = (this.difficulty === "easy");
+
+    this.window = new Blockable(this, this.player, Data.blockable.window, blocked);
+    this.door = new Blockable(this, this.player, Data.blockable.door, blocked);
+    this.fireplace = new Blockable(this, this.player, Data.blockable.fireplace, blocked);
   }
 
   //Método que crea las zonas de spawn de los pájaros
   spawnZones(){
-    this.spawn_fireplace = new SpawnZone(this, -500, 100, 1000, 200, this.spawnzones, this.spawns, 'spawn_chimenea', this.fireplace);
-    this.spawn_window = new SpawnZone(this, 2200, 300, 400, 600, this.spawnzones, this.spawns, 'spawn_ventana', this.window);
-    this.spawn_door =new SpawnZone(this, -200, -300, 400, 600, this.spawnzones, this.spawns, 'spawn_puerta', this.door);
+    this.spawn_fireplace = new SpawnZone(this, Data.spawnZone.west, this.spawnzones, this.spawns, this.fireplace);
+    this.spawn_window = new SpawnZone(this, Data.spawnZone.east, this.spawnzones, this.spawns, this.window);
+    this.spawn_door =new SpawnZone(this, Data.spawnZone.upper, this.spawnzones, this.spawns, this.door);
   }
 
   //Método que crea los interruptores de electricidad
   spawnElectricitySwitches(){
     this.electricity_fireplace = new Electricity(this, this.player, -352, 380, this.spawn_fireplace);
     this.electricity_door = new Electricity(this, this.player, 276, -300, this.spawn_door);
-    this.electricity_window = new Electricity(this, this.player, 1800, 304, this.spawn_window);
+    this.electricity_window = new Electricity(this, this.player, 1700, 304, this.spawn_window);
   }
 
   isElectricityAvailable(){
@@ -263,6 +292,7 @@ export default class Level extends Phaser.Scene {
     new Room(this, Data.rooms.basement, this.rooms, this.walls, this.birdWalls);  //room7 basement   
   }
 
+
   /**
    * Método que escoge un spawn de entre los existentes y crea un pájaro en su interior
    */
@@ -281,10 +311,10 @@ export default class Level extends Phaser.Scene {
   
      
       //Dependiendo de la dificultad apareceran distinto tipos de pájaros
-      if(this.difficulty === 1){
+      if(this.difficulty === "easy"){
         this.birdSpawned = 0;
       }
-      else if(this.difficulty === 2){
+      else if(this.difficulty === "medium"){
         this.birdSpawned = Phaser.Math.Between(0, 1);
       }
       else{
@@ -309,6 +339,10 @@ export default class Level extends Phaser.Scene {
 
   }
 
+  changeScene(){
+    this.scene.start('end');
+  }
+
   addBirdInMiddle(){
     this.nBirdsInMiddle++;
     console.log("Pájaros en medio: " + this.nBirdsInMiddle + "Max: " + this.maxBirdsInMiddle);
@@ -331,21 +365,6 @@ export default class Level extends Phaser.Scene {
   update(t, dt){
     this.timer += dt; 
     this.victoryTimer += dt;
-    this.timerForTensionSounds += dt;
-    this.randomForTensionSound = Phaser.Math.Between(0, 100);
-
-    if(this.timerForTensionSounds >  10000 && this.randomForTensionSound === 0){
-      this.tension1.play();
-      this.timerForTensionSounds = 0;
-    }
-    else if(this.timerForTensionSounds >  10000  && this.randomForTensionSound === 1){
-      this.tension2.play();
-      this.timerForTensionSounds = 0;
-    } 
-    else if(this.timerForTensionSounds >  10000 && this.randomForTensionSound === 2){
-      this.tension3.play();
-      this.timerForTensionSounds = 0;
-    } 
 
     //Spawn de pájaros
     if(this.timer > this.spawnTime)
@@ -370,15 +389,21 @@ export default class Level extends Phaser.Scene {
       {
         this.winSound.play();
         this.gameMusic.stop();
-        this.scene.start('win');
+        this.scene.start('victory');
       }
     }
     //Si el número de pájaros en el centro alcanza el máximo, pierdes y se muestra tu puntuación
-    if (this.nBirdsInMiddle >= this.maxBirdsInMiddle && this.player.whatRoomIs() === 0){
+    if (!this.gameLost && this.nBirdsInMiddle >= this.maxBirdsInMiddle && this.player.whatRoomIs() === 0){
       this.gameMusic.stop();
       this.loseSound.play();
+      this.gameLost = true;
       
-      this.scene.start('end');
+      this.time.addEvent( {
+        delay: 400, 
+        callback: this.changeScene,
+        callbackScope: this,
+        loop: false,
+      });
     }
 
   }

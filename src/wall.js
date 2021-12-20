@@ -6,11 +6,12 @@ export default class Wall extends Phaser.GameObjects.Sprite {
   
   /**
    * Constructor de la Plataforma
-   * @param {Phaser.Scene} scene Escena a la que pertenece la plataforma
-   * @param {Player} player Jugador del juego
-   * @param {Phaser.GameObjects.Group} wallsGroup Grupo en el que se incluirá la base creada por la plataforma
+   * @param {Phaser.Scene} scene Escena a la que pertenece la plataformaç
    * @param {number} x Coordenada x
    * @param {number} y Coordenada y
+   * @param {number} scaleX Ancho 
+   * @param {number} scaleY Alto
+   * @param {Phaser.GameObjects.Group} wallsGroup Grupo en el que se incluirá la base creada por la plataforma
    */
   constructor(scene, x, y, scaleX, scaleY, wallsGroup) {
     super(scene, x, y, 'empty');

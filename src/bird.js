@@ -24,25 +24,19 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     birdsGroup.add(this);
     this.birdSprite = sprite;
     this.setDepth(2);
-    
+    this.multiplier = multiplier;
     this.setAnims();
+    this.gameLost = false;
+    this.scene = scene;
 
     if(this.birdSprite === 'bird1') this.play('bird_fly1')
     else if(this.birdSprite === 'bird2') this.play('bird_fly2')
     else this.play('bird_fly3')
     
-    if(multiplier === 1){
-      console.log("hey");
-      this.delayToMove = Phaser.Math.Between(2000, 5000);
-    }
-    else if(multiplier === 2){
-      console.log("hey2");
-      this.delayToMove = Phaser.Math.Between(1000, 3000);
-    } 
-    else{
-      console.log("bye");
-      this.delayToMove = Phaser.Math.Between(200, 800);
-    } 
+    if(this.multiplier === "easy") this.delayToMove = Phaser.Math.Between(2000, 5000);
+    else if(this.multiplier === "medium") this.delayToMove = Phaser.Math.Between(1000, 3000);
+    else this.delayToMove = 800;
+    
 
     this.level = level;
     //Velocidad de movimiento
@@ -57,11 +51,11 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.deadSound = this.scene.sound.add("birdDeath");
     //Añadimos la vida
     this.delayToChangeRoom;
-    if(this.birdSprite === ' bird1'){
+    if(this.birdSprite == 'bird1'){
       this.health = 1;
       this.delayToChangeRoom = Phaser.Math.Between(5000, 8000);
     }
-    else if(this.birdSprite === ' bird2'){
+    else if(this.birdSprite == 'bird2'){
       this.health = 3;
       this.delayToChangeRoom = Phaser.Math.Between(7000, 10000);
     }
@@ -376,12 +370,27 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.timer += dt;
     this.stopMovementTimer += dt;
     this.changeRoomTimer += dt;
+
+    if(!this.gameLost && this.scene.nBirdsInMiddle >= this.scene.maxBirdsInMiddle && this.scene.player.whatRoomIs() === 0){
+      this.gameLost = true;
+      this.tween = this.scene.tweens.add({
+        targets:  this ,
+         x: this.scene.player.x,
+         y: this.scene.player.y,
+        duration: 500,
+        ease: 'Sine.easeInOutExpo',
+        repeat: 0,
+      })
+    }
+
     if (this.timer >= this.delayToMove)
     {
       this.moveBird();
       this.timer -= this.delayToMove;
       //Generamos otro aleatorio para el siguiente movimiento
-      this.delayToMove = Phaser.Math.Between(3000, 5500);
+      if(this.multiplier === "easy") this.delayToMove = Phaser.Math.Between(2000, 5000);
+      else if(this.multiplier === "medium") this.delayToMove = Phaser.Math.Between(1000, 3000);
+      else this.delayToMove = 800;
       this.stopMovementTimer = 0;
     }
     else if (this.stopMovementTimer >= this.delayToStopMovement){

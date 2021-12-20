@@ -7,9 +7,11 @@ export default class Door extends Phaser.GameObjects.Sprite {
   /**
    * Constructor de las puertas
    * @param {Phaser.Scene} scene Escena a la que pertenece la puerta
+   * @param {Player} player Jugador del juego
+   * @param {camera} camera Cámara que persigue al jugador
    * @param {number} currentRoom Donde está ubicado el jugador
    * @param {number} nextRoom Donde quiere ir el jugador
-   * @param {array} zoneArray Array de spawns
+   * @param {number} position Norte, sur, este u oeste
    * @param {array} roomArray Array de rooms
    */
   constructor(scene, player, camera, currentRoom, nextRoom, position, roomArray){
@@ -50,7 +52,7 @@ export default class Door extends Phaser.GameObjects.Sprite {
           camera.setScroll(this.cameraScrollXForCentralRoomFromRightRoom, this.cameraScrollYForSideRooms);
         }
         else{
-          camera.setScroll(this.cameraScrollXForSideRooms, this.cameraScrollYForSideRooms);
+          camera.setScroll(this.cameraScrollXForRightRooms, this.cameraScrollYForSideRooms);
         }
       }
       else if(position === "left"){
@@ -60,7 +62,7 @@ export default class Door extends Phaser.GameObjects.Sprite {
           camera.setScroll(this.cameraScrollXForCentralRoomFromLeftRoom, this.cameraScrollYForSideRooms);
         }
         else{
-          camera.setScroll(-this.cameraScrollXForSideRooms, this.cameraScrollYForSideRooms);
+          camera.setScroll(-this.cameraScrollXForLeftRooms, this.cameraScrollYForSideRooms);
         }
       }
       else if(position ==="up"){
@@ -76,9 +78,10 @@ export default class Door extends Phaser.GameObjects.Sprite {
 
 
   setCameraVariables() {
-    this.cameraScrollXForCentralRoomFromRightRoom = -220;
+    this.cameraScrollXForCentralRoomFromRightRoom = -208;
     this.cameraScrollXForCentralRoomFromLeftRoom = 220;
-    this.cameraScrollXForSideRooms = 790;
+    this.cameraScrollXForRightRooms = 790;
+    this.cameraScrollXForLeftRooms = 788;
     this.cameraScrollYForSideRooms = 0;
     this.cameraScrollXForUpDownRooms = 0;
     this.cameraScrollYForUpRooms = -390;
