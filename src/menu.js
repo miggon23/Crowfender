@@ -45,10 +45,21 @@ import Button from "./button.js";
         camera.x = 0;
         camera.y = 0;
 
-        // this.optionsButton = new Button(this, 460, 300, 'OPCIONES', { fill: '#fff' });
-        // this.add.existing(this.optionsButton);
+        this.optionsButton = new Button(this, 440, 350, 40, 120, 'CONTROLS', { fill: '#fff' });
+        this.add.existing(this.optionsButton);
+        this.optionsButton.on('pointerup', () => {
+            this.buttonSound.play();
+            this.controlsImage = this.add.image(440, 300, 'controls_image').setInteractive();
+            this.add.existing(this.controlsImage);
+            this.returnImage = this.add.image(this.controlsImage.getBottomLeft().x + 100, this.controlsImage.getBottomLeft().y -70, 'return_image').setInteractive();
+            this.add.existing(this.returnImage);
+            this.returnImage.on('pointerup', function (event) { 
+                this.controlsImage.destroy();
+                this.returnImage.destroy();
+            }, this);
+        })
 
-        this.playButton = new Button(this, 470, 470, 40, 60,  'Play', { fill: '#fff' });
+        this.playButton = new Button(this, 470, 300, 40, 60,  'Play', { fill: '#fff' });
         this.add.existing(this.playButton);
         this.playButton.on('pointerup', () => {
             this.buttonSound.play();
