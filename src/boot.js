@@ -1,3 +1,5 @@
+import Data from './data.js';
+
 /**
  * Escena para la precarga de los assets que se usarán en el juego.
  */
@@ -75,6 +77,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('menu_perder', 'menu_perder.png');
     this.load.image('controls_image', 'controls_image.png');
     this.load.image('return_image', 'return_image.png');
+    this.load.image('birds_wiki', 'birds_wiki.png');
 
     //Carga de audios
     this.load.setPath('assets/audio/');

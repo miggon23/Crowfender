@@ -15,13 +15,15 @@
       super(scene, blockableInfo.x, blockableInfo.y, blockableInfo.sprite);
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this, true);
-      this.blocked = blocked;
+      this.addSounds();
+      
+      this.blocked = false;
+      
       this.spriteName = blockableInfo.sprite;
     
       this.highlight = false;
       this.player = player;
 
-      this.addSounds();
       this.k = this.scene.input.keyboard.addKey('K');
       this.scene.physics.add.overlap(this, player, (o1, o2) => {
         this.highlight = true;
@@ -32,6 +34,11 @@
               }
           }
       });
+
+      if(blocked){
+        this.block();
+      }
+
     }
 
    addSounds() {

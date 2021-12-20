@@ -51,10 +51,16 @@ import Button from "./button.js";
             this.buttonSound.play();
             this.controlsImage = this.add.image(440, 300, 'controls_image').setInteractive();
             this.add.existing(this.controlsImage);
-            this.returnImage = this.add.image(this.controlsImage.getBottomLeft().x + 100, this.controlsImage.getBottomLeft().y -70, 'return_image').setInteractive();
+
+            this.wikiBirds = this.add.image(this.controlsImage.getRightCenter().x + 100, this.controlsImage.getRightCenter().y, 'birds_wiki');
+            this.add.existing(this.wikiBirds);
+
+            this.returnImage = this.add.image(this.controlsImage.getBottomLeft().x + 100, this.controlsImage.getBottomLeft().y - 50, 'return_image').setInteractive();
             this.add.existing(this.returnImage);
+
             this.returnImage.on('pointerup', function (event) { 
                 this.controlsImage.destroy();
+                this.wikiBirds.destroy();
                 this.returnImage.destroy();
             }, this);
         })
