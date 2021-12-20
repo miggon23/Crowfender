@@ -15,9 +15,9 @@ export default class End extends Phaser.Scene {
    * @override
    */
   create() {
-    this.loseImage = this.add.image(0, 0, 'menu_perder');
+    this.loseImage = this.add.image(0, 0, 'menu_perder').setInteractive();;
     this.loseImage.setOrigin(0, 0)
-    this.add.text(500, 250, '¡Se acabó, demasiados pájaros invadieron la escena!\nPulsa cualquier tecla para volver a jugar')
+    this.add.text(500, 250, '¡Se acabó, demasiados pájaros invadieron la escena!\nHaz click en el pájaro para volver a jugar')
         .setOrigin(0.5, 0.5)  // Colocamos el pivote en el centro de cuadro de texto 
         .setAlign('center');  // Centramos el texto dentro del cuadro de texto
 
@@ -26,7 +26,7 @@ export default class End extends Phaser.Scene {
     // lleguemos a ver el mensaje porque veníamos con una tecla pulsada del juego (al 
     // ir moviendo al jugador). Se puede mejorar añadiendo un temporizador que 
     // añada este listener pasado un segundo
-    this.input.keyboard.on('keydown', function (event) { 
+    this.loseImage.on('pointerup', function (event) { 
       this.scene.start('menu');
     }, this);
   }
