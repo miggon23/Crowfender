@@ -399,7 +399,7 @@ export default class Level extends Phaser.Scene {
       this.gameLost = true;
       
       this.time.addEvent( {
-        delay: 200, 
+        delay: 400, 
         callback: this.changeScene,
         callbackScope: this,
         loop: false,
