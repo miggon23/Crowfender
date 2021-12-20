@@ -257,7 +257,7 @@ export default class Level extends Phaser.Scene {
   spawnElectricitySwitches(){
     this.electricity_fireplace = new Electricity(this, this.player, -352, 380, this.spawn_fireplace);
     this.electricity_door = new Electricity(this, this.player, 276, -300, this.spawn_door);
-    this.electricity_window = new Electricity(this, this.player, 1800, 304, this.spawn_window);
+    this.electricity_window = new Electricity(this, this.player, 1700, 304, this.spawn_window);
   }
 
   isElectricityAvailable(){
