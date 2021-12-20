@@ -24,7 +24,7 @@ export default class Level extends Phaser.Scene {
 
   /**
    * Inicialización de variables que dependen del nivel de dificultad elegida por el jugador en el menú
-   * @param {data} data Contiene multiplier y timeToWin, el tiempo en minutos para ganar que se guarda en init
+   * @param {data} data Contiene multiplier(dificultad) y timeToWin, el tiempo en minutos para ganar que se guarda en init
    */
   init(data) {
     this.difficulty = data.multiplier;
@@ -81,13 +81,13 @@ export default class Level extends Phaser.Scene {
     //Número de pájaros en la sala del medio
     this.nBirdsInMiddle = 0;
     //Máximo de pájaros del juego
-    if(this.difficulty === 0) this.maxBirdsInMiddle = 5;
+    if(this.difficulty === "easy") this.maxBirdsInMiddle = 5;
     else this.maxBirdsInMiddle = 4;
 
     //temporizador para spawnear pájaros
     this.timer = 0;
-    if(this.difficulty === 0) this.spawnTime = Phaser.Math.Between(6000, 10000);
-    else if(this.difficulty === 1) this.spawnTime = Phaser.Math.Between(4000, 7000);
+    if(this.difficulty === "easy") this.spawnTime = Phaser.Math.Between(6000, 10000);
+    else if(this.difficulty === "medium") this.spawnTime = Phaser.Math.Between(4000, 7000);
     else this.spawnTime = Phaser.Math.Between(3000, 5000);
     
     //Temporizador para ganar
@@ -238,7 +238,7 @@ export default class Level extends Phaser.Scene {
 
   //Método que crea las zonas bloqueables por el jugador
   spawnBlockables(){
-    let blocked = (this.difficulty === 0);
+    let blocked = (this.difficulty === "easy");
 
     this.window = new Blockable(this, this.player, Data.blockable.window, blocked);
     this.door = new Blockable(this, this.player, Data.blockable.door, blocked);
@@ -309,10 +309,10 @@ export default class Level extends Phaser.Scene {
   
      
       //Dependiendo de la dificultad apareceran distinto tipos de pájaros
-      if(this.difficulty === 1){
+      if(this.difficulty === "easy"){
         this.birdSpawned = 0;
       }
-      else if(this.difficulty === 2){
+      else if(this.difficulty === "medium"){
         this.birdSpawned = Phaser.Math.Between(0, 1);
       }
       else{
