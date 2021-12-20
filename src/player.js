@@ -147,7 +147,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
   pickWood(){
     this.wood = true;
-    this.play('player_idle_wood');
+    if(this.body.velocity.x != 0 || this.body.velocity.y != 0) this.play('player_walk_wood');
+    else this.play('player_idle_wood');
   }
 
   hasWood(){
@@ -156,6 +157,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   getWood(){
     if(this.hasWood()) this.wood = false;
+    if(this.body.velocity.x != 0 || this.body.velocity.y != 0) this.play('player_walk');
+    else this.play('player_idle');
   }
 
   switchPlayerHit(){
