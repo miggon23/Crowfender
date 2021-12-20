@@ -149,12 +149,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.play('player_idle_wood');
   }
 
+  hasWood(){
+    return this.wood;
+  }
+
   getWood(){
-    if(this.wood){
-      this.wood = false;
-      return true;
-    }
-    else return false;
+    if(this.hasWood()) this.wood = false;
   }
 
   switchPlayerHit(){

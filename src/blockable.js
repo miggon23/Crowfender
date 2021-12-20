@@ -17,15 +17,18 @@
       this.blocked = false;
       this.spriteName = blockableInfo.sprite;
       this.blockedSpriteName = blockableInfo.blockedSprite;
+      this.highlight = false;
+      this.player = player;
 
       this.addSounds();
       this.k = this.scene.input.keyboard.addKey('K');
       this.scene.physics.add.overlap(this, player, (o1, o2) => {
+        this.highlight = true;
           if(Phaser.Input.Keyboard.JustDown(this.k) && !this.blocked){
-              if(player.getWood()){
+              if(this.player.hasWood()){
+                this.player.getWood();
                 this.block();
               }
-              
           }
       });
     }
@@ -44,7 +47,6 @@
       if(this.spriteName == 'chimenea') this.fireplaceSoundBlock.play();
       else this.otherSoundBlock.play();
       this.blocked = true;
-      this.setTexture(this.blockedSpriteName);
       this.scene.time.addEvent( {
         delay: 20000, 
         callback: this.unblock,
@@ -59,11 +61,27 @@
       if(this.spriteName == 'chimenea') this.fireplaceSoundUnblock.play();
       else this.otherSoundUnblock.play();
       this.blocked = false;
-      this.setTexture(this.spriteName);
     }
     //Devuelve si está bloqueado o no la ventana, puerta u hoguera
     isBlocked(){
       return this.blocked;
     }
+   
+  /**
+   * Métodos preUpdate de Phaser. Se encarga de mostrar cuando un elemento es interactuable
+   * @override
+   */
+   preUpdate(t,dt) {
+    super.preUpdate(t,dt);
+    if(this.player.hasWood() && this.highlight && !this.isBlocked()){
+      this.setTexture(this.spriteName+"_k");
+    }
+    else if(this.isBlocked()){
+      this.setTexture(this.spriteName+"_tabla");
+    }
+    else{
+      this.setTexture(this.spriteName);
+    }
+    this.highlight = false;
   }
-  
+}
