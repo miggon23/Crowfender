@@ -147,6 +147,8 @@ export default class Level extends Phaser.Scene {
     this.spawnDoors(camera);
 
     this.clockSounds();
+    this.makeTensionSound(100, this.tension1);
+
     this.broom = this.player.returnBroom();
     camera.startFollow(this.player);
     camera.setDeadzone(925, 600); 
@@ -183,6 +185,7 @@ export default class Level extends Phaser.Scene {
     new scrollDoor(this, this.player, camera, 3, "center", this.rooms);
   }
 
+  //LLamada a los callbacks para los sonidos del reloj
   clockSounds(){
     this.makeclockSound(this.winTime / 6, this.clockSound1);
     this.makeclockSound(this.winTime / 3, this.clockSound2);
@@ -192,6 +195,28 @@ export default class Level extends Phaser.Scene {
     this.makeclockSound(this.winTime, this.clockSound6);
   }
 
+  //Callbacks sonidos de tensión
+  makeTensionSound(tiempo, sound){
+    this.time.addEvent( {
+      delay: tiempo, 
+      callback: this.playSpecificTensionSound,
+      callbackScope: this,
+      loop: false,
+      args:[sound]
+    });
+  } 
+
+  //Suena sonido de tensión y se elige el siguiente
+  playSpecificTensionSound(sound){ 
+    this.randomForTensionSound = Phaser.Math.Between(0, 2);
+    if(this.randomForTensionSound === 0) sound = this.tension1;
+    else if(this.randomForTensionSound === 1) sound = this.tension2;
+    else sound = this.tension3;
+    this.makeTensionSound(10000, sound);
+    sound.play();
+  }
+
+  //Callback sonido de reloj
   makeclockSound(tiempo, sound){
     this.time.addEvent( {
       delay: tiempo, 
@@ -202,8 +227,8 @@ export default class Level extends Phaser.Scene {
     });
   }
 
+  //Hace sonar al sonido de reloj
   playSpecificClockSound(sound){ 
-    console.log("Estoy sonando"); 
     sound.play();
   }
   //Resta un pájaro del contador
@@ -334,21 +359,6 @@ export default class Level extends Phaser.Scene {
   update(t, dt){
     this.timer += dt; 
     this.victoryTimer += dt;
-    this.timerForTensionSounds += dt;
-    this.randomForTensionSound = Phaser.Math.Between(0, 100);
-
-    if(this.timerForTensionSounds >  10000 && this.randomForTensionSound === 0){
-      this.tension1.play();
-      this.timerForTensionSounds = 0;
-    }
-    else if(this.timerForTensionSounds >  10000  && this.randomForTensionSound === 1){
-      this.tension2.play();
-      this.timerForTensionSounds = 0;
-    } 
-    else if(this.timerForTensionSounds >  10000 && this.randomForTensionSound === 2){
-      this.tension3.play();
-      this.timerForTensionSounds = 0;
-    } 
 
     //Spawn de pájaros
     if(this.timer > this.spawnTime)
