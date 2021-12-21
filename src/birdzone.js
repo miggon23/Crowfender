@@ -7,10 +7,10 @@ export default class BirdZone extends Phaser.GameObjects.Sprite {
   /**
    * Constructor de la birdZone
    * @param {Phaser.Scene} scene Escena a la que pertenece la zona
-   * @param {Player} player Jugador del juego
-   * @param {Phaser.GameObjects.Group} zoneGroup Grupo en el que se incluirá la zonaa creada para los pájaros
    * @param {number} x Coordenada x
    * @param {number} y Coordenada y
+   * @param {number} scaleX Ancho de la zona
+   * @param {number} scaleY Alto de la zona
    */
   constructor(scene, x, y, scaleX, scaleY) {
     super(scene, x, y, 'empty');

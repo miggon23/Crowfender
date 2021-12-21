@@ -10,6 +10,9 @@ export default class PreScene extends Phaser.Scene {
     super({ key: 'prescene' });
   }
 
+  /**
+   * Carga de los recursos a usar
+   */
   preload(){
     this.load.setPath('assets/sprites/');
     this.load.image('play_button', 'play_button.png');

@@ -2,19 +2,23 @@
 import Button from "./button.js";
 
 /**
- * Escena principal del juego.
+ * Menú principal del juego.
  * @extends Phaser.Scene
  */
  export default class MenuScene extends Phaser.Scene {
     /**
-     * Constructor de la escena
+     * Constructor del menú
      * @param {Phaser.Scene} scene Escena a la que pertenece el jugador
      */
 
      constructor() {
          super({ key: 'menu' });
-     }
-
+     
+        }
+        
+   /**
+    * Creación del menú 
+    */
     create()
     {
 

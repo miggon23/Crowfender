@@ -31,8 +31,9 @@ export default class Level extends Phaser.Scene {
     this.winTime = data.timeToWin * 1000 * 60;
   }
 
-  /* Creación de los elementos de la escena principal de juego
-  */
+  /** 
+   * Creación de los elementos de la escena principal de juego
+   */
   create() { 
 
     this.f = this.input.keyboard.addKey('F');
@@ -141,9 +142,8 @@ export default class Level extends Phaser.Scene {
     camera.x = 0;
     camera.y = 0;
     
-    
-    //camera.setZoom(0.50);
-    //camera.setZoom(1.50);
+    // Descomentar para mostrar todas las salas del juego a la vez
+    //camera.setZoom(0.3);
    
     this.spawnDoors(camera);
 
@@ -171,8 +171,12 @@ export default class Level extends Phaser.Scene {
     this.physics.add.collider(this.player, this.walls)
     this.physics.add.collider(this.birds, this.birdWalls)
     
-  }
-
+  }  
+  
+  /**
+   * Crea las puertas con las que el jugador cambia de sala
+   * @param {camera} camera La cámara del juego
+   */
   spawnDoors(camera) {
     new Door(this, this.player, camera, 0, 1, "right", this.rooms);
     new Door(this, this.player, camera, 0, 2, "left", this.rooms);
@@ -186,7 +190,9 @@ export default class Level extends Phaser.Scene {
     new scrollDoor(this, this.player, camera, 3, "center", this.rooms);
   }
 
-  //LLamada a los callbacks para los sonidos del reloj
+  /**
+   * LLamada a los callbacks para los sonidos del reloj
+   */
   clockSounds(){
     this.makeclockSound(this.winTime / 6, this.clockSound1);
     this.makeclockSound(this.winTime / 3, this.clockSound2);
@@ -196,7 +202,11 @@ export default class Level extends Phaser.Scene {
     this.makeclockSound(this.winTime, this.clockSound6);
   }
 
-  //Callbacks sonidos de tensión
+  /**
+   * Callbacks sonidos de tensión
+   * @param {number} tiempo Tiempo hasta que se reproduzca el sonido
+   * @param {object} sound Sonido que se reproduce
+   */
   makeTensionSound(tiempo, sound){
     this.time.addEvent( {
       delay: tiempo, 
@@ -207,7 +217,10 @@ export default class Level extends Phaser.Scene {
     });
   } 
 
-  //Suena sonido de tensión y se elige el siguiente
+  /**
+   * Suena sonido de tensión y se elige el siguiente
+   * @param {object} sound Sonido que se reproduce
+   */
   playSpecificTensionSound(sound){ 
     this.randomForTensionSound = Phaser.Math.Between(0, 2);
     if(this.randomForTensionSound === 0) sound = this.tension1;
@@ -216,8 +229,12 @@ export default class Level extends Phaser.Scene {
     this.makeTensionSound(10000, sound);
     sound.play();
   }
-
-  //Callback sonido de reloj
+  
+  /**
+   * Callback sonido de reloj   
+   * @param {number} tiempo Tiempo hasta que se reproduzca el sonido
+   * @param {object} sound Sonido que se reproduce
+   */
   makeclockSound(tiempo, sound){
     this.time.addEvent( {
       delay: tiempo, 
@@ -228,16 +245,24 @@ export default class Level extends Phaser.Scene {
     });
   }
 
-  //Hace sonar al sonido de reloj
+  /**
+   * Hace sonar al sonido de reloj
+   * @param {object} sound Sonido que se reproduce
+   */
   playSpecificClockSound(sound){ 
     sound.play();
   }
-  //Resta un pájaro del contador
+
+  /**
+   * Resta un pájaro del contador
+   */
   subBird(){
     this.nBirds--;
   }
 
-  //Método que crea las zonas bloqueables por el jugador
+  /**
+   * Método que crea las zonas bloqueables por el jugador
+   */
   spawnBlockables(){
     let blocked = (this.difficulty === "easy");
 
@@ -246,25 +271,34 @@ export default class Level extends Phaser.Scene {
     this.fireplace = new Blockable(this, this.player, Data.blockable.fireplace, blocked);
   }
 
-  //Método que crea las zonas de spawn de los pájaros
+  /**
+   * Método que crea las zonas de spawn de los pájaros
+   */
   spawnZones(){
     this.spawn_fireplace = new SpawnZone(this, Data.spawnZone.west, this.spawnzones, this.spawns, this.fireplace);
     this.spawn_window = new SpawnZone(this, Data.spawnZone.east, this.spawnzones, this.spawns, this.window);
     this.spawn_door =new SpawnZone(this, Data.spawnZone.upper, this.spawnzones, this.spawns, this.door);
   }
 
-  //Método que crea los interruptores de electricidad
+  /**
+   * Método que crea los interruptores de electricidad
+   */
   spawnElectricitySwitches(){
     this.electricity_fireplace = new Electricity(this, this.player, Data.electricity.west, this.spawn_fireplace);
     this.electricity_door = new Electricity(this, this.player, Data.electricity.upper, this.spawn_door);
     this.electricity_window = new Electricity(this, this.player, Data.electricity.east, this.spawn_window);
   }
-
+  
+  /**
+   * Devuelve true si la electricidad no está en cooldown
+   */
   isElectricityAvailable(){
   return this.electricityAvailable;
   }
 
-  //Se ha activado la electricidad: la ponemos en enfriamiento
+  /**
+   * Se ha activado la electricidad: la ponemos en enfriamiento
+   */  
   putElectricityOnCooldown(){
     this.electricityAvailable = false;
     this.time.addEvent( {
@@ -275,13 +309,15 @@ export default class Level extends Phaser.Scene {
     });
   }
 
-  //Ponemos disponible de nuevo la electricidad
+  /**
+   * Ponemos disponible de nuevo la electricidad
+   */
   electricityNowAvailable(){
     this.electricityReady.play();
     this.electricityAvailable = true;
   }
 
-   /**
+  /**
    * Método que crea las habitaciones del juego mainRoom corresponde a la habitación central
    */
   spawnRooms(){
@@ -339,21 +375,28 @@ export default class Level extends Phaser.Scene {
 
   }
 
+  /**
+   * Cambia de escena a la escena de perder
+   */ 
   changeScene(){
     this.scene.start('end');
   }
 
+  /**
+   * Añade un pájaro al contador de la sala central
+   */
   addBirdInMiddle(){
     this.nBirdsInMiddle++;
     console.log("Pájaros en medio: " + this.nBirdsInMiddle + "Max: " + this.maxBirdsInMiddle);
   }
 
+  /**
+   * Quita un pájaro del contador de la sala central
+   */
   substractBirdFromMiddle(){
     this.nBirdsInMiddle--;
     console.log("Pájaros en medio: " + this.nBirdsInMiddle + "Max: " + this.maxBirdsInMiddle)
   }
-
-  
 
   /**
    * La escena se encarga de crear los pájaros cada cierto tiempo, si ha llegado

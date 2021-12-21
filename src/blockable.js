@@ -6,10 +6,10 @@
   
     /**
      * Constructor del blockable
-     * @param {Phaser.Scene} scene Escena a la que pertenece la ventana
+     * @param {Phaser.Scene} scene Escena a la que pertenece el bloqueable
      * @param {Player} player Jugador del juego
      * @param {Struct} blockableInfo Info necesaria para construir el blockable
-     * @param {Struct} blockableInfo Info necesaria para construir el blockable
+     * @param {bool} blocked Bool que indica si está bloqueado o no
      */
     constructor(scene, player, blockableInfo, blocked) {
       super(scene, blockableInfo.x, blockableInfo.y, blockableInfo.sprite);
@@ -40,7 +40,9 @@
       }
 
     }
-
+  /**
+   * Añade los sonidos
+   */
    addSounds() {
      this.fireplaceSoundBlock = this.scene.sound.add("fireplaceBlocked");
      this.fireplaceSoundUnblock = this.scene.sound.add("fireplaceUnblocked");
@@ -49,8 +51,8 @@
    }
 
     /**
-    *Bloquea la entrada a los pájaros por un tiempo, en este caso 10 segundos
-    */
+     * Bloquea la entrada a los pájaros por un tiempo, en este caso 10 segundos
+     */
     block(){
       if(this.spriteName == 'chimenea') this.fireplaceSoundBlock.play();
       else this.otherSoundBlock.play();
@@ -70,13 +72,15 @@
       else this.otherSoundUnblock.play();
       this.blocked = false;
     }
-    //Devuelve si está bloqueado o no la ventana, puerta u hoguera
+    /**
+     * Devuelve si está bloqueado o no la ventana, puerta u hoguera
+     */
     isBlocked(){
       return this.blocked;
     }
    
   /**
-   * Métodos preUpdate de Phaser. Se encarga de mostrar cuando un elemento es interactuable
+   * Métodos preUpdate de Phaser. Se encarga de mostrar cuando un elemento es interactuable y cuanto está bloqueado
    * @override
    */
    preUpdate(t,dt) {

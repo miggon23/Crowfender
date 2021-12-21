@@ -29,16 +29,16 @@ export default class Door extends Phaser.GameObjects.Sprite {
 
     //Dependiendo de la donde se ubique la sala, derecha, izquierda, arriba o abajo utiliza la posicion de la sala para crearse
     if(position === "right"){
-      this.zone = this.scene.add.zone(roomArray[currentRoom].getTopRight().x - this.displacementXForSideRooms, roomArray[currentRoom].getTopRight().y + this.displacementYForSideRooms, this.witdhForSideRooms, this.heightForSideRooms).setOrigin(0);
+      this.zone = this.scene.add.zone(roomArray[currentRoom].getTopRight().x - this.displacementXForSideRooms, roomArray[currentRoom].getTopRight().y + this.displacementYForSideRooms, this.widthForSideRooms, this.heightForSideRooms).setOrigin(0);
     }
     else if(position === "left"){
-      this.zone = this.scene.add.zone(roomArray[currentRoom].getTopLeft().x + this.displacementXForSideRooms, roomArray[currentRoom].getTopLeft().y + this.displacementYForSideRooms, this.witdhForSideRooms, this.heightForSideRooms).setOrigin(0);
+      this.zone = this.scene.add.zone(roomArray[currentRoom].getTopLeft().x + this.displacementXForSideRooms, roomArray[currentRoom].getTopLeft().y + this.displacementYForSideRooms, this.widthForSideRooms, this.heightForSideRooms).setOrigin(0);
     }
     else if(position ==="up"){
-      this.zone = this.scene.add.zone(roomArray[currentRoom].getTopCenter().x + this.displacementXForUpRooms, roomArray[currentRoom].getTopCenter().y + this.displacementYForUpRooms, this.witdhForUpDownRooms, this.heightForUpDownRooms).setOrigin(0);
+      this.zone = this.scene.add.zone(roomArray[currentRoom].getTopCenter().x + this.displacementXForUpRooms, roomArray[currentRoom].getTopCenter().y + this.displacementYForUpRooms, this.widthForUpDownRooms, this.heightForUpDownRooms).setOrigin(0);
     }
     else{
-      this.zone = this.scene.add.zone(roomArray[currentRoom].getBottomCenter().x + this.displacementXForDownRooms, roomArray[currentRoom].getBottomCenter().y + this.displacementYForDownRooms, this.witdhForUpDownRooms, this.heightForUpDownRooms).setOrigin(0);
+      this.zone = this.scene.add.zone(roomArray[currentRoom].getBottomCenter().x + this.displacementXForDownRooms, roomArray[currentRoom].getBottomCenter().y + this.displacementYForDownRooms, this.widthForUpDownRooms, this.heightForUpDownRooms).setOrigin(0);
     }
    
     scene.physics.world.enable(this.zone);
@@ -76,7 +76,9 @@ export default class Door extends Phaser.GameObjects.Sprite {
     }); 
   }
 
-
+  /**
+   * Inicializa variables de la cámara
+   */
   setCameraVariables() {
     this.cameraScrollXForCentralRoomFromRightRoom = -208;
     this.cameraScrollXForCentralRoomFromLeftRoom = 220;
@@ -88,6 +90,9 @@ export default class Door extends Phaser.GameObjects.Sprite {
     this.cameraScrollYForDownRooms = -220;
   }
 
+  /**
+   * Inicializa variables del movimiento
+   */
   setMovementVariables() {
     this.horizontalMovementForSideRooms = 170;
     this.horizontalMovementForUpDownRooms = 200;
@@ -96,6 +101,9 @@ export default class Door extends Phaser.GameObjects.Sprite {
     this.verticalMovementForDownRooms = 220;
   }
 
+  /**
+   * Inicializa variables del desplazamiento
+   */
   setDisplacementVariables() {
     this.displacementXForSideRooms = 87;
     this.displacementXForUpRooms = 140;
@@ -105,10 +113,13 @@ export default class Door extends Phaser.GameObjects.Sprite {
     this.displacementYForDownRooms = -20;
   }
 
+  /**
+   * Inicializa variables del tamaño
+   */
   setSizeVariables() {
-    this.witdhForSideRooms = 25;
+    this.widthForSideRooms = 25;
     this.heightForSideRooms = 400;
-    this.witdhForUpDownRooms = 175;
+    this.widthForUpDownRooms = 175;
     this.heightForUpDownRooms = 40;
   }
 }

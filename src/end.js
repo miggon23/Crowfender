@@ -17,7 +17,7 @@ export default class End extends Phaser.Scene {
   create() {
     this.loseImage = this.add.image(0, 0, 'menu_perder').setInteractive();;
     this.loseImage.setOrigin(0, 0)
-    this.add.text(500, 250, '¡Se acabó, demasiados pájaros invadieron la escena!\nHaz click en el pájaro para volver a jugar')
+    this.add.text(500, 250, 'They invaded the house!\nYou lose, click anywhere to play again.')
         .setOrigin(0.5, 0.5)  // Colocamos el pivote en el centro de cuadro de texto 
         .setAlign('center');  // Centramos el texto dentro del cuadro de texto
 

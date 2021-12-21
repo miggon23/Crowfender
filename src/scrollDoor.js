@@ -13,7 +13,7 @@
       * @param {number} position Norte, sur, este u oeste
       * @param {array} roomArray Array de rooms
      */
-    constructor(scene, player, camera, currentRoom, position, roomArray){
+      constructor(scene, player, camera, currentRoom, position, roomArray){
       super(scene);
       this.zone;
       this.sizeDoorVariables();
@@ -58,25 +58,33 @@
       }); 
     }
 
-    //Variables tamaño de las salas
+  /**
+   * Variables tamaño de las salas
+   */
     sizeDoorVariables() {
       this.witdhZones = 20;
       this.heightZones = 600;
     }
 
-     //Variables desplazamiento de la sala
+  /**
+   * Variables desplazamiento de la sala
+   */
      displacementDoorVariables() {
       this.displacementX = 200;
     }
 
-    //Variables deadzone
+  /**
+   * Variables deadzone
+   */
     deadzoneDoorVariables() {
       this.deadzoneXRightLeft = 100;
       this.deadzoneXCenter = 925;
       this.deadzoneY = 600;
     }
 
-    //Variables ajuste de la cámara
+  /**
+   * Variables ajuste de la cámara
+   */
     cameraDoorVariables() {
       this.rightX = 200;
       this.rightY = 0;

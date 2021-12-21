@@ -1,7 +1,7 @@
 import Data from './data.js'
 
 /**
- * Clase para la electricidad para espantar a los pájaros de los spawns.
+ * Clase para la electricidad para matar a los pájaros en los spawns.
  * Genera un panel de electricidad asociado a un Spawn.
  */
  export default class Electricity extends Phaser.GameObjects.Sprite {
@@ -13,7 +13,6 @@ import Data from './data.js'
      * @param {Struct} elecInfo Información necesaria pra crear el panel de electricidad
      * @param {Spawn} spawn Spawn al que afecta esta electricidad
      */
-    
     constructor(scene, player, elecInfo, spawn) {
       super(scene, elecInfo.x, elecInfo.y, Data.electricity.sprite);
       this.scene.add.existing(this);

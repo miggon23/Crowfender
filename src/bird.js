@@ -3,7 +3,8 @@ import Level from "./level.js";
 /**
  * Clase que representa a los pájaros del juego, es decir, los enemigos. Los pájaros cambian de habitación
  * cada cierto tiempo. Y tienen un movimietno aleatorio que les hace desplazarse una posición cada cierto tiempo.
- * Los pájaros se espantan  al recibir un golpe.
+ * Los pájaros pierden un punto de vida al ser golpeados. Si les quedan puntos de vida, se espantan y vuelven
+ * a la sala anterior, en caso contrario mueren.
  */
 export default class Bird extends Phaser.GameObjects.Sprite {
   
@@ -16,6 +17,8 @@ export default class Bird extends Phaser.GameObjects.Sprite {
    * @param {Level} level Level al que pertenece el pájaro
    * @param {array of numbers} route salas que sigue el pájaro en orden, desde el spawn a la sala central
    * @param {array of Room} rooms array que guarda las habitaciones visitables por el pájaro
+   * @param {spritesheet} sprite spritesheet con el que se dibujará el pájaro
+   * @param {string} multiplier nivel de dificultad
    */
   constructor(scene, x, y, birdsGroup, level, route, rooms, sprite, multiplier) {
     super(scene, x, y, sprite);
@@ -84,6 +87,10 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.rooms[route[0]].addBirdInSpawn();
     
   }
+
+  /**
+   * Crea las animaciones
+   */
   setAnims() {
     this.scene.anims.create({
       key: 'bird_idle1',
@@ -150,9 +157,9 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   }
 
   /**
-   * Selecciona una de las 4 direcciones posibles de movimiento (no se mueve diagonalmente) 
-   * y le añade un valor fijo de desplazamiento definido en la clase
-   */
+    * Selecciona una de las 4 direcciones posibles de movimiento (no se mueve diagonalmente) 
+    * y le añade un valor fijo de desplazamiento definido en la clase
+    */
   moveBird(){
     //Hay una pequeña probabilidad de que no salte en este turno
     
@@ -188,8 +195,8 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   }
 
   /**
-  * Método que avisa al pájaro para cambiar de sala, consultando antes si es es viable este cambio
-  */
+   * Método que avisa al pájaro para cambiar de sala, consultando antes si es es viable este cambio
+   */
   goToNextRoom()
   {
     this.cancelMovement()
@@ -199,9 +206,11 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     }
   }
 
-  //Comprueba que puede pasar a la siguiente sala. Si está en la sala del spawn 
-  //comprobará el blockeable. En cualquier otro caso, comprobará simplemente que no haya llegado
-  //al final de su ruta
+  /**
+   * Comprueba que puede pasar a la siguiente sala. Si está en la sala del spawn 
+   * comprobará el blockeable. En cualquier otro caso, comprobará simplemente que no haya llegado
+   * al final de su ruta
+   */
   iCanAdvance(){
     if(this.actualOrderRoom === 0)
     {
@@ -218,7 +227,10 @@ export default class Bird extends Phaser.GameObjects.Sprite {
       return (this.actualOrderRoom !== this.route.length - 1);   
   }
 
-  //Cambia a la habitación i de su ruta tomando las coordenadas del la sala y calculando donde debería estar el suelo
+  /**
+  * Cambia a la habitación i de su ruta tomando las coordenadas del la sala y calculando donde debería estar el suelo
+  * @param {number} i Habitación a la que se cambia
+  */
   changeRoom(i){
     let topLeft = this.rooms[this.route[i]].birdZone.getTopLeft();
     let botRight = this.rooms[this.route[i]].birdZone.getBottomRight();
@@ -262,13 +274,18 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     })
     this.tween.on('complete', this.listener, this);
   }
-
+  
+  /**
+  * Método que se ejecuta tras terminar el tween
+  */
   listener() {
     this.body.enable = true;
   }
 
-  //Envía al pájaro a la siguiente sala marcada por su lista de rutas. Comprueba si está
-  // en la sala central, en ese caso, no avanza. La sala central es siempre la última del array de rutas
+  /**
+  * Envía al pájaro a la siguiente sala marcada por su lista de rutas. Comprueba si está
+  * en la sala central, en ese caso, no avanza. La sala central es siempre la última del array de rutas
+  */
   advanceRoom(){
     if(this.actualOrderRoom === 0){ //Si sale del spawn, lo restamos del spawn para que no rebase el limite de pajaros del spawn
       if(this.birdSprite === 'bird1'){
@@ -303,15 +320,18 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     }
   }
 
-  //Clase para eliminar al pájaro, bien por la electricidad o porque le hayan dado el último golpe
+  /**
+  * Clase para eliminar al pájaro, bien por la electricidad o porque le hayan dado el último golpe
+  */
   die(){
     this.level.subBird(); //Restamos un pájaro del contador y añadimos un punto
     this.destroy();
   }
 
-
-  //Envía al pájaro en la sala anterior a la que está, siempre y cuando no se encuentra en el spawn o 
-  // sea su último golpe para acabar con su vida. Se llama cuando el jugador golpea a un pájaro con la escoba
+  /**
+  * Envía al pájaro en la sala anterior a la que está, siempre y cuando no se encuentra en el spawn o 
+  * sea su último golpe para acabar con su vida. Se llama cuando el jugador golpea a un pájaro con la escoba
+  */
   hitBird(){
     this.health--;
     this.changeRoomTimer = 0;
@@ -362,7 +382,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
   }
 
   /**
-   * Métodos preUpdate de Phaser. En este caso se encarga del movimiento del pajaro y de su eliminación por electricidad.
+   * Métodos preUpdate de Phaser. En este caso se encarga del movimiento del pajaro y de la animación de perder
    * @override
    */
     preUpdate(t,dt) {
@@ -371,6 +391,7 @@ export default class Bird extends Phaser.GameObjects.Sprite {
     this.stopMovementTimer += dt;
     this.changeRoomTimer += dt;
 
+    // Todos los pájaros se deslizan hacia el jugador cuando este pierda y se encuentre en la sala central
     if(!this.gameLost && this.scene.nBirdsInMiddle >= this.scene.maxBirdsInMiddle && this.scene.player.whatRoomIs() === 0){
       this.gameLost = true;
       this.tween = this.scene.tweens.add({

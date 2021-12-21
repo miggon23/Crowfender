@@ -38,42 +38,56 @@ export default class SpawnZone extends Phaser.GameObjects.Sprite {
     //this.visible = false;
   }
   
+  /**
+   * Activa el colider de la electricidad en el spawn para entrar en contacto con los pájaros
+   */
   activateElectricity(){ 
     this.visible=false
     this.body.enable= true;
     this.scene.time.addEvent( {
       delay: 300, 
-      callback: this.desactivateElectricity,
+      callback: this.deactivateElectricity,
       callbackScope: this,
       loop: false
     });
   }
 
-  desactivateElectricity(){
+  /**
+   * Desactiva el colider de la electricidad
+   */
+  deactivateElectricity(){
     this.visible=true;
     this.body.enable= false;
   }
 
-  //Devuelve un booleano que indica si el spawn está tapiado (bloqueado)
+  /**
+   * Devuelve un booleano que indica si el spawn está tapiado (bloqueado)
+   */
   spawnBlocked(){
     return this.blockable.isBlocked();
   }
 
-  //Añade un pájaro al contador del spawn
+  /**
+   * Añade un pájaro al contador del spawn
+   */
   addBirdInSpawn()
   {
     this.birdsInSpawn++;
     console.log("Pajaro añadido en este spawn " + this.birdsInSpawn);
   }
 
-  //Resta un pájaro al contador del spawn
+  /**
+   * Resta un pájaro al contador del spawn
+   */
   subBirdInSpawn()
   {
     this.birdsInSpawn--;
     console.log("Un pájaro salió del spawn");
   }
 
-  //Devuelve true si en el spawn no caben más pájaros
+  /**
+   * Devuelve true si en el spawn no caben más pájaros
+   */
   spawnFull()
   {
     return this.birdsInSpawn === this.spawnLimit;

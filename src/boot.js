@@ -5,7 +5,7 @@ import Data from './data.js';
  */
 export default class Boot extends Phaser.Scene {
   /**
-   * Constructor de la escena
+   * Constructor del boot
    */
   constructor() {
     super({ key: 'boot' });
@@ -136,7 +136,7 @@ export default class Boot extends Phaser.Scene {
 
   /**
    * Creación de la escena. En este caso, solo cambiamos a la escena que representa el
-   * nivel del juego
+   * menú del juego
    */
   create() {
     this.scene.start('menu');
@@ -187,7 +187,15 @@ export default class Boot extends Phaser.Scene {
       assetText.destroy();
     });
   }
-  //Crea un texto (s) con un tamaño (size), una posición (x)(y), un color (color) y una alineación
+  
+  /**
+   * Crea un texto (s) con un tamaño (size), una posición (x)(y), un color (color) y una alineación
+   * @param {number} x Coordenada X
+   * @param {number} y Coordenada y
+   * @param {string} s Texto a escribir
+   * @param {number} size Tamaño del texto
+   * @param {color} color Color del texto
+   */
   addInterfaceText(x, y, s, size, color) {
     let text = this.add.text(x, y, s, {
       setFont: 'Georgia',

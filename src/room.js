@@ -35,13 +35,18 @@ export default class Room extends Phaser.GameObjects.Sprite {
     this.setBirdsWalls(scene, birdWalls, roomInfo.scaleX, roomInfo.scaleY);
   }
 
-
+  /**
+   * Inicializa las variables de los muros para el jugador
+   */
   setRoomWallsVariables() {
     this.backgroundWallHeight = 0.3; //Altura del muro del fondo respecto del alto de la habitación
     this.floorHeight = 30; //Alto del suelo
     this.sideWallsWidth = 10;
   }
 
+  /**
+   * Inicializa las variables de los muros para los pájaros
+   */
   setBirdWallsVariables() {
     this.backgroundWallHeightB = 0.6; //Altura del muro del fondo respecto del alto de la habitación
     this.floorHeightB = 8; //Alto del suelo
