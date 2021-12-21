@@ -26,9 +26,9 @@ export default class Boot extends Phaser.Scene {
     this.load.image(Data.rooms.east.sprite, 'fondo_ventana.png');
     this.load.image(Data.rooms.upper.sprite, 'fondo_puerta.png');
     this.load.image(Data.rooms.basement.sprite, 'fondo_sotano.png');
-    this.load.image('spawn_chimenea', 'spawn_chimenea.png');
-    this.load.image('spawn_puerta', 'spawn_puerta.png');
-    this.load.image('spawn_ventana', 'spawn_ventana.png');
+    this.load.image(Data.spawnZone.west.sprite, 'spawn_chimenea.png');
+    this.load.image(Data.spawnZone.upper.sprite, 'spawn_puerta.png');
+    this.load.image(Data.spawnZone.east.sprite, 'spawn_ventana.png');
 
    // Cargamos las imágenes del sótano
     this.load.image(Data.basementZones.middle.sprite, 'sotano_trampilla.png');

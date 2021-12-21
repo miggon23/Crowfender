@@ -123,6 +123,24 @@ const Data = {
             limitOfBirds: 6,
             sprite: 'spawn_chimenea'
         }
+    },
+    electricity: {
+        sprite: 'electricidad_verde',
+        cooldownSprite: 'electricidad_rojo',
+        spriteK: 'electricidad_verde_k',
+
+        west: {
+            x: -352,
+            y: 380
+        },
+        upper: {
+            x: 276,
+            y: -300
+        },
+        east: {
+            x: 1700,
+            y: 304
+        }
     }
 
     
