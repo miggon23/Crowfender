@@ -37,6 +37,7 @@ export default class Level extends Phaser.Scene {
   create() { 
 
     this.f = this.input.keyboard.addKey('F');
+    this.p = this.input.keyboard.addKey('P');
 
       this.f.on('down', function () {
 
@@ -51,6 +52,10 @@ export default class Level extends Phaser.Scene {
         }
 
       }, this);
+
+      this.p.on('down', () => { 
+      });
+
     //Array de zonas de spawn
     this.spawnzones = [];
     //Array de habitaciones
@@ -448,7 +453,11 @@ export default class Level extends Phaser.Scene {
         loop: false,
       });
     }
-
+    // Si se pulsa la P, el juego se pausa (llevando al jugador, en consecuencia, a una escena secundaria llamada "pause")
+    if (Phaser.Input.Keyboard.JustDown(this.p)){
+      this.scene.pause();
+      this.scene.launch('pause', this);
+    }
   }
 
 }

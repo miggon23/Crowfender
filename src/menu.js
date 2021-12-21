@@ -27,15 +27,9 @@ import Button from "./button.js";
         this.f.on('down', function () {
 
             if (this.scale.isFullscreen)
-            {
-        
-            this.scale.stopFullscreen();
-            }
+                this.scale.stopFullscreen();
             else
-            {
-            
-            this.scale.startFullscreen();
-            }
+                this.scale.startFullscreen();
 
         }, this);
 
