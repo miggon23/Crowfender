@@ -47,9 +47,11 @@ export default class Basement extends Phaser.GameObjects.Sprite {
                 player.tp(newPosition.x, newPosition.y + this.offsetToTeleportY);
                 if (basementInfo.scrollCamera){
                     camera.setScroll(this.cameraXScroll,this.cameraYScrollForGoingDown);
+                    player.changeRoomNumber(4);
                 } 
                 else{
-                    camera.setScroll(this.cameraXScroll, this.cameraYScrollForGoingUp);                   
+                    camera.setScroll(this.cameraXScroll, this.cameraYScrollForGoingUp);   
+                    player.changeRoomNumber(1);                
                 } 
             }
         });
