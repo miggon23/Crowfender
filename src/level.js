@@ -43,7 +43,6 @@ export default class Level extends Phaser.Scene {
 
         if (this.scale.isFullscreen)
         {
-      
           this.scale.stopFullscreen();
         }
         else
@@ -426,7 +425,6 @@ export default class Level extends Phaser.Scene {
       else{
         this.timer = 0;
       }
-      
     }
 
     //condición de victoria, si ha pasado el tiempo
@@ -459,5 +457,4 @@ export default class Level extends Phaser.Scene {
       this.scene.launch('pause', this);
     }
   }
-
 }
