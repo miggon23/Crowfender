@@ -46,7 +46,10 @@ import Button from "./button.js";
         this.add.existing(this.optionsButton);
         this.optionsButton.on('pointerup', () => {
             this.buttonSound.play();
-            this.controlsImage = this.add.image(440, 300, 'controls_image').setInteractive();
+            this.controlsImage = this.add.image(480, 300, 'controls_image').setInteractive();
+            this.add.existing(this.controlsImage);
+
+            this.anotherControlsImage = this.add.image(220, 300, 'another_controls_image').setInteractive();
             this.add.existing(this.controlsImage);
 
             this.wikiBirds = this.add.image(this.controlsImage.getRightCenter().x + 100, this.controlsImage.getRightCenter().y, 'birds_wiki');
@@ -56,6 +59,7 @@ import Button from "./button.js";
             this.add.existing(this.returnImage);
 
             this.returnImage.on('pointerup', function (event) { 
+                this.anotherControlsImage.destroy();
                 this.controlsImage.destroy();
                 this.wikiBirds.destroy();
                 this.returnImage.destroy();
