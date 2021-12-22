@@ -70,7 +70,7 @@ Esquema de la zona de juego
 ![Esquema Zona de Juego](https://user-images.githubusercontent.com/82326243/134644498-b26d2520-5295-4dc0-b4a1-fd46a808252d.png)
 Los post-it en azul representan las zonas de spawn de los pájaros. Son zonas visibles para el jugador pero no accesibles para él.
 
-- SPAWN: Punto de congregación de los pájaros que sirve para alertar al jugador del número potencial de pájaros que pueden entrar en la casa en un determinado momento. Los spawns son zonas no accesibles para el jugador, pero sí visibles e interactuables (mediante el uso de la electricidad en este último caso). 
+- Spawn: Punto de congregación de los pájaros que sirve para alertar al jugador del número potencial de pájaros que pueden entrar en la casa en un determinado momento. Los spawns son zonas no accesibles para el jugador, pero sí visibles e interactuables (mediante el uso de la electricidad en este último caso). 
 
 Cada spawn tiene un límite fijo de pájaros que puede generar, y son 6. Para poder generar un pájaro después de haber superado el límite del spawn, debe haber muerto alguno de los pájaros que haya generado, aún siendo dentro de la casa. Esto se hace para poder devolver los pájaros que entren en la casa y no hayan muerto al spawn y no haya conflictos con los pájaros nuevos que se puedan generar (y se acumulen muchos pájaros en el spawn que no puedan ser representados gráficamente).
 
@@ -150,7 +150,8 @@ Los efectos de sonido tienen especial relevancia en Crowfender, ya que pueden se
 - Ocasionalmente se escucharán sonidos de tensión seleccionados de forma aleatoria, con el fin de recordarle al jugador que no sabe lo que puede estar pasando en las salas que no ve.
 
 ### IMÁGENES
--Sprites y animaciones para los objetos interactuables del juego, así como personaje y enemigos. 
+-Sprites y animaciones para los objetos interactuables del juego, así como personaje y enemigos.
+
 -Sprites para el fondo (la casa) y los exteriores (zonas de spawn).
 
 ### HISTORIA
