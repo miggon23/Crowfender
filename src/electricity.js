@@ -1,7 +1,7 @@
-
+import Data from './data.js'
 
 /**
- * Clase para la electricidad para espantar a los pájaros de los spawns.
+ * Clase para la electricidad para matar a los pájaros en los spawns.
  * Genera un panel de electricidad asociado a un Spawn.
  */
  export default class Electricity extends Phaser.GameObjects.Sprite {
@@ -10,13 +10,11 @@
      * Constructor de la electricidad
      * @param {Phaser.Scene} scene Escena a la que pertenece el cofre
      * @param {Player} player Jugador del juego
-     * @param {number} x Coordenada x
-     * @param {number} y Coordenada y
+     * @param {Struct} elecInfo Información necesaria pra crear el panel de electricidad
      * @param {Spawn} spawn Spawn al que afecta esta electricidad
      */
-    
-    constructor(scene, player, x, y, spawn) {
-      super(scene, x, y, 'electricidad_verde');
+    constructor(scene, player, elecInfo, spawn) {
+      super(scene, elecInfo.x, elecInfo.y, Data.electricity.sprite);
       this.scene.add.existing(this);
       this.scene.physics.add.existing(this, true);
       this.switchReady = this.scene.sound.add("electricitySwitch");
@@ -51,13 +49,13 @@
       super.preUpdate(t, dt);
 
       if(this.highlight && this.scene.isElectricityAvailable()){
-        this.setTexture('electricidad_verde_k');
+        this.setTexture(Data.electricity.spriteK);
       }
       else if(this.scene.isElectricityAvailable()){
-        this.setTexture('electricidad_verde');
+        this.setTexture(Data.electricity.sprite);
       }
       else{
-        this.setTexture('electricidad_rojo');
+        this.setTexture(Data.electricity.cooldownSprite);
       }
       this.highlight = false;
     }

@@ -1,6 +1,8 @@
 /**
  * Spot del mapa donde el jugador interactúa
- * para poder acceder al sótano
+ * para poder acceder al sótano y regresar de este.
+ * Es decir, ambas la trampilla y la escalera son instancias
+ * de esta clase
  */
 export default class Basement extends Phaser.GameObjects.Sprite {
 
@@ -15,6 +17,7 @@ export default class Basement extends Phaser.GameObjects.Sprite {
         super(scene, basementInfo.x, basementInfo.y, basementInfo.sprite, basementInfo.scrollCamera);
         this.scene.add.existing(this);
         this.spriteName = basementInfo.sprite;
+        
         //Escala la imagen
         this.displayWidth = basementInfo.scaleX;
         this.displayHeight= basementInfo.scaleY;
@@ -47,9 +50,11 @@ export default class Basement extends Phaser.GameObjects.Sprite {
                 player.tp(newPosition.x, newPosition.y + this.offsetToTeleportY);
                 if (basementInfo.scrollCamera){
                     camera.setScroll(this.cameraXScroll,this.cameraYScrollForGoingDown);
+                    player.changeRoomNumber(4);
                 } 
                 else{
-                    camera.setScroll(this.cameraXScroll, this.cameraYScrollForGoingUp);                   
+                    camera.setScroll(this.cameraXScroll, this.cameraYScrollForGoingUp);   
+                    player.changeRoomNumber(1);                
                 } 
             }
         });

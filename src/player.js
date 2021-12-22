@@ -1,11 +1,13 @@
 
-
+  /**
+   * El personaje que controla el jugador
+   */
 export default class Player extends Phaser.GameObjects.Sprite {
   
   /**
    * Constructor del jugador
    * @param {Phaser.Scene} scene Escena a la que pertenece el player
-   * @param {struct} playerInfo
+   * @param {info} playerInfo Info del jugador
    */
   constructor(scene, playerInfo) {
     super(scene, playerInfo.x, playerInfo.y, playerInfo.sprite);
@@ -29,6 +31,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.playerAttack = scene.sound.add("playerAttack");
   }
   
+  /**
+   * Inicializa las variables
+   * @param {Phaser.Scene} scene Escena a la que pertenece el player
+   */
   setVariable(scene) {
     this.scene = scene;
     this.room = 0;
@@ -39,12 +45,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.playerMoving = false;
   }
 
+  /**
+   * Inicializa la velocidad de movimiento
+   */
   setSpeed() {
     this.horizontalSpeed = 300;
     this.verticalSpeed = 300;
     this.diagonalSpeed = 212.13;
   }
 
+  /**
+   * Inicializa el collider
+   */
   setCollider() {
     this.posXCollider = 70;
     this.posYCollider = 240;
@@ -54,6 +66,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.body.setSize(this.sizeXCollider, this.sizeYCollider, false);
   }
 
+  /**
+   * Crea las animaciones
+   */
   setAnimations() {
     this.scene.anims.create({
       key: 'player_idle',
@@ -106,6 +121,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.play('player_idle');
   }
 
+  /**
+   * Inicializa el input
+   */
   setInput() {
     this.w = this.scene.input.keyboard.addKey('W');
     this.a = this.scene.input.keyboard.addKey('A');
@@ -114,6 +132,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.j = this.scene.input.keyboard.addKey('J');
   }
 
+  /**
+   * Inicializa la escoba
+   */
   setBroom() {
     this.broom = this.scene.add.sprite(this.x, this.y, 'empty');
     this.broom.visible = false;
@@ -123,55 +144,92 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.broom.displayWidth = 100;
   }
 
-  //Devuelve broom para comprobar las colisiones desde el player
+  /**
+   * Devuelve broom para comprobar las colisiones desde el level
+   */
   returnBroom(){
     return this.broom;
   }
   
+  /**
+   * Devuelve la habitación en la que se encuentra el jugador
+   */  
   whatRoomIs(){
     return this.room;
   }
 
+  /**
+   * Cambia de habitación
+   * @param {number} roomNumber Habitación a la que se cambia
+   */
   changeRoomNumber(roomNumber){
     this.room = roomNumber;
   }
 
+  /**
+   * Cambia la posición del jugador
+   * @param {number} x Coordenada X
+   * @param {number} y Coordenada Y
+   */
   changePlayerPosition(x, y){
     this.x = x;
     this.y = y;
   }
 
+  /**
+   * Cambia la posición de la escoba
+   * @param {number} x Coordenada X
+   * @param {number} y Coordenada Y
+   */
   changeBroomPosition(x, y){
     this.broom.x = x;
     this.broom.y = y;
   }
+
+  /**
+   * Coge madera
+   */  
   pickWood(){
     this.wood = true;
     if(this.body.velocity.x != 0 || this.body.velocity.y != 0) this.play('player_walk_wood');
     else this.play('player_idle_wood');
   }
 
+  /**
+   * Devuelve si el jugador tiene madera
+   */
   hasWood(){
     return this.wood;
   }
 
+  /**
+   * Suelta la madera
+   */
   getWood(){
     if(this.hasWood()) this.wood = false;
     if(this.body.velocity.x != 0 || this.body.velocity.y != 0) this.play('player_walk');
     else this.play('player_idle');
   }
 
+  /**
+   * Cambia al estado de golpeo
+   */  
   switchPlayerHit(){
     this.hittingState = !this.hittingState;
   }
-
-  // Teletransporta al jugador a las coordenadas indicadas;
+  
+  /**
+   * Teletransporta al jugador a las coordenadas indicadas;
+   */
   tp(x, y){
     this.x = x;
     this.y = y;
   }
-
-  switchPlayerHitAndReStart(){
+  
+  /**
+   * Resetea los estados del jugador
+   */
+  switchPlayerHitAndRestart(){
     this.hittingState = false;
     this.hittingStateBirds = false;
     this.playerMoving = false;
@@ -182,20 +240,31 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.play('player_idle');
     }
   }
-
+  
+  /**
+   * Devuelve si está haciendo scroll
+   */
   isScrolling(){
     return this.scrolling;
   }
-
+  
+  /**
+   * Cambia el scroll a true
+   */
   switchPlayerScrollToTrue(){
     this.scrolling = true;
   }
-
+  
+  /**
+   * Cambia el scroll a false
+   */
   switchPlayerScrollToFalse(){
     this.scrolling = false;
   }
-    
-
+     
+  /**
+   * Activa el ataque y su animación
+   */
    hittingMoment(){
      if(this.wood){
       this.play('player_hit_wood2', false);
@@ -220,9 +289,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
    
     this.on('animationcomplete-player_hit', this.hittingMoment);
-    this.on('animationcomplete-player_hit2', this.switchPlayerHitAndReStart);
+    this.on('animationcomplete-player_hit2', this.switchPlayerHitAndRestart);
     this.on('animationcomplete-player_hit_wood', this.hittingMoment);
-    this.on('animationcomplete-player_hit_wood2', this.switchPlayerHitAndReStart);
+    this.on('animationcomplete-player_hit_wood2', this.switchPlayerHitAndRestart);
     //Al golpear el jugador, se cambia de estado a que está golpeando y se realiza la animación;
     if (this.j.isDown) {
       if(!this.hittingState){

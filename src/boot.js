@@ -5,7 +5,7 @@ import Data from './data.js';
  */
 export default class Boot extends Phaser.Scene {
   /**
-   * Constructor de la escena
+   * Constructor del boot
    */
   constructor() {
     super({ key: 'boot' });
@@ -26,9 +26,9 @@ export default class Boot extends Phaser.Scene {
     this.load.image(Data.rooms.east.sprite, 'fondo_ventana.png');
     this.load.image(Data.rooms.upper.sprite, 'fondo_puerta.png');
     this.load.image(Data.rooms.basement.sprite, 'fondo_sotano.png');
-    this.load.image('spawn_chimenea', 'spawn_chimenea.png');
-    this.load.image('spawn_puerta', 'spawn_puerta.png');
-    this.load.image('spawn_ventana', 'spawn_ventana.png');
+    this.load.image(Data.spawnZone.west.sprite, 'spawn_chimenea.png');
+    this.load.image(Data.spawnZone.upper.sprite, 'spawn_puerta.png');
+    this.load.image(Data.spawnZone.east.sprite, 'spawn_ventana.png');
 
    // Cargamos las imágenes del sótano
     this.load.image(Data.basementZones.middle.sprite, 'sotano_trampilla.png');
@@ -76,6 +76,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image('menu_ganar', 'menu_ganar.png');
     this.load.image('menu_perder', 'menu_perder.png');
     this.load.image('controls_image', 'controls_image.png');
+    this.load.image('another_controls_image', 'controls_crowfender.png');
     this.load.image('return_image', 'return_image.png');
     this.load.image('birds_wiki', 'birds_wiki.png');
 
@@ -136,7 +137,7 @@ export default class Boot extends Phaser.Scene {
 
   /**
    * Creación de la escena. En este caso, solo cambiamos a la escena que representa el
-   * nivel del juego
+   * menú del juego
    */
   create() {
     this.scene.start('menu');
@@ -187,7 +188,15 @@ export default class Boot extends Phaser.Scene {
       assetText.destroy();
     });
   }
-  //Crea un texto (s) con un tamaño (size), una posición (x)(y), un color (color) y una alineación
+  
+  /**
+   * Crea un texto (s) con un tamaño (size), una posición (x)(y), un color (color) y una alineación
+   * @param {number} x Coordenada X
+   * @param {number} y Coordenada y
+   * @param {string} s Texto a escribir
+   * @param {number} size Tamaño del texto
+   * @param {color} color Color del texto
+   */
   addInterfaceText(x, y, s, size, color) {
     let text = this.add.text(x, y, s, {
       setFont: 'Georgia',

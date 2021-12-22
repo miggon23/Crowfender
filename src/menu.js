@@ -1,20 +1,23 @@
-
 import Button from "./button.js";
 
 /**
- * Escena principal del juego.
+ * Menú principal del juego.
  * @extends Phaser.Scene
  */
  export default class MenuScene extends Phaser.Scene {
     /**
-     * Constructor de la escena
+     * Constructor del menú
      * @param {Phaser.Scene} scene Escena a la que pertenece el jugador
      */
 
      constructor() {
          super({ key: 'menu' });
-     }
-
+     
+        }
+        
+   /**
+    * Creación del menú 
+    */
     create()
     {
 
@@ -23,15 +26,9 @@ import Button from "./button.js";
         this.f.on('down', function () {
 
             if (this.scale.isFullscreen)
-            {
-        
-            this.scale.stopFullscreen();
-            }
+                this.scale.stopFullscreen();
             else
-            {
-            
-            this.scale.startFullscreen();
-            }
+                this.scale.startFullscreen();
 
         }, this);
 
@@ -49,7 +46,10 @@ import Button from "./button.js";
         this.add.existing(this.optionsButton);
         this.optionsButton.on('pointerup', () => {
             this.buttonSound.play();
-            this.controlsImage = this.add.image(440, 300, 'controls_image').setInteractive();
+            this.controlsImage = this.add.image(480, 300, 'controls_image').setInteractive();
+            this.add.existing(this.controlsImage);
+
+            this.anotherControlsImage = this.add.image(220, 300, 'another_controls_image').setInteractive();
             this.add.existing(this.controlsImage);
 
             this.wikiBirds = this.add.image(this.controlsImage.getRightCenter().x + 100, this.controlsImage.getRightCenter().y, 'birds_wiki');
@@ -59,6 +59,7 @@ import Button from "./button.js";
             this.add.existing(this.returnImage);
 
             this.returnImage.on('pointerup', function (event) { 
+                this.anotherControlsImage.destroy();
                 this.controlsImage.destroy();
                 this.wikiBirds.destroy();
                 this.returnImage.destroy();

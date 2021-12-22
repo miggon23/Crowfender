@@ -10,6 +10,9 @@ export default class PreScene extends Phaser.Scene {
     super({ key: 'prescene' });
   }
 
+  /**
+   * Carga de los recursos a usar
+   */
   preload(){
     this.load.setPath('assets/sprites/');
     this.load.image('play_button', 'play_button.png');
@@ -23,14 +26,11 @@ export default class PreScene extends Phaser.Scene {
     
     this.playButton = this.add.image(500, 250, 'play_button').setInteractive();
     this.add.existing(this.playButton);
-    
 
     this.playButton.on('pointerdown', function (event) { 
       this.scale.startFullscreen();
       this.scene.start('boot');
     }, this);
-    
-    
   }
 
 }
