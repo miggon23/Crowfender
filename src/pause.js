@@ -25,12 +25,13 @@ import Button from "./button.js";
    * @override
    */
   create() {
-    // Texto que pone PAUSA
-    this.texto = this.add.text(450, 300, 'PAUSA', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+    // Texto de pausa
+    this.pausa = this.add.text(450, 300, 'PAUSED', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+    this.retorno = this.add.text(415, 320, 'Press P to continue', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' })
     this.p = this.input.keyboard.addKey('P');
 
     // Botón para volver al inicio
-    this.menuButton = new Button(this, 400, 330, 25, 150, 'Volver al menú', { fill: '#fff' });
+    this.menuButton = new Button(this, 0, 0, 25, 150, 'Return to main menu ⮌', { fill: '#fff' });
     this.add.existing(this.menuButton);
     this.menuButton.on('pointerup', () => { // Si se pulsa el botón
       this.scene.stop('pause');
@@ -41,7 +42,8 @@ import Button from "./button.js";
 
     // Si se pulsa la p de nuevo
     this.p.on('down', function () {
-      this.texto.destroy();
+      this.pausa.destroy();
+      this.retorno.destroy();
       this.menuButton.destroy();
       this.scene.resume('level');
     }, this); // Se vuelve al juego
